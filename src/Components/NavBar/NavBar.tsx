@@ -7,17 +7,17 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         backgroundColor: theme.palette.success.light,
     },
     
 }))
 const NavBar = () => {
 
-    const classes = useStyles()
+    const styling = useStyles()
 
   return (
-    <Box className={classes.root}>
+    <Box className={styling.root}>
         <p>NavBar is here</p>
         <p>NavBar is here</p>
         <p>NavBar is here</p>
