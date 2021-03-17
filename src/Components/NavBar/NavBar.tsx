@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     },
     
 }))
-const NavBar = () => {
+const NavBar: React.FC = () => {
 
     const styling = useStyles()
 

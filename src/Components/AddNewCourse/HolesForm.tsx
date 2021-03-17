@@ -22,12 +22,14 @@ const useStyles = makeStyles((theme) => ({
     holenumbercontainer: {
         border: '1px solid black',
         padding: '5px 15px 5px 15px',
+        textAlign: 'center'
     },
     holepaircontainer: {
         padding: '5px 15px 5px 15px',
     },
     holetext: {
-        paddingLeft: '5px',
+        paddingLeft: '10px',
+        margin: 'auto'
     },
     holepartext: {
         paddingLeft: '5px',
@@ -35,13 +37,23 @@ const useStyles = makeStyles((theme) => ({
     },
 
     textfield: {
-        padding: '5px 5px 5px 5px',
         marginTop: '25px',
-        fontSize: '22px'
+        fontSize: '22px',
+        textAlign: 'center'
+
     },
+    input: {
+        "&:invalid": {
+          border: "red solid 2px"
+        }
+      }
 }))
 
-const HolesForm = () => {
+interface sentProps {
+    onChanged: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const HolesForm: React.FC<sentProps> = ({onChanged}) => {
     const styling = useStyles()
 
     let holenumbers: string[] = []
@@ -62,7 +74,7 @@ const HolesForm = () => {
                                 <Typography variant="h6">{number}</Typography>
                             </Box>
                             <Box className={styling.textfield}>
-                                <TextField size="medium" id={number}/>
+                                <TextField size="small" id={number} variant='outlined' inputProps={{maxLength: 1, pattern: '[0-7]'}} onChange={onChanged}/>
                             </Box>
                         </Box>
                     )

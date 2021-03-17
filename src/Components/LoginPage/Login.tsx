@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const LoginForm = () => {
+const LoginForm: React.FC = () => {
     const [Username, SetUsername] = useState<string>('')
     const [Password, SetPassword] = useState<string>('')
 
