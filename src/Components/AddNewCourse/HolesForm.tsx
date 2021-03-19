@@ -42,6 +42,11 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center'
 
     },
+    enterpar: {
+        fontSize: '22px',
+        textAlign: 'center',
+        textDecoration: 'italics'
+    },
     input: {
         "&:invalid": {
           border: "red solid 2px"
@@ -62,7 +67,7 @@ const HolesForm: React.FC<sentProps> = ({onChanged}) => {
 
     return (
         <Box className={styling.root}>
-            <Typography variant="h4">
+            <Typography variant="h4" className={styling.enterpar}>
                 Please enter the par of each hole
             </Typography>
             <Box className={styling.holenumbers}>
@@ -74,7 +79,7 @@ const HolesForm: React.FC<sentProps> = ({onChanged}) => {
                                 <Typography variant="h6">{number}</Typography>
                             </Box>
                             <Box className={styling.textfield}>
-                                <TextField size="small" id={number} variant='outlined' inputProps={{maxLength: 1, pattern: '[0-7]'}} onChange={onChanged}/>
+                                <TextField size="small" id={number} variant='outlined' inputProps={{maxLength: 1, pattern: '[0-7]',  style: { textAlign: 'center', fontSize: '22px' }}} onChange={onChanged}/>
                             </Box>
                         </Box>
                     )
