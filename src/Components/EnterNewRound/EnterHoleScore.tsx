@@ -1,16 +1,20 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormLabel from '@material-ui/core/FormLabel'
 import Button from '@material-ui/core/Button'
 import Radio from '@material-ui/core/Radio'
+import Checkbox from '@material-ui/core/Checkbox'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
 
 interface props {
-    onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+    HoleNumber: number
+    Par: number
+    onSave: (data: string[]) => void
+    onClickPrev: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -37,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     row: {
         marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(4),
         display: 'flex',
         flexDirection: 'row',
         width: '40vw',
@@ -45,16 +50,85 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const CourseBox: React.FC<props> = ({ onClick }) => {
+const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev}) => {
     const styling = useStyles()
+
+    const [Score, SetScore] = useState<string>("")
+    const [Putts, SetPutts] = useState<string>("")
+    const [FIR, SetFIR] = useState<string>("")
+    const [GIR, SetGIR] = useState<string>("")
+    const [Penalties, SetPenalties] = useState<string>("0")
+    const [FairwayBunkers, SetFairwayBunkers] = useState<string>("0")
+    const [GreenBunkers, SetGreenBunkers] = useState<string>("0")
+
+    useEffect(() => {
+        SetScore("")
+        SetPutts("")
+        SetFIR("")
+        SetGIR("")
+        SetPenalties("0")
+        SetFairwayBunkers("0")
+        SetGreenBunkers("0")
+      
+    },[HoleNumber])
+
+    const handleScoreEnter = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        SetScore(event.target.value)
+
+    }
+
+    const handlePuttsEnter = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        SetPutts(event.target.value)
+    }
+
+    const handleFIRSelection = (event: React.ChangeEvent<HTMLInputElement>, value: string): void=> {
+        SetFIR(event.target.value)
+
+    }
+
+    const handleGIRSelection = (event: React.ChangeEvent<HTMLInputElement>, value: string): void => {
+        SetGIR(event.target.value)
+
+    }
+
+    const handleFairwayBunkersEnter = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        SetFairwayBunkers(event.target.value)
+
+    }
+
+    const handleGreenBunkersEnter = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        SetGreenBunkers(event.target.value)
+    }
+
+    const handlePenaltiesEnter = (event: React.ChangeEvent<HTMLInputElement>): void => {
+        SetPenalties(event.target.value)
+
+    }
+
+    
+    const handleNextHoleClicked = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+
+        let letDataArray: string[] = []
+        letDataArray.push(Score)
+        letDataArray.push(Putts)
+        letDataArray.push(FIR)
+        letDataArray.push(GIR)
+        letDataArray.push(Penalties)
+        letDataArray.push(FairwayBunkers)
+        letDataArray.push(GreenBunkers)
+
+        onSave(letDataArray)
+    }
 
     return (
         <Box className={styling.root}>
-            <Typography style={{marginBottom: '3vh', fontSize: '25px'}}>Hole 1 - Par 4</Typography>
+            <Typography style={{marginBottom: '2vh', fontSize: '25px'}}>Hole {HoleNumber} - Par {Par}</Typography>
                 <TextField
                     size="small"
                     variant="standard"
                     label="Score"
+                    value={Score}
+                    onChange={handleScoreEnter}
                     inputProps={{
                         maxLength: 1,
                         pattern: '[0-7]',
@@ -69,6 +143,8 @@ const CourseBox: React.FC<props> = ({ onClick }) => {
                     size="small"
                     variant="standard"
                     label="Putts"
+                    value={Putts}
+                    onChange={handlePuttsEnter}
                     inputProps={{
                         maxLength: 1,
                         pattern: '[0-7]',
@@ -79,8 +155,10 @@ const CourseBox: React.FC<props> = ({ onClick }) => {
                         },
                     }}
                 />
+                {Par !== 3 &&
+                <>
                       <FormLabel component="legend" className={styling.radios}>FIR</FormLabel>
-                <RadioGroup aria-label="Fairway hit" name="fir" row>
+                <RadioGroup aria-label="Fairway hit" name="fir" row onChange={handleFIRSelection} value={FIR}>
                     <FormControlLabel
                         value="left"
                         control={<Radio />}
@@ -100,35 +178,38 @@ const CourseBox: React.FC<props> = ({ onClick }) => {
                         labelPlacement="top"
                     />
                 </RadioGroup >
+                </>
+                }
                 <FormLabel component="legend" className={styling.radios}>GIR</FormLabel>
-                <RadioGroup aria-label="green in regulation" name="gir" row>
+                <RadioGroup aria-label="green in regulation" name="gir" row onChange={handleGIRSelection} value={GIR}> 
+                <FormControlLabel
+                        value="hit"
+                        control={<Checkbox />}
+                        label="Hit"
+                        labelPlacement="top"
+                />
                 <FormControlLabel
                         value="left"
-                        control={<Radio />}
+                        control={<Checkbox />}
                         label="Miss left"
                         labelPlacement="top"
                     />
-                    <FormControlLabel
-                        value="hit"
-                        control={<Radio />}
-                        label="Hit"
-                        labelPlacement="top"
-                    />
+                   
                     <FormControlLabel
                         value="right"
-                        control={<Radio />}
+                        control={<Checkbox />}
                         label="Miss right"
                         labelPlacement="top"
                     />
                     <FormControlLabel
                         value="short"
-                        control={<Radio />}
+                        control={<Checkbox />}
                         label="Miss short"
                         labelPlacement="top"
                     />
                     <FormControlLabel
                         value="long"
-                        control={<Radio />}
+                        control={<Checkbox />}
                         label="Miss long"
                         labelPlacement="top"
                     />
@@ -137,7 +218,8 @@ const CourseBox: React.FC<props> = ({ onClick }) => {
                 <TextField
                     size="small"
                     variant="standard"
-                    value={0}
+                    value={Penalties}
+                    onChange={handlePenaltiesEnter}
                     helperText="Penalties / OB"
                     inputProps={{
                         maxLength: 1,
@@ -153,8 +235,9 @@ const CourseBox: React.FC<props> = ({ onClick }) => {
                 <TextField
                     size="small"
                     variant="standard"
-                    value={0}
-                    helperText="Fairway Bunker Shots!"
+                    value={FairwayBunkers}
+                    helperText="Fairway Bunker Shots"
+                    onChange={handleFairwayBunkersEnter}
                     inputProps={{
                         maxLength: 1,
                         pattern: '[0-7]',
@@ -169,8 +252,9 @@ const CourseBox: React.FC<props> = ({ onClick }) => {
                 <TextField
                     size="small"
                     variant="standard"
-                    value={0}
+                    value={GreenBunkers}
                     helperText="Greenside Bunker Shots"
+                    onChange={handleGreenBunkersEnter}
                     inputProps={{
                         maxLength: 1,
                         pattern: '[0-7]',
@@ -184,15 +268,15 @@ const CourseBox: React.FC<props> = ({ onClick }) => {
                 />
                 </Box>
                 <Box className={styling.row}>
-                <Button variant="contained" color="secondary">Previous Hole</Button>
-                <Button variant="contained" color="secondary">Next Hole</Button>
+                <Button variant="contained" color="secondary" onClick={onClickPrev}>Previous Hole</Button>
+                <Button variant="contained" color="secondary" onClick={handleNextHoleClicked}>Next Hole</Button>
                 </Box>
 
         </Box>
     )
 }
 
-export default CourseBox
+export default EnterHoleScore
 
 /*
 - score
