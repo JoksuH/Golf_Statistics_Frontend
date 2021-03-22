@@ -3,6 +3,7 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import FormLabel from '@material-ui/core/FormLabel'
+import FormGroup from '@material-ui/core/FormGroup'
 import Button from '@material-ui/core/Button'
 import Radio from '@material-ui/core/Radio'
 import Checkbox from '@material-ui/core/Checkbox'
@@ -15,6 +16,10 @@ interface props {
     Par: number
     onSave: (data: string[]) => void
     onClickPrev: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+}
+
+interface GIRObject {
+    [key:string]: boolean
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +61,7 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
     const [Score, SetScore] = useState<string>("")
     const [Putts, SetPutts] = useState<string>("")
     const [FIR, SetFIR] = useState<string>("")
-    const [GIR, SetGIR] = useState<string>("")
+    const [GIR, SetGIR] = useState<{[key:string]: boolean}>({hit: false, left: false, right:false, long: false, short:false})
     const [Penalties, SetPenalties] = useState<string>("0")
     const [FairwayBunkers, SetFairwayBunkers] = useState<string>("0")
     const [GreenBunkers, SetGreenBunkers] = useState<string>("0")
@@ -65,7 +70,7 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
         SetScore("")
         SetPutts("")
         SetFIR("")
-        SetGIR("")
+        SetGIR({hit: false, left: false, right:false, long: false, short:false})
         SetPenalties("0")
         SetFairwayBunkers("0")
         SetGreenBunkers("0")
@@ -86,8 +91,11 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
 
     }
 
-    const handleGIRSelection = (event: React.ChangeEvent<HTMLInputElement>, value: string): void => {
-        SetGIR(event.target.value)
+    const handleGIRSelection = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean): void => {
+
+        let objectcopy = {...GIR}
+        objectcopy[event.target.name] = checked
+        SetGIR(objectcopy)
 
     }
 
@@ -112,12 +120,29 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
         letDataArray.push(Score)
         letDataArray.push(Putts)
         letDataArray.push(FIR)
-        letDataArray.push(GIR)
+        letDataArray.push(getGIRstring(GIR))
+      
+
         letDataArray.push(Penalties)
         letDataArray.push(FairwayBunkers)
         letDataArray.push(GreenBunkers)
 
         onSave(letDataArray)
+    }
+
+    const getGIRstring = (data: GIRObject): string => {
+
+        if (data['hit'] = true)
+            return 'hit'
+
+        let stringGirValues = ""
+
+         Object.keys(data).forEach(key => {
+            if (data[key] === true) stringGirValues += key + " "
+        })
+
+        return (stringGirValues)
+
     }
 
     return (
@@ -181,39 +206,39 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
                 </>
                 }
                 <FormLabel component="legend" className={styling.radios}>GIR</FormLabel>
-                <RadioGroup aria-label="green in regulation" name="gir" row onChange={handleGIRSelection} value={GIR}> 
+                <FormGroup aria-label="green in regulation" row> 
                 <FormControlLabel
                         value="hit"
-                        control={<Checkbox />}
+                        control={<Checkbox onChange={handleGIRSelection} name="hit" checked={GIR['hit']} disabled={Object.keys(GIR).some(value => (GIR[value] === true) &&  (GIR['hit'] === false) )}/>}
                         label="Hit"
                         labelPlacement="top"
                 />
                 <FormControlLabel
                         value="left"
-                        control={<Checkbox />}
+                        control={<Checkbox onChange={handleGIRSelection} name="left" checked={GIR['left']} disabled={GIR['hit'] || GIR['right']}/>}
                         label="Miss left"
                         labelPlacement="top"
                     />
                    
                     <FormControlLabel
                         value="right"
-                        control={<Checkbox />}
+                        control={<Checkbox onChange={handleGIRSelection} name="right" checked={GIR['right']} disabled={GIR['hit'] || GIR['left']} />}
                         label="Miss right"
                         labelPlacement="top"
                     />
                     <FormControlLabel
                         value="short"
-                        control={<Checkbox />}
+                        control={<Checkbox onChange={handleGIRSelection} name="short" checked={GIR['short']} disabled={GIR['hit'] || GIR['long']}/>}
                         label="Miss short"
                         labelPlacement="top"
                     />
                     <FormControlLabel
                         value="long"
-                        control={<Checkbox />}
+                        control={<Checkbox onChange={handleGIRSelection} name="long" checked={GIR['long']} disabled={GIR['hit'] || GIR['short'] }/>}
                         label="Miss long"
                         labelPlacement="top"
                     />
-                </RadioGroup>
+                </FormGroup>
                 <Box className={styling.row}>
                 <TextField
                     size="small"
