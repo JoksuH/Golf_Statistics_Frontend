@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'space-evenly',
         width: '60vw',
-        margin: 'auto'
+        margin: 'auto',
+        backgroundColor: theme.palette.success.light
     },
     divider: {
        marginTop: '15px'

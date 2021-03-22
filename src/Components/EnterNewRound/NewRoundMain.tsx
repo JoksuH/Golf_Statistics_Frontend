@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NewRoundCourseSelection from './NewRoundCourseSelection'
 import CourseBox from './CourseBox'
 import EnterHoleScore from './EnterHoleScore'
+import ViewRound from './../ViewRound/ViewRound'
 
 
 const NewRoundMain: React.FC = () => {
@@ -71,8 +72,9 @@ const NewRoundMain: React.FC = () => {
 
 
     const handleCourseSelection = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-        const input = event.target as HTMLElement;
+        const input = event.target as HTMLElement
         SetSelectedCourse(input.innerText)
+        SetHoleNumber(1)
     }
 
     const handleCourseChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
@@ -84,6 +86,7 @@ const NewRoundMain: React.FC = () => {
                 <NewRoundCourseSelection onClick={handleCourseSelection}/>
                 :
                 <>
+                <ViewRound />
                 <CourseBox name={SelectedCourse} onClick={handleCourseChange} />
                 <EnterHoleScore HoleNumber={HoleNumber} Par={3} onSave={handleNextHoleButtonClicked} onClickPrev={handlePreviousHoleButtonClicked}/>
                 </>
