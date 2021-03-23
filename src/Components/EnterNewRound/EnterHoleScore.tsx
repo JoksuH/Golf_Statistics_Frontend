@@ -132,7 +132,7 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
 
     const getGIRstring = (data: GIRObject): string => {
 
-        if (data['hit'] = true)
+        if (data['hit'] === true)
             return 'hit'
 
         let stringGirValues = ""
@@ -141,7 +141,7 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
             if (data[key] === true) stringGirValues += key + " "
         })
 
-        return (stringGirValues)
+        return (stringGirValues.trimEnd())
 
     }
 

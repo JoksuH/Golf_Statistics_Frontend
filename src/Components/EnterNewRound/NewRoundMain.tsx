@@ -60,6 +60,8 @@ const NewRoundMain: React.FC = () => {
         holderArr.push(data[6])
         SetGreenBunkers(holderArr)
 
+        console.log(GIR)
+
 
     }
 
@@ -85,10 +87,10 @@ const NewRoundMain: React.FC = () => {
             {!SelectedCourse ? 
                 <NewRoundCourseSelection onClick={handleCourseSelection}/>
                 :
-                <>
-                <ViewRound />
+                <>                
                 <CourseBox name={SelectedCourse} onClick={handleCourseChange} />
-                <EnterHoleScore HoleNumber={HoleNumber} Par={3} onSave={handleNextHoleButtonClicked} onClickPrev={handlePreviousHoleButtonClicked}/>
+                <ViewRound Coursename={SelectedCourse}Strokes={ScoreCard} Putts={Putts} Fairways={FIR} GIRs={GIR} Penalties={Penalties} FWBunkers={FairwayBunkers} GreenBunkers={GreenBunkers}/>
+                <EnterHoleScore HoleNumber={HoleNumber} Par={4} onSave={handleNextHoleButtonClicked} onClickPrev={handlePreviousHoleButtonClicked}/>
                 </>
             }
           
