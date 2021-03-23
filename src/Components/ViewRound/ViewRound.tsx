@@ -6,12 +6,13 @@ import HitMarker from './HitMarker'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: theme.spacing(8),
+        marginTop: theme.spacing(6),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         width: '100%',
         margin: 'auto',
+        paddingBottom: '2vh',
         backgroundColor: theme.palette.success.light,
     },
     holenumbers: {
@@ -27,6 +28,24 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-evenly',
     },
     holenumbercontainer: {
+        height: '4vh',
+        width: '2vw',
+        border: '1px solid black',
+        padding: '5px 5px 5px 5px',
+        textAlign: 'center',
+    },
+    iconcontainer: {
+        height: '4vh',
+        width: '2vw',
+        border: '1px solid black',
+        padding: '5px 5px 5px 5px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    scorecardinfo: {
+        height: '4vh',
+        width: '5vw',
         border: '1px solid black',
         padding: '5px 5px 5px 5px',
         textAlign: 'center',
@@ -51,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
     enterpar: {
         fontSize: '22px',
         textAlign: 'center',
-        textDecoration: 'italics',
     },
     input: {
         '&:invalid': {
@@ -81,31 +99,31 @@ const ViewRound: React.FC = () => {
             </Typography>
             <Box className={styling.holenumbers}>
                 <Box className={styling.holepaircontainer}>
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6" className={styling.holetext}>
                             Hole
                         </Typography>
                     </Box>
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">Par</Typography>
                     </Box>
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">Strokes</Typography>
                     </Box>
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">Putts</Typography>
                     </Box>
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">Fairway</Typography>
                     </Box>
 
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">GIR</Typography>
                     </Box>
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">Penalties</Typography>
                     </Box>
-                    <Box className={styling.holenumbercontainer}>
+                    <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">Bunkers</Typography>
                     </Box>
                 </Box>
@@ -142,17 +160,14 @@ const ViewRound: React.FC = () => {
                                     </Typography>
                                 </Box>
                                 {number !== "3" ?
-                                <Box className={styling.holenumbercontainer}>
+                                <Box className={styling.iconcontainer}>
                                         <HitMarker hitvalue={Fairways[index]}/>
                                 </Box>
                                 :
                                 <Box className={styling.holenumbercontainer}>
-                                    <Typography variant="h6">
-                                          00
-                                    </Typography>
                                 </Box>
                                 }
-                                <Box className={styling.holenumbercontainer}>
+                                <Box className={styling.iconcontainer}>
                                         <HitMarker hitvalue={GIRs[index]}/>
                                 </Box>
                                 <Box className={styling.holenumbercontainer}>
