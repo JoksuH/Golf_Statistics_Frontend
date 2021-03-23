@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/core/styles'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 
 const theme = createMuiTheme({
     typography: {
@@ -10,11 +11,18 @@ const theme = createMuiTheme({
     },
 })
 
+const client = new ApolloClient({
+    uri: 'http://localhost:4000/graphql',
+    cache: new InMemoryCache(),
+})
+
 ReactDOM.render(
     <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <App />
-        </ThemeProvider>
+        <ApolloProvider client={client}>
+            <ThemeProvider theme={theme}>
+                <App />
+            </ThemeProvider>
+        </ApolloProvider>
     </React.StrictMode>,
     document.getElementById('root')
 )

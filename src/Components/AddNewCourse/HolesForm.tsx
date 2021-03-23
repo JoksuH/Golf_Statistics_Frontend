@@ -29,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
     holetext: {
         paddingLeft: '10px',
-        margin: 'auto'
+        margin: 'auto',
+        fontSize: '22px'
     },
     holepartext: {
         paddingLeft: '5px',
@@ -55,10 +56,13 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface sentProps {
-    onChanged: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onParChanged: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onDistanceChangedWhite: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onDistanceChangedYellow: (event: React.ChangeEvent<HTMLInputElement>) => void
+
 }
 
-const HolesForm: React.FC<sentProps> = ({onChanged}) => {
+const HolesForm: React.FC<sentProps> = ({onParChanged, onDistanceChangedWhite, onDistanceChangedYellow}) => {
     const styling = useStyles()
 
     let holenumbers: string[] = []
@@ -68,18 +72,36 @@ const HolesForm: React.FC<sentProps> = ({onChanged}) => {
     return (
         <Box className={styling.root}>
             <Typography variant="h4" className={styling.enterpar}>
-                Please enter the par of each hole
+                Please enter the par and distance of each hole
             </Typography>
             <Box className={styling.holenumbers}>
+            <Box className={styling.holepaircontainer}>
+                                <Typography variant="h6" className={styling.holetext}>Hole</Typography>
+                            <Box className={styling.textfield}>
+                                <Typography variant="h6">Par</Typography>
+                            </Box>
+                            <Box className={styling.textfield}>
+                                <Typography variant="h6">Distance White</Typography>
+                            </Box>
+                            <Box className={styling.textfield}>
+                                <Typography variant="h6">Distance Yellow</Typography>
+                            </Box>
+
+                        </Box>
                 {holenumbers.map((number) => {
                     return (
                         <Box className={styling.holepaircontainer} key={number}>
-                                <Typography variant="h6" className={styling.holetext}>Hole</Typography>
                             <Box className={styling.holenumbercontainer}>
                                 <Typography variant="h6">{number}</Typography>
                             </Box>
                             <Box className={styling.textfield}>
-                                <TextField size="small" id={number} variant='outlined' inputProps={{maxLength: 1, pattern: '[0-7]',  style: { textAlign: 'center', fontSize: '22px' }}} onChange={onChanged}/>
+                                <TextField size="small" id={number} variant='outlined' inputProps={{maxLength: 1, pattern: '[0-7]',  style: { textAlign: 'center', fontSize: '22px' }}} onChange={onParChanged}/>
+                            </Box>
+                            <Box className={styling.textfield}>
+                                <TextField size="small" id={number} variant='outlined' inputProps={{maxLength: 3, pattern: '[0-9]',  style: { textAlign: 'center', fontSize: '22px' }}} onChange={onDistanceChangedWhite}/>
+                            </Box>
+                            <Box className={styling.textfield}>
+                                <TextField size="small" id={number} variant='outlined' inputProps={{maxLength: 3, pattern: '[0-9]',  style: { textAlign: 'center', fontSize: '22px' }}} onChange={onDistanceChangedYellow}/>
                             </Box>
                         </Box>
                     )
