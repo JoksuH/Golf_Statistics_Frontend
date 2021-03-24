@@ -11,6 +11,7 @@ import CallMadeIcon from '@material-ui/icons/CallMade'
 import CallReceivedIcon from '@material-ui/icons/CallReceived'
 import CallMissedIcon from '@material-ui/icons/CallMissed'
 import TrendingDownIcon from '@material-ui/icons/TrendingDown'
+import ClearIcon from '@material-ui/icons/Clear'
 
 interface props {
     hitvalue: string,
@@ -41,6 +42,8 @@ const HitMarker: React.FC<props> = ({hitvalue}) => {
             {hitvalue === "right short" && <TrendingDownIcon  color="secondary"/>}
             {hitvalue === "left short" && <CallReceivedIcon  color="secondary"/>}
             {hitvalue === "left long" && <CallMissedIcon  color="secondary"/>}
+            {hitvalue === "NONE" && <ClearIcon color="secondary" />}
+
 
         </Box>
     )
