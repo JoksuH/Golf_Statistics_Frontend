@@ -10,6 +10,7 @@ import Checkbox from '@material-ui/core/Checkbox'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
+import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 
 interface props {
     HoleNumber: number
@@ -294,7 +295,10 @@ const EnterHoleScore: React.FC<props> = ({HoleNumber, Par, onSave, onClickPrev})
                 </Box>
                 <Box className={styling.row}>
                 <Button variant="contained" color="secondary" onClick={onClickPrev}>Previous Hole</Button>
+                {HoleNumber === 18 ? <Button variant="contained" color="primary" onClick={handleNextHoleClicked} startIcon={<CloudUploadIcon />}>Save Round</Button> 
+                :
                 <Button variant="contained" color="secondary" onClick={handleNextHoleClicked}>Next Hole</Button>
+            }
                 </Box>
 
         </Box>

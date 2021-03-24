@@ -3,10 +3,12 @@ import NewRoundCourseSelection from './NewRoundCourseSelection'
 import CourseBox from './CourseBox'
 import EnterHoleScore from './EnterHoleScore'
 import ViewRound from './../ViewRound/ViewRound'
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useMutation } from '@apollo/client'
+
 
 
 interface CourseData {
+    _id: string
     pars: number[],
     holedistances_white: number[],
     holedistances_yellow: number[],
@@ -23,12 +25,21 @@ interface CourseData {
   const GET_COURSE_INFO = gql`
     query getCourseData($name: String) {
         courseOne (filter: {name: $name}) {
+            _id
             pars
             holedistances_white
             holedistances_yellow
       }
     }
   `
+  const CREATE_ROUND = gql`
+ mutation roundCreateOnenew ($coursename: MongoID!, $holescores: [String]!, $putts: [String]!, $fir: [String]! , $gir: [String]!, $penalties: [String]!, $greenbunkers: [String]!, $fwbunkers: [String]!) {
+    roundCreateOne(record: {coursename: $coursename, holescores: $holescores, putts: $putts, fir: $fir, gir: $gir, penalties: $penalties, greenbunkers: $greenbunkers, fwbunkers: $fwbunkers})
+           {
+             recordId
+        }
+    }
+`
 
 
 const NewRoundMain: React.FC = () => {
@@ -43,6 +54,8 @@ const NewRoundMain: React.FC = () => {
     const [GreenBunkers, SetGreenBunkers] = useState<string[] >([])
     const [HoleNumber, SetHoleNumber] = useState<number>(1)
     const {data, loading} = useQuery<data, fetchVariables>(GET_COURSE_INFO, {variables: {name: SelectedCourse}})
+    const [addRound,] =  useMutation(CREATE_ROUND)
+
 
     const handleNextHoleButtonClicked = (data: string[]): void => {
         if (HoleNumber < 18) {
@@ -122,8 +135,8 @@ const NewRoundMain: React.FC = () => {
         
     }
 
-
     }
+    else SaveRound()
 
     }
 
@@ -142,6 +155,12 @@ const NewRoundMain: React.FC = () => {
     const handleCourseChange = (): void => {
         SetSelectedCourse("")
     }
+
+    const SaveRound = (): void => {
+
+        addRound({variables:  {coursename: data?.courseOne?._id, holescores: ScoreCard, putts: Putts, fir: FIR, gir: GIR, penalties: Penalties, greenbunkers: GreenBunkers, fwbunkers: FairwayBunkers}})
+    }
+
     return (
         <div>
             {(SelectedCourse == "" && <NewRoundCourseSelection onClick={handleCourseSelection}/>) }
