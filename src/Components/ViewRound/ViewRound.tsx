@@ -6,6 +6,7 @@ import HitMarker from './HitMarker'
 
 interface props {
     Coursename: string
+    Pars: number[]
     Strokes: string[]
     Putts: string[]
     Fairways: string[]
@@ -92,14 +93,14 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center',
     },
     scorebogey: {
-            height: '3vh',
-            width: '2vw',
-            border: '1px solid black',
-            padding: '5px 5px 5px 5px',
-            backgroundColor: 'darkblue',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+        height: '3vh',
+        width: '2vw',
+        border: '1px solid black',
+        padding: '5px 5px 5px 5px',
+        backgroundColor: 'darkblue',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     scorebirdie: {
         height: '3vh',
@@ -116,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px',
         height: '3vh',
         width: '1vw',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     input: {
         '&:invalid': {
@@ -127,6 +128,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewRound: React.FC<props> = ({
     Coursename,
+    Pars,
     Strokes,
     Putts,
     Fairways,
@@ -135,38 +137,8 @@ const ViewRound: React.FC<props> = ({
     FWBunkers,
     GreenBunkers,
 }) => {
-    //Pars need to be gotten from main
-    const Pars: string[] = [
-        '5',
-        '3',
-        '4',
-        '4',
-        '5',
-        '4',
-        '4',
-        '3',
-        '5',
-        '4',
-        '4',
-        '3',
-        '5',
-        '3',
-        '4',
-        '4',
-        '4',
-        '5',
-    ]
-
-    /*
-    const Strokes: string[] = ['5', '4', '3', '2', '5', '4', '6', '3', '5','5', '4', '3', '2', '5', '4', '6', '3', '5']
-    const Putts: string[] = ['2', '2', '3', '2', '2', '1', '1', '2', '1','2', '2', '1', '2', '3', '1', '2', '3', '2']
-    const Fairways: string[] = ['hit', "null", 'hit', 'hit', 'left', 'right', 'hit', 'null', 'left','right', 'hit', 'null', 'right', 'null', 'left', 'right', 'hit', 'right']
-    const GIRs: string[] = ['hit', "left long", 'hit', 'hit', 'right short', 'right long', 'hit', 'left', 'left','right', 'hit', 'left short', 'right', 'hit', 'left', 'right', 'hit', 'right']
-    const Penalties: string[] = ['0', '0', '0', '0', '0', '1', '0', '0', '1','0', '0', '0', '0', '0', '1', '0', '0', '0']
-    const FWBunkers: string[] = ['0', '0', '0', '1', '0', '0', '0', '1', '0','0', '0', '1', '0', '0', '1', '0', '2', '0']
-    const GreenBunkers: string[] = ['0', '0', '0', '1', '0', '0', '0', '1', '0','0', '0', '1', '0', '0', '1', '0', '2', '0']
-
-*/
+    
+    const stringPars: string[] = Pars.map((par) => par.toString())
 
     const styling = useStyles()
 
@@ -208,7 +180,7 @@ const ViewRound: React.FC<props> = ({
                         <Typography variant="h6">Fairway Bunkers</Typography>
                     </Box>
                 </Box>
-                {Pars.map((number, index) => {
+                {stringPars.map((number, index) => {
                     return (
                         <Box
                             className={styling.holepaircontainer}
@@ -227,29 +199,40 @@ const ViewRound: React.FC<props> = ({
                                 </Box>
                             </Box>
                             <Box className={styling.holepaircontainer}>
-                                {Strokes[index] > number && 
-                                <Box className={styling.scorebogey}>
-                                    <Typography variant="h5" style={{color:'white'}}>
-                                        {Strokes[index]}
-                                    </Typography>
-                                </Box>
-                            }
-                            {Strokes[index] < number && 
-                                <Box className={styling.scorebirdie}>
-                                    <Typography variant="h5" style={{color:'white'}}>
-                                        {Strokes[index]}
-                                    </Typography>
-                                </Box>
-                            }
-                              {Strokes[index] === number && 
+                                {!Strokes[index] && (
+                                    <Box
+                                        className={styling.iconcontainer}
+                                    ></Box>
+                                )}
+                                {Strokes[index] > number && (
+                                    <Box className={styling.scorebogey}>
+                                        <Typography
+                                            variant="h5"
+                                            style={{ color: 'white' }}
+                                        >
+                                            {Strokes[index]}
+                                        </Typography>
+                                    </Box>
+                                )}
+                                {Strokes[index] < number && (
+                                    <Box className={styling.scorebirdie}>
+                                        <Typography
+                                            variant="h5"
+                                            style={{ color: 'white' }}
+                                        >
+                                            {Strokes[index]}
+                                        </Typography>
+                                    </Box>
+                                )}
+                                {Strokes[index] === number && (
+                                    <Box className={styling.iconcontainer}>
+                                        <Typography variant="h5">
+                                            {Strokes[index]}
+                                        </Typography>
+                                    </Box>
+                                )}
                                 <Box className={styling.iconcontainer}>
                                     <Typography variant="h5">
-                                        {Strokes[index]}
-                                    </Typography>
-                                </Box>
-                            }
-                                <Box className={styling.scorecontainer}>
-                                    <Typography variant="h6">
                                         {Putts[index]}
                                     </Typography>
                                 </Box>

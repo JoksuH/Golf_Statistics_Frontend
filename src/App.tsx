@@ -11,7 +11,7 @@ const App = () => {
     return (
         <div style={{backgroundImage: `url(${bgImg})`, backgroundRepeat: "no-repeat", width: '100vw', height:'100vh'  }}>
             <NavBar />
-            <AddNewCourse />
+            <NewRoundMain />
         </div>
     )
 }

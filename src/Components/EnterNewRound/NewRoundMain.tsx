@@ -3,11 +3,37 @@ import NewRoundCourseSelection from './NewRoundCourseSelection'
 import CourseBox from './CourseBox'
 import EnterHoleScore from './EnterHoleScore'
 import ViewRound from './../ViewRound/ViewRound'
+import { gql, useQuery } from '@apollo/client';
+
+
+interface CourseData {
+    pars: number[],
+    holedistances_white: number[],
+    holedistances_yellow: number[],
+  }
+  
+  interface data {
+    courseOne: {[key:string] : number[]}
+  }
+
+  interface fetchVariables {
+    name: string
+  }
+
+  const GET_COURSE_INFO = gql`
+    query getCourseData($name: String) {
+        courseOne (filter: {name: $name}) {
+            pars
+            holedistances_white
+            holedistances_yellow
+      }
+    }
+  `
 
 
 const NewRoundMain: React.FC = () => {
 
-    const [SelectedCourse, SetSelectedCourse] = useState<string | undefined>(undefined)
+    const [SelectedCourse, SetSelectedCourse] = useState<string>("")
     const [ScoreCard, SetScoreCard] = useState<string[]>([])
     const [Putts, SetPutts] = useState<string[]>([])
     const [FIR, SetFIR] = useState<string[]>([])
@@ -16,7 +42,7 @@ const NewRoundMain: React.FC = () => {
     const [FairwayBunkers, SetFairwayBunkers] = useState<string[]>([])
     const [GreenBunkers, SetGreenBunkers] = useState<string[] >([])
     const [HoleNumber, SetHoleNumber] = useState<number>(1)
-
+    const {data, loading} = useQuery<data, fetchVariables>(GET_COURSE_INFO, {variables: {name: SelectedCourse}})
 
     const handleNextHoleButtonClicked = (data: string[]): void => {
         if (HoleNumber < 18) {
@@ -32,35 +58,69 @@ const NewRoundMain: React.FC = () => {
         (GreenBunkers)
         */
 
+        if (HoleNumber === ScoreCard.length+1)
+        {
+            let holderArr = ScoreCard
+             holderArr.push(data[0])
+             SetScoreCard(holderArr)
+             
+            holderArr = Putts
+            holderArr.push(data[1])
+            SetPutts(holderArr)
+    
+            holderArr = FIR
+            holderArr.push(data[2])
+            SetFIR(holderArr)
+    
+            holderArr = GIR
+            holderArr.push(data[3])
+            SetGIR(holderArr)
+    
+            holderArr = Penalties
+            holderArr.push(data[4])
+            SetPenalties(holderArr)
+    
+            holderArr = FairwayBunkers
+            holderArr.push(data[5])
+            SetFairwayBunkers(holderArr)
+    
+            holderArr = GreenBunkers
+            holderArr.push(data[6])
+            SetGreenBunkers(holderArr)
+    
+        } else {
+
         let holderArr = ScoreCard
-        holderArr.push(data[0])
+        holderArr.splice(HoleNumber-1, 1, data[0])
         SetScoreCard(holderArr)
 
         holderArr = Putts
-        holderArr.push(data[1])
+        holderArr.splice(HoleNumber-1, 1, data[1])
         SetPutts(holderArr)
 
         holderArr = FIR
-        holderArr.push(data[2])
+        holderArr.splice(HoleNumber-1, 1, data[2])
         SetFIR(holderArr)
 
         holderArr = GIR
-        holderArr.push(data[3])
+        holderArr.splice(HoleNumber-1, 1, data[3])
         SetGIR(holderArr)
 
         holderArr = Penalties
-        holderArr.push(data[4])
+        holderArr.splice(HoleNumber-1, 1, data[4])
         SetPenalties(holderArr)
 
         holderArr = FairwayBunkers
-        holderArr.push(data[5])
+        holderArr.splice(HoleNumber-1, 1, data[5])
         SetFairwayBunkers(holderArr)
 
         holderArr = GreenBunkers
-        holderArr.push(data[6])
+        holderArr.splice(HoleNumber-1, 1, data[6])
         SetGreenBunkers(holderArr)
 
-        console.log(GIR)
+        SetHoleNumber(ScoreCard.length+1)
+        
+    }
 
 
     }
@@ -79,18 +139,17 @@ const NewRoundMain: React.FC = () => {
         SetHoleNumber(1)
     }
 
-    const handleCourseChange = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
-        SetSelectedCourse(undefined)
+    const handleCourseChange = (): void => {
+        SetSelectedCourse("")
     }
     return (
         <div>
-            {!SelectedCourse ? 
-                <NewRoundCourseSelection onClick={handleCourseSelection}/>
-                :
+            {(SelectedCourse == "" && <NewRoundCourseSelection onClick={handleCourseSelection}/>) }
+            {(data !== undefined && SelectedCourse !== "") &&
                 <>                
                 <CourseBox name={SelectedCourse} onClick={handleCourseChange} />
-                <ViewRound Coursename={SelectedCourse}Strokes={ScoreCard} Putts={Putts} Fairways={FIR} GIRs={GIR} Penalties={Penalties} FWBunkers={FairwayBunkers} GreenBunkers={GreenBunkers}/>
-                <EnterHoleScore HoleNumber={HoleNumber} Par={4} onSave={handleNextHoleButtonClicked} onClickPrev={handlePreviousHoleButtonClicked}/>
+                <ViewRound Coursename={SelectedCourse} Pars={data?.courseOne?.pars} Strokes={ScoreCard} Putts={Putts} Fairways={FIR} GIRs={GIR} Penalties={Penalties} FWBunkers={FairwayBunkers} GreenBunkers={GreenBunkers}/>
+                <EnterHoleScore HoleNumber={HoleNumber} Par={data?.courseOne?.pars[HoleNumber-1]} onSave={handleNextHoleButtonClicked} onClickPrev={handlePreviousHoleButtonClicked}/>
                 </>
             }
           

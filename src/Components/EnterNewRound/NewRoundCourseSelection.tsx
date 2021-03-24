@@ -1,36 +1,41 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import CourseBox from './CourseBox'
+import { gql, useQuery } from '@apollo/client';
 
 interface props {
     onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
     }
+
+    interface CourseData {
+        _id: string,
+        name: string
+      }
+      
+      interface data {
+          courseMany: CourseData[]
+      }
     
+const GET_COURSE_NAMES = gql`
+    query getCourseNames {
+        courseMany {
+            _id
+            name
+      }
+    }
+  `
 
 const NewRoundCourseSelection: React.FC<props> = ({onClick}) => {
 
-    const [CourseList, SetCourseList] = useState<string[]>([])
-
-    useEffect(() => {
-
-        //fetch courselist
-        let courselistTest = ['Espoo Ringside Golf', 'Vuosaari Golf', 'Kerigolf', 'Nevas Golf', 'SHG Golf Lakisto']
-        SetCourseList(courselistTest)
-
-
-
-
-    }, [])
-
+    const { loading, data } = useQuery<data>(GET_COURSE_NAMES)
 
     return (
         <div>
-            {CourseList && CourseList.map(course => {
-                return (<CourseBox name={course} key={course} onClick={onClick}/>)
+            {data && data.courseMany.map(course => {
+                return (<CourseBox name={course.name} key={course._id} onClick={onClick}/>)
             })
-            
-            
-            }
-          
+        }
+            {loading && <p>Loading Courselist</p>}
+                      
         </div>
     )
 }
