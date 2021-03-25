@@ -113,11 +113,14 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     scoreeagle: {
-        border: '1px solid black',
-        borderRadius: '20px',
         height: '3vh',
-        width: '1vw',
-        textAlign: 'center',
+        width: '2vw',
+        border: '1px solid black',
+        backgroundColor: 'orange',
+        padding: '5px 5px 5px 5px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     input: {
         '&:invalid': {
@@ -194,7 +197,7 @@ const ViewRound: React.FC<props> = ({
                         <Typography variant="h6">Fairway Bunkers</Typography>
                     </Box>
                 </Box>
-                {stringPars.map((number, index) => {
+                {Pars.map((number, index) => {
                     return (
                         <Box
                             className={styling.holepaircontainer}
@@ -218,7 +221,7 @@ const ViewRound: React.FC<props> = ({
                                         className={styling.iconcontainer}
                                     ></Box>
                                 )}
-                                {Strokes[index] > number && (
+                                {parseInt(Strokes[index]) > number && (
                                     <Box className={styling.scorebogey}>
                                         <Typography
                                             variant="h5"
@@ -228,7 +231,7 @@ const ViewRound: React.FC<props> = ({
                                         </Typography>
                                     </Box>
                                 )}
-                                {Strokes[index] < number && (
+                                {parseInt(Strokes[index]) === number-1 && (
                                     <Box className={styling.scorebirdie}>
                                         <Typography
                                             variant="h5"
@@ -238,7 +241,16 @@ const ViewRound: React.FC<props> = ({
                                         </Typography>
                                     </Box>
                                 )}
-                                {Strokes[index] === number && (
+                                {parseInt(Strokes[index]) === number-2 && (
+                                    <Box className={styling.scoreeagle}>
+                                        <Typography
+                                            variant="h5"
+                                        >
+                                            {Strokes[index]}
+                                        </Typography>
+                                    </Box>
+                                )}
+                                {parseInt(Strokes[index]) === number && (
                                     <Box className={styling.iconcontainer}>
                                         <Typography variant="h5">
                                             {Strokes[index]}
@@ -250,7 +262,7 @@ const ViewRound: React.FC<props> = ({
                                         {Putts[index]}
                                     </Typography>
                                 </Box>
-                                {number !== '3' ? (
+                                {number !== 3 ? (
                                     <Box className={styling.iconcontainer}>
                                         <HitMarker hitvalue={Fairways[index]} />
                                     </Box>
