@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import ListofRounds from './ListofRounds'
 import ViewRound from './../ViewRound/ViewRound'
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: theme.spacing(6),
@@ -20,15 +19,18 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface roundData {
-    data: { [key: string]: string[]; } | { [key: string]: { [key: string]: string | number[]; }; }
+    data:
+        | { [key: string]: string[] }
+        | { [key: string]: { [key: string]: string | number[] } }
 }
 
 const PastRounds: React.FC = () => {
-
     const styling = useStyles()
 
-    const [SelectedRound, SetSelectedRound] = useState<any|undefined>(undefined)
-    
+    const [SelectedRound, SetSelectedRound] = useState<any | undefined>(
+        undefined
+    )
+
     const handleRoundSelect = (data: any): void => {
         console.log(data.course.name)
         SetSelectedRound(data)
@@ -40,23 +42,31 @@ const PastRounds: React.FC = () => {
 
     return (
         <Box className={styling.root}>
-            {SelectedRound === undefined ? 
-        <ListofRounds onClick={handleRoundSelect}/>
-        :
-        <>
-        <ViewRound Coursename={SelectedRound.course.name}
-        Pars={SelectedRound.course.pars}
-        Strokes={SelectedRound.holescores}
-        Putts={SelectedRound.putts}
-        Fairways={SelectedRound.fir}
-        GIRs={SelectedRound.gir}
-        Penalties={SelectedRound.penalties}
-        FWBunkers={SelectedRound.fwbunkers}
-        GreenBunkers={SelectedRound.greenbunkers}/>
-        <Button variant="outlined" style={{width: '20vw', margin: 'auto'}} onClick={resetSelection}>Go Back</Button>
-        </>
-        }
-        </Box>  
+            {SelectedRound === undefined ? (
+                <ListofRounds onClick={handleRoundSelect} />
+            ) : (
+                <>
+                    <ViewRound
+                        Coursename={SelectedRound.course.name}
+                        Pars={SelectedRound.course.pars}
+                        Strokes={SelectedRound.holescores}
+                        Putts={SelectedRound.putts}
+                        Fairways={SelectedRound.fir}
+                        GIRs={SelectedRound.gir}
+                        Penalties={SelectedRound.penalties}
+                        FWBunkers={SelectedRound.fwbunkers}
+                        GreenBunkers={SelectedRound.greenbunkers}
+                    />
+                    <Button
+                        variant="outlined"
+                        style={{ width: '20vw', margin: 'auto' }}
+                        onClick={resetSelection}
+                    >
+                        Go Back
+                    </Button>
+                </>
+            )}
+        </Box>
     )
 }
 

@@ -140,20 +140,18 @@ const ViewRound: React.FC<props> = ({
     FWBunkers,
     GreenBunkers,
 }) => {
-    
     const stringPars: string[] = Pars.map((par) => par.toString())
 
     const styling = useStyles()
 
-    const countReducer = (accumulator: string, curVal: string)  => (Number(accumulator) + Number(curVal)).toString()
+    const countReducer = (accumulator: string, curVal: string) =>
+        (Number(accumulator) + Number(curVal)).toString()
 
-    const hitCounter = (arr: string[]): string  => {
-
+    const hitCounter = (arr: string[]): string => {
         let count = 0
 
-        arr.forEach(element => {
-            if (element === 'hit')
-            count += 1
+        arr.forEach((element) => {
+            if (element === 'hit') count += 1
         })
 
         return count.toString()
@@ -231,7 +229,7 @@ const ViewRound: React.FC<props> = ({
                                         </Typography>
                                     </Box>
                                 )}
-                                {parseInt(Strokes[index]) === number-1 && (
+                                {parseInt(Strokes[index]) === number - 1 && (
                                     <Box className={styling.scorebirdie}>
                                         <Typography
                                             variant="h5"
@@ -241,11 +239,9 @@ const ViewRound: React.FC<props> = ({
                                         </Typography>
                                     </Box>
                                 )}
-                                {parseInt(Strokes[index]) === number-2 && (
+                                {parseInt(Strokes[index]) === number - 2 && (
                                     <Box className={styling.scoreeagle}>
-                                        <Typography
-                                            variant="h5"
-                                        >
+                                        <Typography variant="h5">
                                             {Strokes[index]}
                                         </Typography>
                                     </Box>
@@ -295,35 +291,50 @@ const ViewRound: React.FC<props> = ({
                 })}
                 <Box className={styling.holepaircontainer}>
                     <Box className={styling.scorecardinfo}>
-                    <Typography variant="h6">Total</Typography>
+                        <Typography variant="h6">Total</Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{stringPars.reduce(countReducer, "0")}</Typography>
+                        <Typography variant="h6">
+                            {stringPars.reduce(countReducer, '0')}
+                        </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{Strokes.reduce(countReducer, "0")}</Typography>
+                        <Typography variant="h6">
+                            {Strokes.reduce(countReducer, '0')}
+                        </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{Putts.reduce(countReducer, "0")}</Typography>
+                        <Typography variant="h6">
+                            {Putts.reduce(countReducer, '0')}
+                        </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{hitCounter(Fairways)}</Typography>
+                        <Typography variant="h6">
+                            {hitCounter(Fairways)}
+                        </Typography>
                     </Box>
 
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{hitCounter(GIRs)} / {GIRs.length} </Typography>
+                        <Typography variant="h6">
+                            {hitCounter(GIRs)} / {GIRs.length}{' '}
+                        </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{Penalties.reduce(countReducer, "0")}</Typography>
+                        <Typography variant="h6">
+                            {Penalties.reduce(countReducer, '0')}
+                        </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{GreenBunkers.reduce(countReducer, "0")}</Typography>
+                        <Typography variant="h6">
+                            {GreenBunkers.reduce(countReducer, '0')}
+                        </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
-                        <Typography variant="h6">{FWBunkers.reduce(countReducer, "0")}</Typography>
+                        <Typography variant="h6">
+                            {FWBunkers.reduce(countReducer, '0')}
+                        </Typography>
+                    </Box>
                 </Box>
-                </Box>
-
             </Box>
         </Box>
     )

@@ -8,60 +8,86 @@ interface props {
     onClick: (data: any) => void
 }
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        margin: 'auto',
-        height: '40vh'
+        margin: 'auto',        
     },
 }))
 
-interface data {
-    roundMany: {[key:string]: string[]}[] | {[key:string]: {[key:string]: string| number[] }}[]
-}
-
-const GET_LATEST_ROUNDS = gql
-`query {
-    roundMany(limit: 10) {
-      _id
-      holescores
-      putts
-      fir
-      gir
-      approachdistance
-      penalties
-      greenbunkers
-      fwbunkers
-      course {
-        name
-        pars
-      }
-      }
+interface Query {
+    __typename: string
+    roundMany: dataFields[]
   }
+
+  interface dataFields {
+    __typename: string
+    _id: string
+    holescores: string[]
+    putts: string[]
+    fir: string[]
+    gir: string[]
+    approachdistance: string[]
+    penalties: string[]
+    greenbunkers: string[]
+    fwbunkers: string[]
+  }
+
+
+const GET_LATEST_ROUNDS = gql`
+    query {
+        roundMany(limit: 10) {
+            _id
+            holescores
+            putts
+            fir
+            gir
+            approachdistance
+            penalties
+            greenbunkers
+            fwbunkers
+            date
+            course {
+                name
+                pars
+            }
+        }
+    }
 `
 
-const ListofRounds: React.FC<props> = ({onClick}) => {
-
-    const { data, loading } = useQuery<data>(GET_LATEST_ROUNDS)
+const ListofRounds: React.FC<props> = ({ onClick }) => {
+    const { data } = useQuery<Query>(GET_LATEST_ROUNDS)
 
     const styling = useStyles()
 
     console.log(data)
 
-    const passCourseData = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    const passCourseData = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ): void => {
         const input = event.target as HTMLElement
-        if (input?.parentElement?.id !== "" && input?.parentElement?.id !== undefined)
+        if (
+            input?.parentElement?.id !== '' &&
+            input?.parentElement?.id !== undefined
+        )
             onClick(data?.roundMany[parseInt(input.parentElement.id)])
     }
 
     return (
         <Box className={styling.root}>
-            {data !== undefined && data?.roundMany?.map((element: any, index: number) => {
-                return (<RoundListItem name={element.course.name} score={element['holescores']} onClick={passCourseData} index={index}/> )
-            })
-}
+            {data !== undefined &&
+                data?.roundMany?.map((element: any, index: number) => {
+                    return (
+                        <RoundListItem
+                            name={element.course.name}
+                            score={element.holescores}
+                            date={element.date}
+                            onClick={passCourseData}
+                            index={index}
+                        />
+                    )
+                })}
         </Box>
     )
 }

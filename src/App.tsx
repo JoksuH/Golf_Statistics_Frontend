@@ -5,6 +5,7 @@ import AddNewCourse from './Components/AddNewCourse/AddNewCourse'
 import NewRoundMain from './Components/EnterNewRound/NewRoundMain'
 import bgImg from './bgimg.jpg'
 import PastRounds from './Components/PastRounds/PastRounds'
+import StatsPage from './Components/Stats/StatsMain'
 
 const App = () => {
     return (
@@ -17,7 +18,7 @@ const App = () => {
             }}
         >
             <NavBar />
-            <PastRounds />{' '}
+            <StatsPage />
         </div>
     )
 }
