@@ -6,4 +6,16 @@ const sumScores = (data: string[]): string => {
     return sum
 }
 
-export { sumScores }
+const hitCounter = (arr: string[]): string => {
+    let count = 0
+
+    arr.forEach((element) => {
+        if (element === 'hit') count += 1
+    })
+
+    return count.toString()
+}
+
+
+
+export { sumScores, hitCounter }

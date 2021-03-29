@@ -5,12 +5,18 @@ import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery } from '@apollo/client'
 import LineChart from './LineChart'
 import BarChart from './BarChart'
-import {sumScores} from './../../Utils/Helpers'
+import {sumScores, hitCounter} from './../../Utils/Helpers'
+import StatTabs from './Tabs'
 
 
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',        
+    },
+    row: {
         display: 'flex',
         flexDirection: 'row',
         margin: 'auto',        
@@ -64,6 +70,7 @@ const StatsPage = () => {
     const [Penalties, SetPenalties] = useState<string[]>([])
     const [FairwayBunkers, SetFairwayBunkers] = useState<string[]>([])
     const [GreenBunkers, SetGreenBunkers] = useState<string[]>([])
+    const [ActivePage, SetActivePage] = useState<string>("Main")
 
     const { data, loading } = useQuery<Query>(GET_LATEST_ROUNDS)
 
@@ -83,8 +90,8 @@ const StatsPage = () => {
         data?.roundMany?.forEach(value => {
             holescores.push(sumScores(value.holescores))
             putts.push(sumScores(value.putts))
-            fIR = fIR.concat(value.fir)
-            gIR = gIR.concat(value.gir)
+            fIR.push(hitCounter(value.fir))
+            gIR.push(hitCounter(value.gir))
             approachDistance = approachDistance.concat(value.approachdistance)
             penalties.push(sumScores(value.penalties))
             fairwayBunkers.push(sumScores(value.greenbunkers))
@@ -102,16 +109,33 @@ const StatsPage = () => {
 
     }, [data])
 
+    const handleTabsChange = (event: React.ChangeEvent<{}>): void => {
+
+        const input = event.target as HTMLElement
+        SetActivePage(input.innerHTML)
+
+    }
+
     return (
         <Box className={styling.root}>
+            <StatTabs activePage={ActivePage} onChange={handleTabsChange}/>
             {loading && <p>Loading data, please wait a bit...</p>}
             {ScoreCard && 
             <>
-            <LineChart dataArray = {ScoreCard} title="Shots (7 round moving average)" average={true} min={65} max={100}/>
-            <BarChart dataArray = {ScoreCard} title="Strokes per Round"/>
-            <LineChart dataArray = {Putts} title="Putts (7 round moving average)" average={true} min={25} max={45}/>
-            <BarChart dataArray = {Putts} title="Putts per Round"/>
+            <Box className={styling.row}>
 
+            <LineChart dataArray = {ScoreCard} title="Shots (7 round moving average)" average={true} min={65} max={100}/>
+            <LineChart dataArray = {Putts} title="Putts (7 round moving average)" average={true} min={25} max={45}/>
+            <LineChart dataArray = {GIR} title="FIR (7 round moving average)" average={true} min={0} max={18}/>
+            <LineChart dataArray = {FIR} title="GIR (7 round moving average)" average={true} min={0} max={14}/>
+            </Box>
+            <Box className={styling.row}>
+
+            <LineChart dataArray = {Penalties} title="Penalties (7 round moving average)" average={true} min={0} max={15}/>
+            <LineChart dataArray = {FairwayBunkers} title="Fairway Bunkers (7 round moving average)" average={true} min={0} max={15}/>
+            <LineChart dataArray = {GreenBunkers} title="Green Bunkers (7 round moving average)" average={true} min={0} max={15}/>
+            <LineChart dataArray = {ApproachDistance} title="Approach Distance (7 round moving average)" average={true} min={0} max={200}/>
+            </Box>
             </>
             }
 
@@ -123,3 +147,9 @@ const StatsPage = () => {
 export default StatsPage
 
 // Putts per Gir
+// Avg gir hit percentage per meter of approach distance
+// split approach distance into groups (25 meters?) and see progression of greens hit
+// Gir misses
+// fir misses
+// When bunker how affects score or putts in greenside bunker
+// scoring from different aprroac distances

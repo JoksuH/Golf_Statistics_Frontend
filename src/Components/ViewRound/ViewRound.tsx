@@ -3,6 +3,8 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import HitMarker from './HitMarker'
+import {sumScores, hitCounter} from './../../Utils/Helpers'
+
 
 interface props {
     Coursename: string
@@ -144,19 +146,6 @@ const ViewRound: React.FC<props> = ({
 
     const styling = useStyles()
 
-    const countReducer = (accumulator: string, curVal: string) =>
-        (Number(accumulator) + Number(curVal)).toString()
-
-    const hitCounter = (arr: string[]): string => {
-        let count = 0
-
-        arr.forEach((element) => {
-            if (element === 'hit') count += 1
-        })
-
-        return count.toString()
-    }
-
     return (
         <Box className={styling.root}>
             <Typography variant="h4" className={styling.enterpar}>
@@ -295,17 +284,17 @@ const ViewRound: React.FC<props> = ({
                     </Box>
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {stringPars.reduce(countReducer, '0')}
+                            {sumScores(stringPars)}
                         </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {Strokes.reduce(countReducer, '0')}
+                            {sumScores(Strokes)}
                         </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {Putts.reduce(countReducer, '0')}
+                            {sumScores(Putts)}
                         </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
@@ -321,17 +310,17 @@ const ViewRound: React.FC<props> = ({
                     </Box>
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {Penalties.reduce(countReducer, '0')}
+                            {sumScores(Penalties)}
                         </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {GreenBunkers.reduce(countReducer, '0')}
+                            {sumScores(GreenBunkers)}
                         </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {FWBunkers.reduce(countReducer, '0')}
+                            {sumScores(FWBunkers)}
                         </Typography>
                     </Box>
                 </Box>
