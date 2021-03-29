@@ -167,10 +167,11 @@ const createFakeApproachData = (girData: string[]): string[] => {
 
         if (girData[i] !== "NONE") {
 
-        let randomval: string = Math.floor(Math.random() * (200 -1  + 1)).toString()
+        let randomval: string = Math.floor(Math.random() * (200 -1  + 1) + 10).toString()
 
         fakeData.push(randomval)
     }
+    else fakeData.push("NONE")
 
     }
 

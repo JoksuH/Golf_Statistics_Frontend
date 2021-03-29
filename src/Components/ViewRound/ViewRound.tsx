@@ -299,13 +299,13 @@ const ViewRound: React.FC<props> = ({
                     </Box>
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {hitCounter(Fairways)}
+                            {hitCounter(Fairways, "hit")}
                         </Typography>
                     </Box>
 
                     <Box className={styling.scorecardinfo}>
                         <Typography variant="h6">
-                            {hitCounter(GIRs)} / {GIRs.length}{' '}
+                            {hitCounter(GIRs, "hit")} / {GIRs.length}{' '}
                         </Typography>
                     </Box>
                     <Box className={styling.scorecardinfo}>

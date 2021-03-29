@@ -6,11 +6,11 @@ const sumScores = (data: string[]): string => {
     return sum
 }
 
-const hitCounter = (arr: string[]): string => {
+const hitCounter = (arr: string[], hitvalue: string): string => {
     let count = 0
 
     arr.forEach((element) => {
-        if (element === 'hit') count += 1
+        if (element === hitvalue) count += 1
     })
 
     return count.toString()

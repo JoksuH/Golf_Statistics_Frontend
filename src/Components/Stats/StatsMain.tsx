@@ -5,30 +5,30 @@ import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery } from '@apollo/client'
 import LineChart from './LineChart'
 import BarChart from './BarChart'
-import {sumScores, hitCounter} from './../../Utils/Helpers'
+import { sumScores, hitCounter } from './../../Utils/Helpers'
 import StatTabs from './Tabs'
-
-
+import MainStats from './Pages/Main'
+import ShortGameStats from './Pages/ShortGame'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        margin: 'auto',        
+        margin: 'auto',
     },
     row: {
         display: 'flex',
         flexDirection: 'row',
-        margin: 'auto',        
+        margin: 'auto',
     },
 }))
 
- interface Query {
+interface Query {
     __typename: string
     roundMany: dataFields[]
-  }
+}
 
-  interface dataFields {
+interface dataFields {
     __typename: string
     holescores: string[]
     putts: string[]
@@ -38,9 +38,12 @@ const useStyles = makeStyles((theme) => ({
     penalties: string[]
     greenbunkers: string[]
     fwbunkers: string[]
-  }
+    course: courseData
+}
 
-
+interface courseData {
+    pars: string[]
+}
 
 const GET_LATEST_ROUNDS = gql`
     query {
@@ -53,52 +56,54 @@ const GET_LATEST_ROUNDS = gql`
             penalties
             greenbunkers
             fwbunkers
+            course {
+                pars
+            }
         }
     }
 `
 
-
 const StatsPage = () => {
-
     const styling = useStyles()
 
-    const [ScoreCard, SetScoreCard] = useState<string[]>([])
-    const [Putts, SetPutts] = useState<string[]>([])
-    const [FIR, SetFIR] = useState<string[]>([])
-    const [GIR, SetGIR] = useState<string[]>([])
-    const [ApproachDistance, SetApproachDistance] = useState<string[]>([])
-    const [Penalties, SetPenalties] = useState<string[]>([])
-    const [FairwayBunkers, SetFairwayBunkers] = useState<string[]>([])
-    const [GreenBunkers, SetGreenBunkers] = useState<string[]>([])
-    const [ActivePage, SetActivePage] = useState<string>("Main")
+    const [Scores, SetScores] = useState<string[][]>([])
+    const [Pars, SetPars] = useState<string[][]>([])
+    const [Putts, SetPutts] = useState<string[][]>([])
+    const [FIR, SetFIR] = useState<string[][]>([])
+    const [GIR, SetGIR] = useState<string[][]>([])
+    const [ApproachDistance, SetApproachDistance] = useState<string[][]>([])
+    const [Penalties, SetPenalties] = useState<string[][]>([])
+    const [FairwayBunkers, SetFairwayBunkers] = useState<string[][]>([])
+    const [GreenBunkers, SetGreenBunkers] = useState<string[][]>([])
+    const [ActivePage, SetActivePage] = useState<string>('Overview')
+    const [SelectedTeeBox, SetSelectedTeeBox] = useState<string>('White')
 
     const { data, loading } = useQuery<Query>(GET_LATEST_ROUNDS)
 
     useEffect(() => {
+        let holescores: string[][] = []
+        let pars: string[][] = []
+        let putts: string[][] = []
+        let fIR: string[][] = []
+        let gIR: string[][] = []
+        let approachDistance: string[][] = []
+        let penalties: string[][] = []
+        let fairwayBunkers: string[][] = []
+        let greenBunkers: string[][] = []
 
-        let holescores: string[] = []
-        let putts: string[] = []
-        let fIR: string[] = []
-        let gIR: string[] = []
-        let approachDistance: string[] = []
-        let penalties: string[] = []
-        let fairwayBunkers: string[] = []
-        let greenBunkers: string[] = []
-
-
-
-        data?.roundMany?.forEach(value => {
-            holescores.push(sumScores(value.holescores))
-            putts.push(sumScores(value.putts))
-            fIR.push(hitCounter(value.fir))
-            gIR.push(hitCounter(value.gir))
-            approachDistance = approachDistance.concat(value.approachdistance)
-            penalties.push(sumScores(value.penalties))
-            fairwayBunkers.push(sumScores(value.greenbunkers))
-            greenBunkers.push(sumScores(value.fwbunkers))
+        data?.roundMany?.forEach((value) => {
+            holescores.push(value.holescores)
+            putts.push(value.putts)
+            fIR.push(value.fir)
+            gIR.push(value.gir)
+            approachDistance.push(value.approachdistance)
+            penalties.push(value.penalties)
+            fairwayBunkers.push(value.greenbunkers)
+            greenBunkers.push(value.fwbunkers)
         })
 
-        SetScoreCard(holescores)
+        SetScores(holescores)
+        SetPars(pars)
         SetPutts(putts)
         SetFIR(fIR)
         SetGIR(gIR)
@@ -106,40 +111,51 @@ const StatsPage = () => {
         SetPenalties(penalties)
         SetFairwayBunkers(fairwayBunkers)
         SetGreenBunkers(greenBunkers)
-
     }, [data])
 
     const handleTabsChange = (event: React.ChangeEvent<{}>): void => {
-
         const input = event.target as HTMLElement
         SetActivePage(input.innerHTML)
+    }
 
+    const handleTeeBoxChange = (event: React.ChangeEvent<{}>): void => {
+        const input = event.target as HTMLElement
+        SetSelectedTeeBox(input.innerHTML)
     }
 
     return (
         <Box className={styling.root}>
-            <StatTabs activePage={ActivePage} onChange={handleTabsChange}/>
+            <StatTabs
+                activePage={ActivePage}
+                activeTee={SelectedTeeBox}
+                onChangeTab={handleTabsChange}
+                onChangeTee={handleTeeBoxChange}
+            />
             {loading && <p>Loading data, please wait a bit...</p>}
-            {ScoreCard && 
-            <>
-            <Box className={styling.row}>
-
-            <LineChart dataArray = {ScoreCard} title="Shots (7 round moving average)" average={true} min={65} max={100}/>
-            <LineChart dataArray = {Putts} title="Putts (7 round moving average)" average={true} min={25} max={45}/>
-            <LineChart dataArray = {GIR} title="FIR (7 round moving average)" average={true} min={0} max={18}/>
-            <LineChart dataArray = {FIR} title="GIR (7 round moving average)" average={true} min={0} max={14}/>
-            </Box>
-            <Box className={styling.row}>
-
-            <LineChart dataArray = {Penalties} title="Penalties (7 round moving average)" average={true} min={0} max={15}/>
-            <LineChart dataArray = {FairwayBunkers} title="Fairway Bunkers (7 round moving average)" average={true} min={0} max={15}/>
-            <LineChart dataArray = {GreenBunkers} title="Green Bunkers (7 round moving average)" average={true} min={0} max={15}/>
-            <LineChart dataArray = {ApproachDistance} title="Approach Distance (7 round moving average)" average={true} min={0} max={200}/>
-            </Box>
-            </>
-            }
-
-          
+            {(Scores && ActivePage==="Overview") && (
+                <>
+                    <MainStats
+                        pars={Pars}
+                        holescores={Scores}
+                        putts={Putts}
+                        fir={FIR}
+                        gir={GIR}
+                        greenbunkers={GreenBunkers}
+                        penalties={Penalties}
+                    />
+                </>
+            )}
+            {(Scores && ActivePage==="Short Game") && (
+                <>
+                    <ShortGameStats
+                        pars={Pars}
+                        holescores={Scores}
+                        putts={Putts}
+                        gir={GIR}
+                        greenbunkers={GreenBunkers}
+                    />
+                </>
+            )}
         </Box>
     )
 }
