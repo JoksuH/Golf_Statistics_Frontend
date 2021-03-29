@@ -38,11 +38,11 @@ const LongGame: React.FC<propsData> = ({Fir}) => {
             <>
             <Box className={styling.row}>
 
-            <LineChart dataArray = {Fir} title="GIR (7 round moving average)" average={true} min={0} max={14}/>
+            <LineChart dataArray = {Fir} title="GIR (7 round moving average)" average={true} fitData={true}/>
             </Box>
             <Box className={styling.row}>
 
-            <LineChart dataArray = {Fir} title="Approach Distance (7 round moving average)" average={true} min={0} max={200}/>
+            <LineChart dataArray = {Fir} title="Approach Distance (7 round moving average)" average={true} fitData={true}/>
             </Box>
             </>
             }

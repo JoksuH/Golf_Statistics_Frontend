@@ -17,5 +17,4 @@ const hitCounter = (arr: string[], hitvalue: string): string => {
 }
 
 
-
 export { sumScores, hitCounter }

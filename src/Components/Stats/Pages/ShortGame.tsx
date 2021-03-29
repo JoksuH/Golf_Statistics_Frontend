@@ -38,40 +38,73 @@ const ShortGameStats: React.FC<propsData> = ({pars, holescores, putts, gir, gree
     const [Scores, SetScores] = useState<string[]>([])
     const [Pars, SetPars] = useState<string[]>([])
     const [Putts, SetPutts] = useState<string[]>([])
+    const [PuttsPerRound, SetPuttsPerRound] = useState<string[]>([])
+    const [PuttsPerGIR, SetPuttsPerGIR] = useState<string[]>([])
+    const [PuttsNoGIR, SetPuttsNoGIR] = useState<string[]>([])
     const [FIR, SetFIR] = useState<string[]>([])
     const [GIR, SetGIR] = useState<string[]>([])
-    const [Penalties, SetPenalties] = useState<string[]>([])
     const [GreenBunkers, SetGreenBunkers] = useState<string[]>([])
 
-    
-    let holescorestot: string[] = []
-    let puttstot: string[] = []
-    let fIRtot: string[]= []
-    let gIRtot: string[]= []
-    let penaltiestot: string[] = []
-    let greenBunkerstot: string[] = []
 
     useEffect(() => {
+
+        let parstot: string[] = []
+        let holescorestot: string[] = []
+        let puttstot: string[] = []
+        let puttsperRound: string[] = []
+        let fIRtot: string[]= []
+        let gIRtot: string[]= []
+        let greenBunkerstot: string[] = []
+    
+
         for (let i = 0; i <holescores.length; i++) {
-            holescorestot.push(sumScores(holescores[i]))
-            puttstot.push(sumScores(putts[i]))
-            gIRtot.push(hitCounter(gir[i], "hit"))
-            greenBunkerstot.push(sumScores(greenbunkers[i]))
+            parstot = parstot.concat((pars[i]))
+            holescorestot = holescorestot.concat((holescores[i]))
+            puttstot = puttstot.concat((putts[i]))
+            puttsperRound.push(sumScores(putts[i]))
+            gIRtot = gIRtot.concat((gir[i]))
+            greenBunkerstot = greenBunkerstot.concat((greenbunkers[i]))
         }
+        SetPars(parstot)
         SetScores(holescorestot)
         SetPutts(puttstot)
+        SetPuttsPerRound(puttsperRound)
         SetFIR(fIRtot)
         SetGIR(gIRtot)
-        SetPenalties(penaltiestot)
         SetGreenBunkers(greenBunkerstot)
+        calcputtsPerGIR()
 
     }, [])
+
+    const calcputtsPerGIR = () => {
+
+        let girPutts: string[] = []
+        let nogirPutts: string[] = []
+
+        GIR.forEach((value: string, index: number) => {
+
+            if ( value === "hit") {
+                console.log('hitted')
+                girPutts.push(Putts[index])
+            }
+            else {
+                nogirPutts.push(Putts[index])
+            }
+
+        })
+
+        SetPuttsPerGIR(girPutts)
+        SetPuttsNoGIR(nogirPutts)
+
+    }
 
 
     return (
         <Box className={styling.root}>
 
-            <LineChart dataArray = {Putts} title="Putts (7 round moving average)" average={true} min={25} max={45}/>
+            <LineChart dataArray = {PuttsPerGIR} title="Putts Avg GIR (7 round moving average)" average={true} />
+            <LineChart dataArray = {PuttsNoGIR} title="Putts Avg NO GIR (7 round moving average)" average={true} />
+            <LineChart dataArray = {PuttsPerRound} title="Putts (7 round moving average)" average={true} />
 
 
           

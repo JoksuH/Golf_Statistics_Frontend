@@ -4,37 +4,40 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import LineChart from './../LineChart'
 import BarChart from './../BarChart'
-import {sumScores, hitCounter} from './../../../Utils/Helpers'
-
-
+import { sumScores, hitCounter } from './../../../Utils/Helpers'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
-        margin: 'auto',        
+        margin: 'auto',
     },
     row: {
         display: 'flex',
         flexDirection: 'row',
-        margin: 'auto',        
+        margin: 'auto',
     },
 }))
 
- interface propsData {
+interface propsData {
     pars: string[][]
     holescores: string[][]
-    putts: string[][],
+    putts: string[][]
     fir: string[][]
     gir: string[][]
     greenbunkers: string[][]
     penalties: string[][]
-  }
+}
 
-
-
-const MainStats: React.FC<propsData> = ({pars, holescores, putts,fir, gir, greenbunkers, penalties}) => {
-
+const MainStats: React.FC<propsData> = ({
+    pars,
+    holescores,
+    putts,
+    fir,
+    gir,
+    greenbunkers,
+    penalties,
+}) => {
     const [Scores, SetScores] = useState<string[]>([])
     const [Pars, SetPars] = useState<string[]>([])
     const [Putts, SetPutts] = useState<string[]>([])
@@ -43,23 +46,21 @@ const MainStats: React.FC<propsData> = ({pars, holescores, putts,fir, gir, green
     const [Penalties, SetPenalties] = useState<string[]>([])
     const [GreenBunkers, SetGreenBunkers] = useState<string[]>([])
 
-    
     let holescorestot: string[] = []
     let puttstot: string[] = []
-    let fIRtot: string[]= []
-    let gIRtot: string[]= []
+    let fIRtot: string[] = []
+    let gIRtot: string[] = []
     let penaltiestot: string[] = []
     let greenBunkerstot: string[] = []
-
 
     const styling = useStyles()
 
     useEffect(() => {
-        for (let i = 0; i <holescores.length; i++) {
+        for (let i = 0; i < holescores.length; i++) {
             holescorestot.push(sumScores(holescores[i]))
             puttstot.push(sumScores(putts[i]))
-            fIRtot.push(hitCounter(fir[i], "hit"))
-            gIRtot.push(hitCounter(gir[i], "hit"))
+            fIRtot.push(hitCounter(fir[i], 'hit'))
+            gIRtot.push(hitCounter(gir[i], 'hit'))
             penaltiestot.push(sumScores(penalties[i]))
             greenBunkerstot.push(sumScores(greenbunkers[i]))
         }
@@ -69,25 +70,45 @@ const MainStats: React.FC<propsData> = ({pars, holescores, putts,fir, gir, green
         SetGIR(gIRtot)
         SetPenalties(penaltiestot)
         SetGreenBunkers(greenBunkerstot)
-
     }, [])
 
     return (
         <Box className={styling.root}>
             <Box className={styling.row}>
+                <LineChart
+                    dataArray={Scores}
+                    title="Shots (7 round moving average)"
+                    average={true}
+                    />
+                <LineChart
+                    dataArray={Putts}
+                    title="Putts (7 round moving average)"
+                    average={true}
+                />
+                <LineChart
+                    dataArray={GIR}
+                    title="FIR (7 round moving average)"
+                    average={true}
+                />
+            </Box>
 
-<LineChart dataArray = {Scores} title="Shots (7 round moving average)" average={true} min={65} max={100}/>
-<LineChart dataArray = {Putts} title="Putts (7 round moving average)" average={true} min={25} max={45}/>
-<LineChart dataArray = {GIR} title="FIR (7 round moving average)" average={true} min={0} max={18}/>
-</Box>
-
-<Box className={styling.row}>
-<LineChart dataArray = {FIR} title="GIR (7 round moving average)" average={true} min={0} max={14}/>
-<LineChart dataArray = {Penalties} title="Penalties (7 round moving average)" average={true} min={0} max={15}/>
-<LineChart dataArray = {GreenBunkers} title="Green Bunkers (7 round moving average)" average={true} min={0} max={15}/>
-</Box>
-
-          
+            <Box className={styling.row}>
+                <LineChart
+                    dataArray={FIR}
+                    title="GIR (7 round moving average)"
+                    average={true}
+                />
+                <LineChart
+                    dataArray={Penalties}
+                    title="Penalties (7 round moving average)"
+                    average={true}
+                />
+                <LineChart
+                    dataArray={GreenBunkers}
+                    title="Green Bunkers (7 round moving average)"
+                    average={true}
+                />
+            </Box>
         </Box>
     )
 }

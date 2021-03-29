@@ -7,9 +7,10 @@ import { makeStyles } from '@material-ui/core/styles'
   interface propsData { 
     dataArray: string[]
     title: string
-    average: Boolean
-    min: number
-    max: number
+    average?: Boolean
+    fitData?: Boolean
+    Setmin?: number
+    Setmax?: number
   }
 
   const useStyles = makeStyles((theme) => ({
@@ -26,13 +27,17 @@ import { makeStyles } from '@material-ui/core/styles'
 }))
   
 
-const Chart: React.FC<propsData> = ({dataArray, title, average, min, max}) => {
+const Chart: React.FC<propsData> = ({dataArray, title, average, Setmin=0, Setmax=0, fitData=true}) => {
 
 const styling = useStyles()
     let setArray: {
         roundnumber: number
         datavalue: number
     }[] = []
+
+    let min: number = 200
+    let max: number = 0
+
 
     if (average) {
 
@@ -44,7 +49,9 @@ const styling = useStyles()
         for (let j = 1; j < 8; j ++) {
           average += parseFloat(dataArray[i-j])
       }
-        sevendayAverage.push(average / 7)
+      if (parseFloat(Number(average / 7).toFixed(1)) > max) max = parseFloat(Number(average / 7).toFixed(1))
+      if (parseFloat(Number(average / 7).toFixed(1)) < min) min = parseFloat(Number(average / 7).toFixed(1))
+      sevendayAverage.push(parseFloat(Number(average / 7).toFixed(1)))
   }
 }
 setArray = sevendayAverage.map((element, index) =>  ({roundnumber: index, datavalue: element}))
@@ -56,6 +63,8 @@ else
     let width = window.innerWidth * 0.7
     let height = window.innerHeight * 0.3
 
+    console.log(min)
+    console.log(max)
 
   return (
     <Box className={styling.root}>
@@ -63,7 +72,7 @@ else
       <LineChart data={setArray} width={500} height={300}>
         <Line type="monotone" dataKey="datavalue" stroke="#000000" strokeWidth={3} dot={false}  />
         <XAxis dataKey="roundnumber" />
-        <YAxis domain={[min,max]}/>
+        <YAxis domain={(fitData) ? [min,max] : [Setmin,Setmax]}/>
         <Tooltip />
         </LineChart>    
     </Box>
