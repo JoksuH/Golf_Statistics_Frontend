@@ -9,6 +9,7 @@ import { sumScores, hitCounter } from './../../Utils/Helpers'
 import StatTabs from './Tabs'
 import MainStats from './Pages/Main'
 import ShortGameStats from './Pages/ShortGame'
+import LongGameStats from './Pages/LongGame'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -142,6 +143,19 @@ const StatsPage = () => {
                         gir={GIR}
                         greenbunkers={GreenBunkers}
                         penalties={Penalties}
+                    />
+                </>
+            )}
+            {(Scores && ActivePage==="Long Game") && (
+                <>
+                    <LongGameStats
+                        pars={Pars}
+                        holescores={Scores}
+                        fir={FIR}
+                        gir={GIR}
+                        fairwaybunkers={FairwayBunkers}
+                        penalties={Penalties}
+                        approachdistances={ApproachDistance}
                     />
                 </>
             )}

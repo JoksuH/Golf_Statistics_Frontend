@@ -70,7 +70,7 @@ const MainStats: React.FC<propsData> = ({
         SetGIR(gIRtot)
         SetPenalties(penaltiestot)
         SetGreenBunkers(greenBunkerstot)
-    }, [])
+    }, [holescores,putts,fir,gir,penalties,greenbunkers])
 
     return (
         <Box className={styling.root}>
