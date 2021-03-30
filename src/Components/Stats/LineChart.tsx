@@ -12,6 +12,7 @@ interface propsData {
     fitData?: Boolean
     Setmin?: number
     Setmax?: number
+    digits?: number
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         margin: 'auto',
         paddingBottom: '2vh',
-        backgroundColor: theme.palette.success.light,
+        backgroundColor: "hsl(107, 100%, 87%)",
     },
 }))
 
@@ -36,6 +37,7 @@ const Chart: React.FC<propsData> = ({
     Setmin = 0,
     Setmax = 0,
     fitData = true,
+    digits = 1
 }) => {
     const styling = useStyles()
     let setArray: {
@@ -72,12 +74,12 @@ const Chart: React.FC<propsData> = ({
                         const sum: number = roundarr.reduce(
                             (acc, curvalue) => acc + curvalue
                         )
-                        Average.push(parseFloat(Number(sum / 18).toFixed(1)))
+                        Average.push(parseFloat(Number(sum / 18).toFixed(digits)))
                         holecount = 0
                         roundarr = []
                     }
                 } else {
-                    Average.push(parseFloat(Number(average / last).toFixed(1)))
+                    Average.push(parseFloat(Number(average / last).toFixed(digits)))
                 }
             }
         }
@@ -92,13 +94,13 @@ const Chart: React.FC<propsData> = ({
             datavalue: parseFloat(element),
         }))
 
-    let width = window.innerWidth * 0.7
-    let height = window.innerHeight * 0.3
+    let width = window.innerWidth * 0.2
+    let height = window.innerHeight * 0.2
 
     return (
         <Box className={styling.root}>
             <h2>{title}</h2>
-            <LineChart data={setArray} width={500} height={300}>
+            <LineChart data={setArray} width={width} height={height}>
                 <Line
                     type="monotone"
                     dataKey="datavalue"

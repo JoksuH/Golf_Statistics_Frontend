@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface propsData {
-    pars: string[][]
+    pars?: string[][]
     holescores: string[][]
     putts: string[][]
     fir: string[][]

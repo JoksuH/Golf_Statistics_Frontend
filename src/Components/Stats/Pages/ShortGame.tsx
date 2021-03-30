@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface propsData {
-    pars: string[][]
+    pars?: number[]
     holescores: string[][]
     putts: string[][]
     gir: string[][]
@@ -37,7 +37,7 @@ const ShortGameStats: React.FC<propsData> = ({
     const styling = useStyles()
 
     const [Scores, SetScores] = useState<string[]>([])
-    const [Pars, SetPars] = useState<string[]>([])
+    const [Pars, SetPars] = useState<number[]|undefined>([])
     const [Putts, SetPutts] = useState<string[]>([])
     const [PuttsPerRound, SetPuttsPerRound] = useState<string[]>([])
     const [PuttsPerGIR, SetPuttsPerGIR] = useState<string[]>([])
@@ -49,7 +49,6 @@ const ShortGameStats: React.FC<propsData> = ({
     const [GreenBunkers, SetGreenBunkers] = useState<string[]>([])
 
     useEffect(() => {
-        let parstot: string[] = []
         let holescorestot: string[] = []
         let puttstot: string[] = []
         let puttsperRound: string[] = []
@@ -58,7 +57,6 @@ const ShortGameStats: React.FC<propsData> = ({
         let greenBunkerstot: string[] = []
 
         for (let i = 0; i < holescores.length; i++) {
-            parstot = parstot.concat(pars[i])
             holescorestot = holescorestot.concat(holescores[i])
             puttstot = puttstot.concat(putts[i])
             puttsperRound.push(sumScores(putts[i]))
@@ -67,7 +65,7 @@ const ShortGameStats: React.FC<propsData> = ({
         }
         calcputtsPerGIR(gIRtot, puttstot)
         calcSandSavesandUpDowns(greenBunkerstot, puttstot, gIRtot)
-        SetPars(parstot)
+        SetPars(pars)
         SetScores(holescorestot)
         SetPutts(puttstot)
         SetPuttsPerRound(puttsperRound)

@@ -43,7 +43,7 @@ interface dataFields {
 }
 
 interface courseData {
-    pars: string[]
+    pars: number[]
 }
 
 const GET_LATEST_ROUNDS = gql`
@@ -68,7 +68,7 @@ const StatsPage = () => {
     const styling = useStyles()
 
     const [Scores, SetScores] = useState<string[][]>([])
-    const [Pars, SetPars] = useState<string[][]>([])
+    const [Pars, SetPars] = useState<number[]>([])
     const [Putts, SetPutts] = useState<string[][]>([])
     const [FIR, SetFIR] = useState<string[][]>([])
     const [GIR, SetGIR] = useState<string[][]>([])
@@ -83,7 +83,7 @@ const StatsPage = () => {
 
     useEffect(() => {
         let holescores: string[][] = []
-        let pars: string[][] = []
+        let pars: number[] = []
         let putts: string[][] = []
         let fIR: string[][] = []
         let gIR: string[][] = []
@@ -101,6 +101,7 @@ const StatsPage = () => {
             penalties.push(value.penalties)
             fairwayBunkers.push(value.greenbunkers)
             greenBunkers.push(value.fwbunkers)
+            pars = pars.concat(value.course.pars)
         })
 
         SetScores(holescores)
@@ -136,7 +137,6 @@ const StatsPage = () => {
             {(Scores && ActivePage==="Overview") && (
                 <>
                     <MainStats
-                        pars={Pars}
                         holescores={Scores}
                         putts={Putts}
                         fir={FIR}
@@ -162,7 +162,6 @@ const StatsPage = () => {
             {(Scores && ActivePage==="Short Game") && (
                 <>
                     <ShortGameStats
-                        pars={Pars}
                         holescores={Scores}
                         putts={Putts}
                         gir={GIR}

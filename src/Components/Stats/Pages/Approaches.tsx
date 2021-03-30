@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 interface propsData {
-    pars: number[]
+    pars: string[][]
     holescores: string[][]
     fir: string[][]
     gir: string[][]
@@ -34,7 +34,7 @@ interface propsData {
 
 
 
-const LongGameStats: React.FC<propsData> = ({ pars,
+const ApproachesStats: React.FC<propsData> = ({ pars,
     holescores,
     fir,
     gir,
@@ -43,7 +43,7 @@ const LongGameStats: React.FC<propsData> = ({ pars,
 fairwaybunkers}) => {
 
     const [Scores, SetScores] = useState<string[]>([])
-    const [Pars, SetPars] = useState<number[]>([])
+    const [Pars, SetPars] = useState<string[]>([])
     const [FIR, SetFIR] = useState<string[]>([])
     const [FIRMissLeft, SetFIRMissLeft] = useState<string[]>([])
     const [FIRHit, SetFIRHit] = useState<string[]>([])
@@ -54,11 +54,6 @@ fairwaybunkers}) => {
     const [GIRHitPercentageFW, SetGIRHitPercentageFW] = useState<string[]>([])
     const [GIRHitPercentageOutFW, SetGIRHitPercentageOutFW] = useState<string[]>([])
 
-    const [GIRHitPercentagePar3, SetGIRHitPercentagePar3] = useState<string[]>([])
-    const [GIRHitPercentagePar4, SetGIRHitPercentagePar4] = useState<string[]>([])
-    const [GIRHitPercentagePar5, SetGIRHitPercentagePar5] = useState<string[]>([])
-
-
     const [ApproachDistances, SetApproachDistances] = useState<string[]>([])
     const [FairwayBunkers, SetFairwayBunkers] = useState<string[]>([])
     const [Penalties, SetPenalties] = useState<string[]>([])
@@ -67,7 +62,7 @@ fairwaybunkers}) => {
 
 
     useEffect(() => {
-        let parstot: number[] = pars
+        let parstot: string[] = []
         let holescorestot: string[] = []
         let approachdistancestot: string[] = []
         let fIRtot: string[] = []
@@ -77,6 +72,7 @@ fairwaybunkers}) => {
 
 
         for (let i = 0; i < holescores.length; i++) {
+            parstot = parstot.concat(pars[i])
             holescorestot = holescorestot.concat(holescores[i])
             approachdistancestot = approachdistancestot.concat(approachdistances[i])
             fIRtot = fIRtot.concat(fir[i])            
@@ -94,7 +90,6 @@ fairwaybunkers}) => {
         SetPenalties(penaltiestot)
         countFairwayHitsMisses(fIRtot)
         countGIRHitsMisses(fIRtot, gIRtot)
-        countGIRHitsPars(parstot, gIRtot)
 
     }, [pars, holescores, approachdistances, fir, gir, fairwaybunkers])
 
@@ -175,55 +170,6 @@ fairwaybunkers}) => {
 
 
     }
-
-    const countGIRHitsPars = (parsData: number[], girData: string[]) => {
-
-        let par3hit: string[] = []
-        let par4hit: string[] = []
-        let par5hit: string[] = []
-
-        let par3HitCount: number = 0
-        let par4HitCount: number = 0
-        let par5HitCount: number = 0
-
-        let girPar3triesCount: number = 0
-        let girPar4triesCount: number = 0
-        let girPar5triesCount: number = 0
-
-        console.log(parsData)
-
-        girData.forEach((value: string, index: number) => {
-            if (value === "hit" && parsData[index] === 3) {
-                console.log("here")
-                par3HitCount++
-                girPar3triesCount++
-                par3hit.push((par3HitCount/(girPar3triesCount)).toString())
-            }
-            else if (value === "hit" && parsData[index] === 4) {
-                par4HitCount++
-                girPar4triesCount++
-                par4hit.push((par4HitCount/(girPar4triesCount)).toString())
-            }
-            else if (value === "hit" && parsData[index] === 5)  {
-                par5HitCount++
-                girPar5triesCount++
-                par5hit.push((par5HitCount/(girPar5triesCount)).toString())     
-            }
-            else if (value !== "hit") {
-            if (parsData[index] === 3)    girPar3triesCount++      
-            if (parsData[index] === 4)    girPar4triesCount++        
-            if (parsData[index] === 5)    girPar5triesCount++        
-}
-
-        })
-
-        SetGIRHitPercentagePar3(par3hit)
-        SetGIRHitPercentagePar4(par4hit)
-        SetGIRHitPercentagePar5(par5hit)
-
-
-    }
-
     const styling = useStyles()
 
     return (
@@ -250,18 +196,6 @@ fairwaybunkers}) => {
 
 </Box>
 </Box>
-<Box className={styling.root}>
-
-            <Typography align="center" variant="h4">Green in Regulation % per Par (moving average)</Typography>            
-
-            <Box className={styling.row}>
-            <LineChart dataArray = {GIRHitPercentagePar3} title="Par 3" average={true} fitData={true} digits={2} last={15}/>
-            <LineChart dataArray = {GIRHitPercentagePar4} title="Par 4" average={true} fitData={true} digits={2} last={15} />
-            <LineChart dataArray = {GIRHitPercentagePar5} title="Par 5" average={true} fitData={true} digits={2} last={15} />
-
-            </Box>
-            </Box>
-
 
 
           
@@ -269,4 +203,4 @@ fairwaybunkers}) => {
     )
 }
 
-export default LongGameStats
+export default ApproachesStats
