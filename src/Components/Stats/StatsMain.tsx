@@ -9,7 +9,9 @@ import { sumScores, hitCounter } from './../../Utils/Helpers'
 import StatTabs from './Tabs'
 import MainStats from './Pages/Main'
 import ShortGameStats from './Pages/ShortGame'
-import LongGameStats from './Pages/LongGame'
+import DrivingStats from './Pages/Driving'
+import ApproachesStats from './Pages/Approaches'
+import GIRStats from './Pages/GIR'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -146,15 +148,32 @@ const StatsPage = () => {
                     />
                 </>
             )}
-            {(Scores && ActivePage==="Long Game") && (
+            {(Scores && ActivePage==="Driving") && (
                 <>
-                    <LongGameStats
-                        pars={Pars}
-                        holescores={Scores}
+                    <DrivingStats
                         fir={FIR}
                         gir={GIR}
                         fairwaybunkers={FairwayBunkers}
                         penalties={Penalties}
+                    />
+                </>
+            )}
+            {(Scores && ActivePage==="Greens In Regulation") && (
+                <>
+                    <GIRStats
+                        pars={Pars}
+                        fir={FIR}
+                        gir={GIR}
+                    />
+                </>
+            )}
+            {(Scores && ActivePage==="Approach Accuracy") && (
+                <>
+                    <ApproachesStats
+                        pars={Pars}
+                        holescores={Scores}
+                        fir={FIR}
+                        gir={GIR}
                         approachdistances={ApproachDistance}
                     />
                 </>
@@ -180,5 +199,6 @@ export default StatsPage
 // split approach distance into groups (25 meters?) and see progression of greens hit
 // Gir misses
 // fir misses
-// When bunker how affects score or putts in greenside bunker
 // scoring from different aprroac distances
+
+//effect of hitting a fairway bunker on gir or scoring

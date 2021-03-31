@@ -41,7 +41,9 @@ const StatTabs: React.FC<pageData> = ({
 }) => {
     const pageList: string[] = [
         'Overview',
-        'Long Game',
+        'Driving',
+        'Greens In Regulation',
+        'Approach Accuracy',
         'Short Game',
         'Strategy',
     ]

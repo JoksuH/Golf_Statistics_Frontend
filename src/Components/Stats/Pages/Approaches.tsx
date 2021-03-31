@@ -5,6 +5,9 @@ import { makeStyles } from '@material-ui/core/styles'
 import LineChart from './../LineChart'
 import BarChart from './../BarChart'
 import {sumScores, hitCounter} from './../../../Utils/Helpers'
+import ToggleButton from '@material-ui/lab/ToggleButton'
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+
 
 
 
@@ -20,17 +23,28 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         margin: 'auto',        
     },
+    toggle: {
+        margin: '0 25px 0 25px',
+    },
+    toggletext: {
+        fontSize: '17px',
+        color: 'black',
+    },
 }))
 
 interface propsData {
-    pars: string[][]
+    pars: number[]
     holescores: string[][]
     fir: string[][]
     gir: string[][]
     approachdistances: string[][]
-    fairwaybunkers: string[][]
-    penalties: string[][]
 }
+
+interface GIRmissesData {
+    [key: string]: number|string
+}
+
+
 
 
 
@@ -39,30 +53,29 @@ const ApproachesStats: React.FC<propsData> = ({ pars,
     fir,
     gir,
     approachdistances,
-    penalties,
-fairwaybunkers}) => {
+}) => {
 
     const [Scores, SetScores] = useState<string[]>([])
-    const [Pars, SetPars] = useState<string[]>([])
+    const [Pars, SetPars] = useState<number[]>([])
     const [FIR, SetFIR] = useState<string[]>([])
     const [FIRMissLeft, SetFIRMissLeft] = useState<string[]>([])
     const [FIRHit, SetFIRHit] = useState<string[]>([])
     const [FIRMissRight, SetFIRMissRight] = useState<string[]>([])
 
     const [GIR, SetGIR] = useState<string[]>([])
-    const [GIRHitPercentage, SetGIRHitPercentage] = useState<string[]>([])
-    const [GIRHitPercentageFW, SetGIRHitPercentageFW] = useState<string[]>([])
-    const [GIRHitPercentageOutFW, SetGIRHitPercentageOutFW] = useState<string[]>([])
+    const [GIRMissesAllDirections, SetGIRMissesAllDirections] = useState<GIRmissesData[]>([])
+    const [GirMissDirections, SetGirMissDirections] = useState<GIRmissesData[]>([])
+    const [GirMissLength, SetGirMissLength] = useState<GIRmissesData[]>([])
+
 
     const [ApproachDistances, SetApproachDistances] = useState<string[]>([])
-    const [FairwayBunkers, SetFairwayBunkers] = useState<string[]>([])
-    const [Penalties, SetPenalties] = useState<string[]>([])
+    const [ToggleValue, SetToggleValue] = useState<string>("1000")
 
 
 
 
     useEffect(() => {
-        let parstot: string[] = []
+        let parstot: number[] = []
         let holescorestot: string[] = []
         let approachdistancestot: string[] = []
         let fIRtot: string[] = []
@@ -77,53 +90,113 @@ fairwaybunkers}) => {
             approachdistancestot = approachdistancestot.concat(approachdistances[i])
             fIRtot = fIRtot.concat(fir[i])            
             gIRtot = gIRtot.concat(gir[i])
-            FwBunkerstot = FwBunkerstot.concat(fairwaybunkers[i])
-            penaltiestot = penaltiestot.concat(penalties[i])
-
         }
         SetPars(parstot)
         SetScores(holescorestot)
         SetFIR(fIRtot)
         SetGIR(gIRtot)
         SetApproachDistances(approachdistancestot)
-        SetFairwayBunkers(FwBunkerstot)
-        SetPenalties(penaltiestot)
-        countFairwayHitsMisses(fIRtot)
-        countGIRHitsMisses(fIRtot, gIRtot)
+        countGirMissDirectionsForBarChart(gIRtot)
 
-    }, [pars, holescores, approachdistances, fir, gir, fairwaybunkers])
+    }, [pars, holescores, approachdistances, fir, gir, ToggleValue])
+    
 
-    const countFairwayHitsMisses = (firData: string[]) => {
-
-        let leftmiss: string[] = []
-        let hit: string[] = []
-        let rightmiss: string[] = []
+    const countGirMissDirectionsForBarChart = (girData: string[]) => {
 
         let leftCount: number = 0
         let hitCount: number = 0
         let rightCount: number = 0
 
-        firData.forEach((value: string, index: number) => {
-            if (value === "left") {
-                leftCount++
-                leftmiss.push((leftCount/(index+1)).toString())
-            }
-            if (value === "hit") {
-                hitCount++
-                hit.push((hitCount/(index+1)).toString())
-            }
-            if (value === "right") {
-                rightCount++
-                rightmiss.push((rightCount/(index+1)).toString())
+        let longLeftCount: number = 0
+        let longCount: number = 0
+        let longRightCount: number = 0
+
+        let shortLeftCount: number = 0
+        let shortCount: number = 0
+        let shortRightCount: number = 0
+
+        let leftTotal: number = 0
+        let rightTotal: number = 0
+        let longTotal: number = 0
+        let shortTotal: number = 0
+
+        let selectedGirData: string[] = []
+        let dataLength: number = 0
+
+        //Selections choosing the latest x rounds
+        if (ToggleValue === "10" && girData.length > 10*18) {
+            selectedGirData = girData.slice(girData.length-10*18, girData.length)
+            dataLength = 10*18
+        }
+        else if (ToggleValue === "5" && girData.length > 5*18) {
+            selectedGirData = girData.slice(girData.length-5*18, girData.length)
+            dataLength = 5*18
+
+        }
+        else  {
+            selectedGirData = girData
+        dataLength = girData.length
             }
 
+
+        selectedGirData.forEach((value: string) => {
+
+            switch(value) {
+            case "left":
+            leftCount++
+            leftTotal++
+            break
+        case "right":
+            rightCount++
+            rightTotal++
+            break
+            case "hit":
+                hitCount++
+                break
+                case "left short":
+                    shortLeftCount++
+                    leftTotal++
+                    shortTotal++
+                    break
+                    case "short":
+                        shortCount++
+                        shortTotal++
+                        break
+                        case "right short":
+                            shortRightCount++
+                            rightTotal++
+                            shortTotal++
+                            break
+                            case "left long":
+                                longLeftCount++
+                                leftTotal++
+                                longTotal++
+                                break
+                                case "long":
+                                    longCount++
+                                    longTotal++
+                                    break
+                                    case "right long":
+                                    longRightCount++
+                                    longTotal++
+                                    rightTotal++
+                                    break
+                                        
+
+
+        }
         })
 
-        SetFIRMissLeft(leftmiss)
-        SetFIRHit(hit)
-        SetFIRMissRight(rightmiss)
 
+        const readyFormattedAllData = [{direction: "left", value: (leftCount/dataLength*100)},{direction: "right", value: (rightCount/dataLength*100)},{direction: "hit", value: (hitCount/dataLength*100)},{direction: "left long", value: (longLeftCount/dataLength*100)},{direction: "long", value: (longCount/dataLength*100)},{direction: "right long", value: (longRightCount/dataLength*100)},{direction: "left short", value: (shortLeftCount/dataLength*100)},{direction: "short", value: (shortCount/dataLength*100)},{direction: "right short", value: (shortRightCount/dataLength*100)}]
+        const missDirectionData = [{direction: "left", value: (leftTotal/dataLength*100)},{direction: "hit", value: (hitCount/dataLength*100)},{direction: "right", value: (rightTotal/dataLength*100)}]
+        const missLengthData = [{direction: "long", value: (longTotal/dataLength*100)},{direction: "hit", value: (hitCount/dataLength*100)},{direction: "short", value: (shortTotal/dataLength*100)}]
+
+        SetGIRMissesAllDirections(readyFormattedAllData)
+        SetGirMissDirections(missDirectionData)
+        SetGirMissLength(missLengthData)
     }
+    
     
     const countGIRHitsMisses = (firData: string[], girData: string[]) => {
 
@@ -164,38 +237,59 @@ fairwaybunkers}) => {
 
         })
 
-        SetGIRHitPercentage(girTotal)
-        SetGIRHitPercentageFW(girFairway)
-        SetGIRHitPercentageOutFW(girNoFairway)
-
 
     }
     const styling = useStyles()
 
     return (
         <Box className={styling.root}>
-            <Box className={styling.root}>
-
-            <Typography align="center" variant="h4">Fairway Driving (moving average)</Typography>            
             
+            <Box className={styling.root}>
             <Box className={styling.row}>
-            <LineChart dataArray = {FIRMissLeft} title="Miss left" average={true} fitData={true} digits={2} last={15}/>
-            <LineChart dataArray = {FIRHit} title="Hit" average={true} fitData={true} digits={2} last={15} />
-            <LineChart dataArray = {FIRMissRight} title="Miss right" average={true} fitData={true} digits={2}last={15} />
 
+            <Typography align="center" variant="h4">Gir Approach Misses</Typography>    
+            <ToggleButtonGroup
+                    className={styling.toggle}
+                    value={ToggleValue}
+                    exclusive
+                    onChange={(event: React.MouseEvent<HTMLElement, MouseEvent>, value: string) => SetToggleValue(value)}
+                    aria-label="teebox selection"
+                >
+                    <ToggleButton value="1000" aria-label="all teeboxes">
+                        <Typography className={styling.toggletext}>
+                            All Rounds
+                        </Typography>
+                    </ToggleButton>
+                    <ToggleButton value="10" aria-label="yellow teebox">
+                        <Typography className={styling.toggletext}>
+                            Last 10
+                        </Typography>
+                    </ToggleButton>
+                    <ToggleButton value="5" aria-label="white teebox">
+                        <Typography className={styling.toggletext}>
+                            Last 5
+                        </Typography>
+                    </ToggleButton>
+                </ToggleButtonGroup>        
+                </Box>
+            <Box className={styling.row}>
+            <BarChart data = {GirMissDirections} title="Left or Right?" width={400}/>
+            <BarChart data = {GirMissLength} title="Long or Short?" width={400}/>
             </Box>
             </Box>
             <Box className={styling.root}>
+             <Box className={styling.root}>
 
-            <Typography align="center" variant="h4">Green in Regulation % (moving average)</Typography>            
+            <Typography align="center" variant="h4">Gir Approach Misses (all directions)</Typography>            
 
             <Box className={styling.row}>
-            <LineChart dataArray = {GIRHitPercentage} title="GIR Total" average={true} fitData={true} digits={2} last={15}/>
-            <LineChart dataArray = {GIRHitPercentageFW} title="GIR from fairway" average={true} fitData={true} digits={2} last={15} />
-            <LineChart dataArray = {GIRHitPercentageOutFW} title="GIR not fairway" average={true} fitData={true} digits={2}last={15} />
+            <BarChart data = {GIRMissesAllDirections} title="Approach Direction %" />
+            </Box>
+            </Box>
 
-</Box>
-</Box>
+            
+            </Box>
+
 
 
           
