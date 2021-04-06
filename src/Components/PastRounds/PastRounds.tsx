@@ -32,7 +32,6 @@ const PastRounds: React.FC = () => {
     )
 
     const handleRoundSelect = (data: any): void => {
-        console.log(data.course.name)
         SetSelectedRound(data)
     }
 

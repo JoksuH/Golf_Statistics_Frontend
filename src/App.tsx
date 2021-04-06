@@ -20,7 +20,6 @@ const App = () => {
                 }}
             >
                 <NavBar />
-
                 <Switch>
                     <Route path="/newround">
                         <NewRoundMain />

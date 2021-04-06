@@ -34,7 +34,7 @@ const CREATE_ROUND = gql`
 
 const DataFaker: React.FC = () => {
 
-const fakePars: number[] = [5, 3, 4,4, 5,4, 4, 3, 5, 4, 4, 3, 5, 3, 4, 4, 4, 5]
+const fakePars: number[] = [5, 3, 4, 4, 5, 4, 4, 3, 5, 4, 4, 3, 5, 3, 4, 4, 4, 5]
 
 
 let SelectedCourseID: string = "6059ec67ed6e8f279ce59863"
@@ -152,6 +152,8 @@ const createFakeFIRData = (fakePars: number[]): string[] => {
         
         if (fakePars[i] !== 3)
              fakeData.push(posValues[randomval])
+            else fakeData.push("NONE")
+
 
     }
 

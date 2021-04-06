@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
@@ -101,10 +101,13 @@ const EnterHoleScore: React.FC<props> = ({
         SetGreenBunkers('0')
     }, [HoleNumber])
 
+    const inputtwo = useRef<HTMLDivElement | null>(null)
+
     const handleScoreEnter = (
         event: React.ChangeEvent<HTMLInputElement>
     ): void => {
         SetScore(event.target.value)
+        inputtwo.current?.focus()
     }
 
     const handlePuttsEnter = (
@@ -114,8 +117,7 @@ const EnterHoleScore: React.FC<props> = ({
     }
 
     const handleFIRSelection = (
-        event: React.ChangeEvent<HTMLInputElement>,
-        value: string
+        event: React.ChangeEvent<HTMLInputElement>
     ): void => {
         SetFIR(event.target.value)
     }
@@ -156,10 +158,14 @@ const EnterHoleScore: React.FC<props> = ({
     const handleNextHoleClicked = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ): void => {
+        //Collects data to single array to pass to parent component
+
         let letDataArray: string[] = []
         letDataArray.push(Score)
         letDataArray.push(Putts)
-        letDataArray.push(FIR)
+        // Push NONE to Fir value if par 3 to match array lengths later
+        if (Par === 3) letDataArray.push('NONE')
+        else letDataArray.push(FIR)
         letDataArray.push(getGIRstring(GIR))
         if (ApproachDistance && !GIR['NONE'])
             letDataArray.push(ApproachDistance)
@@ -193,6 +199,7 @@ const EnterHoleScore: React.FC<props> = ({
                 variant="standard"
                 label="Score"
                 value={Score}
+                autoFocus={true}
                 onChange={handleScoreEnter}
                 inputProps={{
                     maxLength: 1,
@@ -209,6 +216,7 @@ const EnterHoleScore: React.FC<props> = ({
                 variant="standard"
                 label="Putts"
                 value={Putts}
+                inputRef={inputtwo}
                 onChange={handlePuttsEnter}
                 inputProps={{
                     maxLength: 1,
@@ -364,9 +372,7 @@ const EnterHoleScore: React.FC<props> = ({
                     onChange={handleApproachDistanceEnter}
                     InputProps={{
                         endAdornment: (
-                            <InputAdornment position="end">
-                                (m)
-                            </InputAdornment>
+                            <InputAdornment position="end">(m)</InputAdornment>
                         ),
                     }}
                     inputProps={{

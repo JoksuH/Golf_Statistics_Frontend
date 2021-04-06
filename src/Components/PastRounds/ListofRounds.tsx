@@ -37,7 +37,7 @@ interface Query {
 
 const GET_LATEST_ROUNDS = gql`
     query {
-        roundMany(limit: 10) {
+        roundMany(limit: 20) {
             _id
             holescores
             putts

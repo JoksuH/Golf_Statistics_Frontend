@@ -64,7 +64,7 @@ const NewRoundMain: React.FC = () => {
     const [FairwayBunkers, SetFairwayBunkers] = useState<string[]>([])
     const [GreenBunkers, SetGreenBunkers] = useState<string[]>([])
     const [HoleNumber, SetHoleNumber] = useState<number>(1)
-    const { data, loading } = useQuery<data, fetchVariables>(GET_COURSE_INFO, {
+    const { data } = useQuery<data, fetchVariables>(GET_COURSE_INFO, {
         variables: { name: SelectedCourse },
     })
     const [addRound] = useMutation(CREATE_ROUND)
@@ -171,6 +171,17 @@ const NewRoundMain: React.FC = () => {
 
     const handleCourseChange = (): void => {
         SetSelectedCourse('')
+
+        //Reset statistics if course changed
+        SetScoreCard([])
+        SetPutts([])
+        SetFIR([])
+        SetGIR([])
+        SetApproachDistance([])
+        SetPenalties([])
+        SetFairwayBunkers([])
+        SetGreenBunkers([])
+        SetHoleNumber(1)
     }
 
     const SaveRound = (): void => {
