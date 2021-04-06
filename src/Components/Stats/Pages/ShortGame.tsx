@@ -98,7 +98,8 @@ const ShortGameStats: React.FC<propsData> = ({
 
         greenbunkers.forEach((value: string, index: number) => {
             if (value === '1' && puttsdata[index] === '1') {
-                sandSaves.push('1')
+                //Push 100 to get full percentage values
+                sandSaves.push('100')
             } 
             else if (value > '0' && puttsdata[index] !== '1') 
                 {
@@ -106,7 +107,7 @@ const ShortGameStats: React.FC<propsData> = ({
                 }
             else if (value === '0' && puttsdata[index] === '1' && girdata[index] !== 'hit') 
                 {
-                    upandDowns.push('1')
+                    upandDowns.push('100')
                 }
             else if (value === '0' && puttsdata[index] > '1' && girdata[index] !== 'hit') 
                 {

@@ -44,6 +44,8 @@ const StatTabs: React.FC<pageData> = ({
         'Driving',
         'Greens In Regulation',
         'Approach Accuracy',
+        'Approach by Distance',
+        'Scoring',
         'Short Game',
         'Strategy',
     ]
