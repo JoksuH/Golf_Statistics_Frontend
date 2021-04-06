@@ -18,12 +18,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-interface roundData {
-    data:
-        | { [key: string]: string[] }
-        | { [key: string]: { [key: string]: string | number[] } }
-}
-
 const PastRounds: React.FC = () => {
     const styling = useStyles()
 

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import LineChart from './../LineChart'
-import BarChart from './../BarChart'
-import { sumScores, hitCounter } from './../../../Utils/Helpers'
+import { sumScores } from './../../../Utils/Helpers'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -36,23 +34,16 @@ const ShortGameStats: React.FC<propsData> = ({
 }) => {
     const styling = useStyles()
 
-    const [Scores, SetScores] = useState<string[]>([])
-    const [Pars, SetPars] = useState<number[]|undefined>([])
-    const [Putts, SetPutts] = useState<string[]>([])
     const [PuttsPerRound, SetPuttsPerRound] = useState<string[]>([])
     const [PuttsPerGIR, SetPuttsPerGIR] = useState<string[]>([])
     const [PuttsNoGIR, SetPuttsNoGIR] = useState<string[]>([])
     const [SandSaves, SetSandSaves] = useState<string[]>([])
     const [UpAndDowns, SetUpAndDowns] = useState<string[]>([])
-    const [FIR, SetFIR] = useState<string[]>([])
-    const [GIR, SetGIR] = useState<string[]>([])
-    const [GreenBunkers, SetGreenBunkers] = useState<string[]>([])
 
     useEffect(() => {
         let holescorestot: string[] = []
         let puttstot: string[] = []
         let puttsperRound: string[] = []
-        let fIRtot: string[] = []
         let gIRtot: string[] = []
         let greenBunkerstot: string[] = []
 
@@ -65,13 +56,7 @@ const ShortGameStats: React.FC<propsData> = ({
         }
         calcputtsPerGIR(gIRtot, puttstot)
         calcSandSavesandUpDowns(greenBunkerstot, puttstot, gIRtot)
-        SetPars(pars)
-        SetScores(holescorestot)
-        SetPutts(puttstot)
         SetPuttsPerRound(puttsperRound)
-        SetFIR(fIRtot)
-        SetGIR(gIRtot)
-        SetGreenBunkers(greenBunkerstot)
     }, [pars, holescores, putts, gir, greenbunkers])
 
     const calcputtsPerGIR = (girdata: string[], puttsdata: string[]) => {

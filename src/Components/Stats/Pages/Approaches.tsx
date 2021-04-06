@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
-import LineChart from './../LineChart'
 import BarChart from './../BarChart'
-import { sumScores, hitCounter } from './../../../Utils/Helpers'
 import ToggleButton from '@material-ui/lab/ToggleButton'
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 
@@ -48,14 +46,6 @@ const ApproachesStats: React.FC<propsData> = ({
     gir,
     approachdistances,
 }) => {
-    const [Scores, SetScores] = useState<string[]>([])
-    const [Pars, SetPars] = useState<number[]>([])
-    const [FIR, SetFIR] = useState<string[]>([])
-    const [FIRMissLeft, SetFIRMissLeft] = useState<string[]>([])
-    const [FIRHit, SetFIRHit] = useState<string[]>([])
-    const [FIRMissRight, SetFIRMissRight] = useState<string[]>([])
-
-    const [GIR, SetGIR] = useState<string[]>([])
     const [GIRMissesAllDirections, SetGIRMissesAllDirections] = useState<
         GIRmissesData[]
     >([])
@@ -64,34 +54,16 @@ const ApproachesStats: React.FC<propsData> = ({
     )
     const [GirMissLength, SetGirMissLength] = useState<GIRmissesData[]>([])
 
-    const [ApproachDistances, SetApproachDistances] = useState<string[]>([])
     const [ToggleValue, SetToggleValue] = useState<string>('1000')
 
     useEffect(() => {
-        let parstot: number[] = []
-        let holescorestot: string[] = []
-        let approachdistancestot: string[] = []
-        let fIRtot: string[] = []
         let gIRtot: string[] = []
-        let FwBunkerstot: string[] = []
-        let penaltiestot: string[] = []
 
         for (let i = 0; i < holescores.length; i++) {
-            parstot = parstot.concat(pars[i])
-            holescorestot = holescorestot.concat(holescores[i])
-            approachdistancestot = approachdistancestot.concat(
-                approachdistances[i]
-            )
-            fIRtot = fIRtot.concat(fir[i])
             gIRtot = gIRtot.concat(gir[i])
         }
-        SetPars(parstot)
-        SetScores(holescorestot)
-        SetFIR(fIRtot)
-        SetGIR(gIRtot)
-        SetApproachDistances(approachdistancestot)
         countGirMissDirectionsForBarChart(gIRtot)
-    }, [pars, holescores, approachdistances, fir, gir, ToggleValue])
+    }, [ToggleValue])
 
     const countGirMissDirectionsForBarChart = (girData: string[]) => {
         let hitCount: number = 0
@@ -218,12 +190,18 @@ const ApproachesStats: React.FC<propsData> = ({
         console.log(readyFormattedAllData)
         const missDirectionData = [
             { direction: 'Left', value: (leftTotal / dataLength) * 100 },
-            { direction: 'Correct', value: (correctDirectionCount / dataLength) * 100 },
+            {
+                direction: 'Correct',
+                value: (correctDirectionCount / dataLength) * 100,
+            },
             { direction: 'Right', value: (rightTotal / dataLength) * 100 },
         ]
         const missLengthData = [
             { direction: 'Long', value: (longTotal / dataLength) * 100 },
-            { direction: 'Correct', value: (correctLengthCount / dataLength) * 100 },
+            {
+                direction: 'Correct',
+                value: (correctLengthCount / dataLength) * 100,
+            },
             { direction: 'Short', value: (shortTotal / dataLength) * 100 },
         ]
 

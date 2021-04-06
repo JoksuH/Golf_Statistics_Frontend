@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import LineChart from './../LineChart'
-import BarChart from './../BarChart'
 import { sumScores, hitCounter } from './../../../Utils/Helpers'
 
 const useStyles = makeStyles((theme) => ({
@@ -39,7 +37,6 @@ const MainStats: React.FC<propsData> = ({
     penalties,
 }) => {
     const [Scores, SetScores] = useState<string[]>([])
-    const [Pars, SetPars] = useState<string[]>([])
     const [Putts, SetPutts] = useState<string[]>([])
     const [FIR, SetFIR] = useState<string[]>([])
     const [GIR, SetGIR] = useState<string[]>([])

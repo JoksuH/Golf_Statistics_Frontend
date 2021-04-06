@@ -184,11 +184,11 @@ const ViewRound: React.FC<props> = ({
                         <Typography variant="h6">Fairway Bunkers</Typography>
                     </Box>
                 </Box>
-                {Pars.map((number, index) => {
+                {Pars.map((number: number, index: number) => {
                     return (
                         <Box
                             className={styling.holepaircontainer}
-                            key={number + index}
+                            key={number.toString() + index.toString()}
                         >
                             <Box className={styling.holepaircontainer}>
                                 <Box className={styling.holenumbercontainer}>

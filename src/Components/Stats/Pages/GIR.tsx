@@ -3,9 +3,6 @@ import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import LineChart from './../LineChart'
-import BarChart from './../BarChart'
-import {sumScores, hitCounter} from './../../../Utils/Helpers'
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -35,7 +32,6 @@ const GIRStats: React.FC<propsData> = ({ pars,
     gir
 }) => {
 
-    console.log(fir)
     const [GIRHitPercentage, SetGIRHitPercentage] = useState<string[]>([])
     const [GIRHitPercentageFW, SetGIRHitPercentageFW] = useState<string[]>([])
     const [GIRHitPercentageOutFW, SetGIRHitPercentageOutFW] = useState<string[]>([])
@@ -137,7 +133,6 @@ const GIRStats: React.FC<propsData> = ({ pars,
 
         girData.forEach((value: string, index: number) => {
             if (value === "hit" && parsData[index] === 3) {
-                console.log("here")
                 par3HitCount++
                 girPar3triesCount++
                 par3hit.push((par3HitCount*100/(girPar3triesCount)).toString())

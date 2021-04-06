@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'start',
-        width: '60vw',
         margin: 'auto',
     },
     coursename: {
@@ -30,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.success.light,
         borderRadius: '7px',
         width: '30vw',
-        height: '5vh',
+        height: '85vh',
         "&:hover" : {
             backgroundColor: 'hsla(194, 3%, 88%, 1)',
 

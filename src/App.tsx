@@ -16,7 +16,7 @@ const App = () => {
                     backgroundImage: `url(${bgImg})`,
                     backgroundRepeat: 'no-repeat',
                     width: '100vw',
-                    height: '100vh',
+                    height: window.innerWidth < 1200 ? '100%' : '100vh',
                 }}
             >
                 <NavBar />

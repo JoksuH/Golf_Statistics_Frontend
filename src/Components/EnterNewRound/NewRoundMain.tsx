@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import NewRoundCourseSelection from './NewRoundCourseSelection'
-import CourseBox from './CourseBox'
 import EnterHoleScore from './EnterHoleScore'
 import ViewRound from './../ViewRound/ViewRound'
 import { gql, useQuery, useMutation } from '@apollo/client'
@@ -193,21 +192,6 @@ const NewRoundMain: React.FC = () => {
         SetHoleNumber(1)
     }
 
-    const handleCourseChange = (): void => {
-        SetSelectedCourse('')
-
-        //Reset statistics if course changed
-        SetScoreCard([])
-        SetPutts([])
-        SetFIR([])
-        SetGIR([])
-        SetApproachDistance([])
-        SetPenalties([])
-        SetFairwayBunkers([])
-        SetGreenBunkers([])
-        SetHoleNumber(1)
-    }
-
     const SaveRound = (): void => {
         addRound({
             variables: {
@@ -255,12 +239,7 @@ const NewRoundMain: React.FC = () => {
                 SelectedCourse !== '' &&
                 SelectedTeeBox !== '' && (
                     <>
-                        <Box>
-                            <CourseBox
-                                name={SelectedCourse}
-                                onClick={handleCourseChange}
-                            />
-                        </Box>
+                       
                         <EnterHoleScore
                             HoleNumber={HoleNumber}
                             Par={data?.courseOne?.pars[HoleNumber - 1]}

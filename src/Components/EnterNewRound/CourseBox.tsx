@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.success.light,
         borderRadius: '7px',
         width: '30vw',
-        height: '5vh',
+        height: window.innerWidth < 1000 ? '15vh' : '5vh',
         "&:hover" : {
             backgroundColor: 'hsla(194, 3%, 88%, 1)',
 

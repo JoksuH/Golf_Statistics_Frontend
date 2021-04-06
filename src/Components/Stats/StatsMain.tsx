@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import { gql, useQuery } from '@apollo/client'
-import LineChart from './LineChart'
-import BarChart from './BarChart'
-import { sumScores, hitCounter } from './../../Utils/Helpers'
 import StatTabs from './Tabs'
 import MainStats from './Pages/Main'
 import ShortGameStats from './Pages/ShortGame'
@@ -123,12 +119,17 @@ const StatsPage = () => {
 
     const handleTabsChange = (event: React.ChangeEvent<{}>): void => {
         const input = event.target as HTMLElement
-        SetActivePage(input.innerHTML)
+        //Using input.textContent to get the value no matter where in the tab the click is placed
+        if (input.textContent !== null)
+        SetActivePage(input.textContent)
     }
 
     const handleTeeBoxChange = (event: React.ChangeEvent<{}>): void => {
         const input = event.target as HTMLElement
-        SetSelectedTeeBox(input.innerHTML)
+
+        //Get value from innertext to make the buttons work no matter where in them you click
+        let formattedinputText = input.innerText.charAt(0).toUpperCase() +  input.innerText.slice(1).toLowerCase()
+        SetSelectedTeeBox(formattedinputText)
     }
 
     return (
