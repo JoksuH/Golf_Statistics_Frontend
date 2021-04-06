@@ -94,13 +94,17 @@ const ApproachesStats: React.FC<propsData> = ({
     }, [pars, holescores, approachdistances, fir, gir, ToggleValue])
 
     const countGirMissDirectionsForBarChart = (girData: string[]) => {
-        let leftCount: number = 0
         let hitCount: number = 0
+
+        let leftCount: number = 0
         let rightCount: number = 0
+        let correctDirectionCount: number = 0
 
         let longLeftCount: number = 0
         let longCount: number = 0
         let longRightCount: number = 0
+
+        let correctLengthCount: number = 0
 
         let shortLeftCount: number = 0
         let shortCount: number = 0
@@ -134,16 +138,24 @@ const ApproachesStats: React.FC<propsData> = ({
 
         selectedGirData.forEach((value: string) => {
             switch (value) {
+                //If gir try was not valid, shorten the data length to compensate
+                case 'NONE':
+                    dataLength--
+                    break
                 case 'left':
                     leftCount++
                     leftTotal++
+                    correctLengthCount++
                     break
                 case 'right':
                     rightCount++
                     rightTotal++
+                    correctLengthCount++
                     break
                 case 'hit':
                     hitCount++
+                    correctDirectionCount++
+                    correctLengthCount++
                     break
                 case 'left short':
                     shortLeftCount++
@@ -152,6 +164,7 @@ const ApproachesStats: React.FC<propsData> = ({
                     break
                 case 'short':
                     shortCount++
+                    correctDirectionCount++
                     shortTotal++
                     break
                 case 'right short':
@@ -166,6 +179,7 @@ const ApproachesStats: React.FC<propsData> = ({
                     break
                 case 'long':
                     longCount++
+                    correctDirectionCount++
                     longTotal++
                     break
                 case 'right long':
@@ -176,6 +190,7 @@ const ApproachesStats: React.FC<propsData> = ({
             }
         })
 
+        console.log(dataLength)
         const readyFormattedAllData = [
             { direction: 'left', value: (leftCount / dataLength) * 100 },
             { direction: 'right', value: (rightCount / dataLength) * 100 },
@@ -199,15 +214,17 @@ const ApproachesStats: React.FC<propsData> = ({
                 value: (shortRightCount / dataLength) * 100,
             },
         ]
+
+        console.log(readyFormattedAllData)
         const missDirectionData = [
-            { direction: 'left', value: (leftTotal / dataLength) * 100 },
-            { direction: 'hit', value: (hitCount / dataLength) * 100 },
-            { direction: 'right', value: (rightTotal / dataLength) * 100 },
+            { direction: 'Left', value: (leftTotal / dataLength) * 100 },
+            { direction: 'Correct', value: (correctDirectionCount / dataLength) * 100 },
+            { direction: 'Right', value: (rightTotal / dataLength) * 100 },
         ]
         const missLengthData = [
-            { direction: 'long', value: (longTotal / dataLength) * 100 },
-            { direction: 'hit', value: (hitCount / dataLength) * 100 },
-            { direction: 'short', value: (shortTotal / dataLength) * 100 },
+            { direction: 'Long', value: (longTotal / dataLength) * 100 },
+            { direction: 'Correct', value: (correctLengthCount / dataLength) * 100 },
+            { direction: 'Short', value: (shortTotal / dataLength) * 100 },
         ]
 
         SetGIRMissesAllDirections(readyFormattedAllData)

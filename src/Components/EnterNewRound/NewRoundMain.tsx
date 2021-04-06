@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import NewRoundCourseSelection from './NewRoundCourseSelection'
 import CourseBox from './CourseBox'
 import EnterHoleScore from './EnterHoleScore'
 import ViewRound from './../ViewRound/ViewRound'
 import { gql, useQuery, useMutation } from '@apollo/client'
+import { makeStyles } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 interface data {
     courseOne: { [key: string]: number[] }
@@ -53,8 +58,25 @@ const CREATE_ROUND = gql`
     }
 `
 
+const useStyles = makeStyles((theme) => ({
+    teeboxselection: {
+        marginTop: theme.spacing(8),
+        marginLeft: '45vw',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        width: '50vw',
+    },
+    rowbox: {
+        margin: 'auto',
+        display: 'flex',
+        flexDirection: 'row',
+    },
+}))
+
 const NewRoundMain: React.FC = () => {
     const [SelectedCourse, SetSelectedCourse] = useState<string>('')
+    const [SelectedTeeBox, SetSelectedTeeBox] = useState<string>('')
     const [ScoreCard, SetScoreCard] = useState<string[]>([])
     const [Putts, SetPutts] = useState<string[]>([])
     const [FIR, SetFIR] = useState<string[]>([])
@@ -68,6 +90,8 @@ const NewRoundMain: React.FC = () => {
         variables: { name: SelectedCourse },
     })
     const [addRound] = useMutation(CREATE_ROUND)
+
+    const styling = useStyles()
 
     const handleNextHoleButtonClicked = (data: string[]): void => {
         if (HoleNumber < 18) {
@@ -194,6 +218,7 @@ const NewRoundMain: React.FC = () => {
                 gir: GIR,
                 approachdistance: ApproachDistance,
                 penalties: Penalties,
+                tee: SelectedTeeBox, 
                 greenbunkers: GreenBunkers,
                 fwbunkers: FairwayBunkers,
             },
@@ -202,36 +227,59 @@ const NewRoundMain: React.FC = () => {
         alert('Round Saved!')
     }
 
+    const handleTeeSelection = (
+        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ): void => {
+        const input = event.target as HTMLElement
+        SetSelectedTeeBox(input.innerHTML)
+    }
+
     return (
         <div>
-            {SelectedCourse == '' && (
+            {SelectedCourse === '' && (
                 <NewRoundCourseSelection onClick={handleCourseSelection} />
             )}
-            {data !== undefined && SelectedCourse !== '' && (
-                <>
-                    <CourseBox
-                        name={SelectedCourse}
-                        onClick={handleCourseChange}
-                    />
-                    <EnterHoleScore
-                        HoleNumber={HoleNumber}
-                        Par={data?.courseOne?.pars[HoleNumber - 1]}
-                        onSave={handleNextHoleButtonClicked}
-                        onClickPrev={handlePreviousHoleButtonClicked}
-                    />
-                    <ViewRound
-                        Coursename={SelectedCourse}
-                        Pars={data?.courseOne?.pars}
-                        Strokes={ScoreCard}
-                        Putts={Putts}
-                        Fairways={FIR}
-                        GIRs={GIR}
-                        Penalties={Penalties}
-                        FWBunkers={FairwayBunkers}
-                        GreenBunkers={GreenBunkers}
-                    />
-                </>
+            {SelectedTeeBox === '' && SelectedCourse !== '' && (
+                <Box className={styling.teeboxselection}>
+                    <Typography>Please Select The Tee Box:</Typography>
+                    <ButtonGroup
+                        variant="contained"
+                        aria-label="contained primary button group"
+                    >
+                        <Button onClick={handleTeeSelection}>White</Button>
+                        <Button onClick={handleTeeSelection}>Yellow</Button>
+                    </ButtonGroup>
+                </Box>
             )}
+            {data !== undefined &&
+                SelectedCourse !== '' &&
+                SelectedTeeBox !== '' && (
+                    <>
+                        <Box>
+                            <CourseBox
+                                name={SelectedCourse}
+                                onClick={handleCourseChange}
+                            />
+                        </Box>
+                        <EnterHoleScore
+                            HoleNumber={HoleNumber}
+                            Par={data?.courseOne?.pars[HoleNumber - 1]}
+                            onSave={handleNextHoleButtonClicked}
+                            onClickPrev={handlePreviousHoleButtonClicked}
+                        />
+                        <ViewRound
+                            Coursename={SelectedCourse}
+                            Pars={data?.courseOne?.pars}
+                            Strokes={ScoreCard}
+                            Putts={Putts}
+                            Fairways={FIR}
+                            GIRs={GIR}
+                            Penalties={Penalties}
+                            FWBunkers={FairwayBunkers}
+                            GreenBunkers={GreenBunkers}
+                        />
+                    </>
+                )}
         </div>
     )
 }

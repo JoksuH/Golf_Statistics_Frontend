@@ -35,6 +35,7 @@ const GIRStats: React.FC<propsData> = ({ pars,
     gir
 }) => {
 
+    console.log(fir)
     const [GIRHitPercentage, SetGIRHitPercentage] = useState<string[]>([])
     const [GIRHitPercentageFW, SetGIRHitPercentageFW] = useState<string[]>([])
     const [GIRHitPercentageOutFW, SetGIRHitPercentageOutFW] = useState<string[]>([])

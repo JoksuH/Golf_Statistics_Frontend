@@ -41,6 +41,7 @@ interface dataFields {
     penalties: string[]
     greenbunkers: string[]
     fwbunkers: string[]
+    tee: string
     course: courseData
 }
 
@@ -59,6 +60,7 @@ const GET_LATEST_ROUNDS = gql`
             penalties
             greenbunkers
             fwbunkers
+            tee
             course {
                 pars
             }
@@ -95,6 +97,7 @@ const StatsPage = () => {
         let greenBunkers: string[][] = []
 
         data?.roundMany?.forEach((value) => {
+            if (value.tee === SelectedTeeBox || SelectedTeeBox === "All") {
             holescores.push(value.holescores)
             putts.push(value.putts)
             fIR.push(value.fir)
@@ -104,6 +107,7 @@ const StatsPage = () => {
             fairwayBunkers.push(value.greenbunkers)
             greenBunkers.push(value.fwbunkers)
             pars = pars.concat(value.course.pars)
+        }
         })
 
         SetScores(holescores)
@@ -115,7 +119,7 @@ const StatsPage = () => {
         SetPenalties(penalties)
         SetFairwayBunkers(fairwayBunkers)
         SetGreenBunkers(greenBunkers)
-    }, [data])
+    }, [data, SelectedTeeBox])
 
     const handleTabsChange = (event: React.ChangeEvent<{}>): void => {
         const input = event.target as HTMLElement

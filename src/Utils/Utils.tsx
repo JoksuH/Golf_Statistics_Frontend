@@ -13,6 +13,7 @@ const CREATE_ROUND = gql`
         $penalties: [String]!
         $greenbunkers: [String]!
         $fwbunkers: [String]!
+        $tee: String!
     ) {
         roundCreateOne(
             record: {
@@ -25,6 +26,7 @@ const CREATE_ROUND = gql`
                 penalties: $penalties
                 greenbunkers: $greenbunkers
                 fwbunkers: $fwbunkers
+                tee: $tee
             }
         ) {
             recordId
@@ -46,6 +48,7 @@ let ApproachDistance: string[] = createFakeApproachData(GIR)
 let Penalties: string[] = createFakeSmallNumData()
 let FairwayBunkers: string[] = createFakeSmallNumData()
 let GreenBunkers: string[] = createFakeSmallNumData()
+let Tee: string = createfakeTee()
 
 let [addRound,] = useMutation(CREATE_ROUND)
 
@@ -60,13 +63,25 @@ addRound({
             penalties: Penalties,
             greenbunkers: GreenBunkers,
             fwbunkers: FairwayBunkers,
+            tee: Tee,
         
 
 }})
 
+
 return(<div></div>)
 
 }
+
+const createfakeTee = (): string => {
+
+    let randomNum: number = Math.random()
+
+    if (randomNum > 0.68) return "White"
+    else return "Yellow"
+
+
+} 
 
 const createFakeScoreData = (fakePars: number[]): string[] => {
 
