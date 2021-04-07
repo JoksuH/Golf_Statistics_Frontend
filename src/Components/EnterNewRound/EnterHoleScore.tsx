@@ -106,12 +106,16 @@ const EnterHoleScore: React.FC<props> = ({
             short: false,
             NONE: false,
         })
-        SetApproachDistance(undefined)
+        SetApproachDistance('')
         SetPenalties('')
         SetFairwayBunkers('')
         SetGreenBunkers('')
+
+        inputScore.current?.focus()
+
     }, [HoleNumber])
 
+    const inputScore = useRef<HTMLDivElement | null>(null)
     const inputPutts = useRef<HTMLDivElement | null>(null)
     const inputHiddenFir = useRef<HTMLDivElement | null>(null)
     const inputHiddenGir = useRef<HTMLDivElement | null>(null)
@@ -143,12 +147,13 @@ const EnterHoleScore: React.FC<props> = ({
                 SetFIR('right')
                 break
         }
+        event.target.value = ""
         inputHiddenGir.current?.focus()
     }
     const handleGirEnter = (
         event: React.ChangeEvent<HTMLInputElement>
     ): void => {
-        console.log('here')
+        console.log(event.target.value)
         switch (event.target.value) {
             case '1':
                 SetGIR({ ...GIR, left: true, short: true })
@@ -181,6 +186,7 @@ const EnterHoleScore: React.FC<props> = ({
                 SetGIR({ ...GIR, NONE: true })
                 break
         }
+        event.target.value = ""
         inputApproachDistance.current?.focus()
     }
 
@@ -188,7 +194,10 @@ const EnterHoleScore: React.FC<props> = ({
         event: React.ChangeEvent<HTMLInputElement>
     ): void => {
         SetPutts(event.target.value)
-        inputHiddenFir.current?.focus()
+        // Move the focus directly to GIR if no FIR question present
+        Par !== 3 ? inputHiddenFir.current?.focus() : inputHiddenGir.current?.focus()
+        event.target.value = ""
+
     }
 
     const handleFIRSelection = (
@@ -280,6 +289,7 @@ const EnterHoleScore: React.FC<props> = ({
                 size="small"
                 variant="standard"
                 label="Score"
+                inputRef={inputScore}
                 value={Score}
                 autoFocus={true}
                 onChange={handleScoreEnter}
