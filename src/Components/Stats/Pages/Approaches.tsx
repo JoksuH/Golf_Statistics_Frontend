@@ -49,9 +49,7 @@ const ApproachesStats: React.FC<propsData> = ({
     const [GIRMissesAllDirections, SetGIRMissesAllDirections] = useState<
         GIRmissesData[]
     >([])
-    const [GirMissDirections, SetGirMissDirections] = useState<GIRmissesData[]>(
-        []
-    )
+    const [GirMissDirections, SetGirMissDirections] = useState<GIRmissesData[]>([])
     const [GirMissLength, SetGirMissLength] = useState<GIRmissesData[]>([])
 
     const [ToggleValue, SetToggleValue] = useState<string>('1000')
@@ -92,16 +90,10 @@ const ApproachesStats: React.FC<propsData> = ({
 
         //Selections choosing the latest x rounds
         if (ToggleValue === '10' && girData.length > 10 * 18) {
-            selectedGirData = girData.slice(
-                girData.length - 10 * 18,
-                girData.length
-            )
+            selectedGirData = girData.slice(girData.length - 10 * 18, girData.length)
             dataLength = 10 * 18
         } else if (ToggleValue === '5' && girData.length > 5 * 18) {
-            selectedGirData = girData.slice(
-                girData.length - 5 * 18,
-                girData.length
-            )
+            selectedGirData = girData.slice(girData.length - 5 * 18, girData.length)
             dataLength = 5 * 18
         } else {
             selectedGirData = girData
@@ -162,7 +154,6 @@ const ApproachesStats: React.FC<propsData> = ({
             }
         })
 
-        console.log(dataLength)
         const readyFormattedAllData = [
             { direction: 'left', value: (leftCount / dataLength) * 100 },
             { direction: 'right', value: (rightCount / dataLength) * 100 },
@@ -187,7 +178,6 @@ const ApproachesStats: React.FC<propsData> = ({
             },
         ]
 
-        console.log(readyFormattedAllData)
         const missDirectionData = [
             { direction: 'Left', value: (leftTotal / dataLength) * 100 },
             {
@@ -210,40 +200,6 @@ const ApproachesStats: React.FC<propsData> = ({
         SetGirMissLength(missLengthData)
     }
 
-    const countGIRHitsMisses = (firData: string[], girData: string[]) => {
-        //Counts the amount of greens hit in regulation from fairway and out of it
-
-        let girTotal: string[] = []
-        let girFairway: string[] = []
-        let girNoFairway: string[] = []
-
-        let girTotCount: number = 0
-        let girFairCount: number = 0
-        let girnoFWCount: number = 0
-
-        let girFWtries: number = 0
-        let girNoFWtries: number = 0
-
-        girData.forEach((value: string, index: number) => {
-            if (value === 'hit' && firData[index] === 'hit') {
-                girTotCount++
-                girFairCount++
-                girFWtries++
-                girTotal.push((girTotCount / (index + 1)).toString())
-                girFairway.push((girFairCount / girFWtries).toString())
-            } else if (value === 'hit' && firData[index] !== 'hit') {
-                girTotCount++
-                girnoFWCount++
-                girNoFWtries++
-                girTotal.push((girTotCount / (index + 1)).toString())
-                girNoFairway.push((girnoFWCount / girNoFWtries).toString())
-            } else if (value !== 'hit' && firData[index] !== 'hit') {
-                girNoFWtries++
-            } else if (value !== 'hit' && firData[index] === 'hit') {
-                girFWtries++
-            }
-        })
-    }
     const styling = useStyles()
 
     return (
@@ -261,8 +217,7 @@ const ApproachesStats: React.FC<propsData> = ({
                             event: React.MouseEvent<HTMLElement, MouseEvent>,
                             value: string
                         ) => SetToggleValue(value)}
-                        aria-label="teebox selection"
-                    >
+                        aria-label="teebox selection">
                         <ToggleButton value="1000" aria-label="all teeboxes">
                             <Typography className={styling.toggletext}>
                                 All Rounds

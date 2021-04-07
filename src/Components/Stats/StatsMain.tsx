@@ -7,6 +7,8 @@ import MainStats from './Pages/Main'
 import ShortGameStats from './Pages/ShortGame'
 import DrivingStats from './Pages/Driving'
 import ApproachesStats from './Pages/Approaches'
+import ApproachesbyDistanceStats from './Pages/ApproachesDistance'
+
 import GIRStats from './Pages/GIR'
 
 const useStyles = makeStyles((theme) => ({
@@ -178,6 +180,14 @@ const StatsPage = () => {
                         pars={Pars}
                         holescores={Scores}
                         fir={FIR}
+                        gir={GIR}
+                        approachdistances={ApproachDistance}
+                    />
+                </>
+            )}
+            {(Scores && ActivePage==="Approach by Distance") && (
+                <>
+                    <ApproachesbyDistanceStats
                         gir={GIR}
                         approachdistances={ApproachDistance}
                     />
