@@ -28,99 +28,85 @@ const useStyles = makeStyles((theme) => ({
 interface propsData {
     pars: number[]
     scores: string[][]
-    approachdistances: string[][]
 }
 
-const Scoring: React.FC<propsData> = ({ pars, scores, approachdistances }) => {
-    const [ShotsFrom2550, SetShotsFrom2550] = useState<string[]>([])
-    const [ShotsFrom5075, SetShotsFrom5075] = useState<string[]>([])
-    const [ShotsFrom75100, SetShotsFrom75100] = useState<string[]>([])
-    const [ShotsFrom100125, SetShotsFrom100125] = useState<string[]>([])
-    const [ShotsFrom125150, SetShotsFrom125150] = useState<string[]>([])
-    const [ShotsFrom150175, SetShotsFrom150175] = useState<string[]>([])
+const Scoring: React.FC<propsData> = ({ pars, scores }) => {
+    const [ScorePar3s, SetScorePar3s] = useState<string[]>([])
+    const [ScorePar4s, SetScorePar4s] = useState<string[]>([])
+    const [ScorePar5s, SetScorePar5s] = useState<string[]>([])
+
+    const [EaglePercentage, SetEaglePercentage] = useState<string[]>([])
+    const [BirdiePercentage, SetBirdiePercentage] = useState<string[]>([])
+    const [ParPercentage, SetParPercentage] = useState<string[]>([])
+    const [BogeyPercentage, SetBogeyPercentage] = useState<string[]>([])
+    const [DBBogeyPercentage, SetDBBogeyPercentage] = useState<string[]>([])
+    const [TrBogeyPercentage, SetTrBogeyPercentage] = useState<string[]>([])
 
     useEffect(() => {
         let parstot: number[] = []
         let scorestot: string[] = []
-        let approachdistancestot: string[] = []
 
         for (let i = 0; i < pars.length; i++) {
             parstot = parstot.concat(pars[i])
             scorestot = scorestot.concat(scores[i])
-            approachdistancestot = approachdistancestot.concat(approachdistances[i])
         }
+        countScores(parstot,scorestot)
+    }, [pars, scores])
 
-        let shotsFrom2550 = countShotsFromForChart(
-            parstot,
-            scorestot,
-            approachdistancestot,
-            25,
-            49
-        )
-        let shotsFrom5075 = countShotsFromForChart(
-            parstot,
-            scorestot,
-            approachdistancestot,
-            50,
-            74
-        )
-        let shotsFrom75100 = countShotsFromForChart(
-            parstot,
-            scorestot,
-            approachdistancestot,
-            75,
-            99
-        )
-        let shotsFrom100125 = countShotsFromForChart(
-            parstot,
-            scorestot,
-            approachdistancestot,
-            100,
-            124
-        )
-        let shotsFrom125150 = countShotsFromForChart(
-            parstot,
-            scorestot,
-            approachdistancestot,
-            125,
-            149
-        )
-        let shotsFrom150175 = countShotsFromForChart(
-            parstot,
-            scorestot,
-            approachdistancestot,
-            150,
-            174
-        )
+    const countScores = (pars: number[], scores: string[]): void => {
+        let par3resultsArr: string[] = []
+        let par4resultsArr: string[] = []
+        let par5resultsArr: string[] = []
 
-        SetShotsFrom2550(shotsFrom2550)
-        SetShotsFrom5075(shotsFrom5075)
-        SetShotsFrom75100(shotsFrom75100)
-        SetShotsFrom100125(shotsFrom100125)
-        SetShotsFrom125150(shotsFrom125150)
-        SetShotsFrom150175(shotsFrom150175)
-       
-    }, [pars, scores, approachdistances])
+        let eagleCount: number = 0
+        let birdieCount: number = 0
+        let parCount: number = 0
+        let bogeyCount: number = 0
+        let dbBogeyCount: number = 0
+        let trBogeyCount: number = 0
 
-    const countShotsFromForChart = (
-        pars: number[],
-        scores: string[],
-        approachData: string[],
-        mindistance: number,
-        maxdistance: number
-    ): string[] => {
-        let resultsArr: string[] = []
+        let eaglePercentageArr: string[] = []
+        let birdiePercentageArr: string[] = []
+        let parPercentageArr: string[] = []
 
-        approachData.forEach((value: string, index: number) => {
-            if (parseInt(value) <= maxdistance && parseInt(value) >= mindistance) {
-                // shots taken to get into hole from a green in regulation try is 3 if par, 4 if bogey and 2 if birdie etc.
-                const shotsToHole =
-                    parseInt(scores[index]) - pars[index] + 3
-                resultsArr.push(shotsToHole.toString())
-            }
+        let bogeyPercentageArr: string[] = []
+        let dbBogeyPercentageArr: string[] = []
+        let trBogeyPercentageArr: string[] = []
+
+        pars.forEach((value: number, index: number) => {
+            const scoreRelativeToPar: string = (
+                parseInt(scores[index]) - value
+            ).toString()
+
+            if (value === 3) par3resultsArr.push(scoreRelativeToPar)
+            if (value === 4) par4resultsArr.push(scoreRelativeToPar)
+            if (value === 5) par5resultsArr.push(scoreRelativeToPar)
+
+            if (scoreRelativeToPar === '-2') eagleCount++
+            if (scoreRelativeToPar === '-1') birdieCount++
+            if (scoreRelativeToPar === '0') parCount++
+            if (scoreRelativeToPar === '1') bogeyCount++
+            if (scoreRelativeToPar === '2') dbBogeyCount++
+            if (scoreRelativeToPar === '3') trBogeyCount++
+
+            eaglePercentageArr.push((eagleCount * 100 / (index+1)).toString())
+            birdiePercentageArr.push((birdieCount* 100 / (index+1)).toString())
+            parPercentageArr.push((parCount* 100 / (index+1)).toString())
+            bogeyPercentageArr.push((bogeyCount* 100 / (index+1)).toString())
+            dbBogeyPercentageArr.push((dbBogeyCount* 100 / (index+1)).toString())
+            trBogeyPercentageArr.push((trBogeyCount* 100 / (index+1)).toString())
         })
 
-        return resultsArr
+        SetScorePar3s(par3resultsArr)
+        SetScorePar4s(par4resultsArr)
+        SetScorePar5s(par5resultsArr)
+
+        SetEaglePercentage(eaglePercentageArr)
+        SetBirdiePercentage(birdiePercentageArr)
+        SetParPercentage(parPercentageArr)
+        SetBogeyPercentage(bogeyPercentageArr)
+        SetDBBogeyPercentage(dbBogeyPercentageArr)
+        SetTrBogeyPercentage(trBogeyPercentageArr)
     }
 
     const styling = useStyles()
@@ -130,36 +116,23 @@ const Scoring: React.FC<propsData> = ({ pars, scores, approachdistances }) => {
             <Box className={styling.root}>
                 <Box className={styling.row}>
                     <Typography align="center" variant="h4">
-                        Scoring By Distance
+                        Scoring
                     </Typography>
                 </Box>
                 <Box className={styling.row}>
-                    <LineChart
-                        dataArray={ShotsFrom2550}
-                        title="Shots to Hole (25-50 m)"
-                    />
-                    <LineChart
-                        dataArray={ShotsFrom5075}
-                        title="Shots to Hole (50-75 m)"
-                    />
-                    <LineChart
-                        dataArray={ShotsFrom75100}
-                        title="Shots to Hole (75 - 100 m)"
-                    />
+                    <LineChart dataArray={ScorePar3s} title="Scoring on Par 3s" last={20}/>
+                    <LineChart dataArray={ScorePar4s} title="Scoring on Par 4s" last={20}/>
+                    <LineChart dataArray={ScorePar5s} title="Scoring on Par 5s" last={20}/>
                 </Box>
                 <Box className={styling.row}>
-                    <LineChart
-                        dataArray={ShotsFrom100125}
-                        title="Shots to Hole  (100 - 125 m)"
-                    />
-                    <LineChart
-                        dataArray={ShotsFrom125150}
-                        title="Shots to Hole  (125 - 150 m)"
-                    />
-                    <LineChart
-                        dataArray={ShotsFrom150175}
-                        title="Shots to Hole  (150 - 175 m)"
-                    />
+                    <LineChart dataArray={EaglePercentage} title="Eagles (%)" perRound={true} last={10}/>
+                    <LineChart dataArray={BirdiePercentage} title="Birdie (%)" perRound={true} last={10}/>
+                    <LineChart dataArray={ParPercentage} title="Pars (%)" perRound={true} last={10}/>
+                </Box>
+                <Box className={styling.row}>
+                    <LineChart dataArray={BogeyPercentage} title="Bogeys (%)" perRound={true} last={10} />
+                    <LineChart dataArray={DBBogeyPercentage} title="Double Bogeys (%)" perRound={true} last={10}/>
+                    <LineChart dataArray={TrBogeyPercentage} title="Triple Bogeys (%)" perRound={true} last={10}/>
                 </Box>
             </Box>
         </Box>

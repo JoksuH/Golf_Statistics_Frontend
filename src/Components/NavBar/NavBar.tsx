@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import Box from '@material-ui/core/Box'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import { useHistory } from 'react-router-dom'
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -23,22 +22,16 @@ const NavBar: React.FC = () => {
 
     const [SelectedTab, SetSelectedTab] = useState<number>(0)
 
-    const handleTabChange = (event:object, value: number): void => {
-
+    const handleTabChange = (event: object, value: number): void => {
         SetSelectedTab(value)
 
-        switch(value) {
+        switch (value) {
             case 0:
-                History.push('/')
-                break
-            case 1:
                 History.push('/stats')
                 break
-            case 2:
+            case 1:
                 History.push('/pastrounds')
                 break
-            
-
         }
     }
 
@@ -49,19 +42,22 @@ const NavBar: React.FC = () => {
 
     return (
         <Box className={styling.root}>
-                <Tabs
-                    indicatorColor="primary"
-                    textColor="inherit"
-                    aria-label="Page Tab Selector"
-                    onChange={handleTabChange}
-                    value={SelectedTab}
-                    centered
-                >
-                    <Tab label="Main" />
-                    <Tab label="Stats" />
-                    <Tab label="Past Rounds" />
-                </Tabs>
-                <Button variant="outlined" style={{marginLeft: '50px'}} onClick={handleNewRoundStart}>Start a New Round</Button>
+            <Tabs
+                indicatorColor="primary"
+                textColor="inherit"
+                aria-label="Page Tab Selector"
+                onChange={handleTabChange}
+                value={SelectedTab}
+                centered>
+                <Tab label="Stats" />
+                <Tab label="Past Rounds" />
+            </Tabs>
+            <Button
+                variant="outlined"
+                style={{ marginLeft: '50px' }}
+                onClick={handleNewRoundStart}>
+                Start a New Round
+            </Button>
         </Box>
     )
 }

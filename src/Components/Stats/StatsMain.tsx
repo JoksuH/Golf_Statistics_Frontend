@@ -205,6 +205,14 @@ const StatsPage = () => {
                     />
                 </>
             )}
+            {(Scores && ActivePage==="Scoring") && (
+                <>
+                    <Scoring
+                        pars={Pars}
+                        scores={Scores}
+                    />
+                </>
+            )}
             {(Scores && ActivePage==="Short Game") && (
                 <>
                     <ShortGameStats
