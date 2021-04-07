@@ -70,7 +70,6 @@ const GIRStats: React.FC<propsData> = ({ pars,
         let girTotal: string[] = []
         let girFairway: string[] = []
         let girNoFairway: string[] = []
-        let girNoTry : string[] = []
 
         let girTotCount: number = 0
         let girNoneCount: number = 0
@@ -85,20 +84,19 @@ const GIRStats: React.FC<propsData> = ({ pars,
                 girTotCount++
                 girFairCount++
                 girFWtries++
-                girTotal.push((girTotCount*100/(index+1)).toString())
+                // Remove not valid tries from index
+                girTotal.push((girTotCount*100/(index+1-girNoneCount)).toString())
                 girFairway.push((girFairCount*100/girFWtries).toString())
             }
             else if (value === "hit" && firData[index] !== "hit") {
                 girTotCount++
                 girnoFWCount++
                 girNoFWtries++
-                girTotal.push((girTotCount*100/(index+1)).toString())
+                girTotal.push((girTotCount*100/(index+1-girNoneCount)).toString())
                 girNoFairway.push((girnoFWCount*100/girNoFWtries).toString())
             }
             else if (value === "NONE") {
                 girNoneCount++
-                girNoTry.push((girNoneCount*100/(index+1)).toString())
-
             }
             else if (value !== "hit"  && firData[index] !== "hit") {
                 girNoFWtries++

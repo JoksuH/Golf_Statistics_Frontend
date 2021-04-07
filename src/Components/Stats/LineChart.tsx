@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 const Chart: React.FC<propsData> = ({
     dataArray,
     title,
-    average,
+    average=true,
     last = 7,
     perRound = false,
     Setmin = 0,

@@ -44,22 +44,38 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
     gir,
     approachdistances,
 }) => {
-
-    console.log('Rendering')
-    const [GirMissDirections2550, SetGirMissDirections2550] = useState<GirMissesArrData[]>([])
-    const [GirMissLength2550, SetGirMissLength2550] = useState<GirMissesArrData[]>([])
-    const [GirMissDirections5075, SetGirMissDirections5075] = useState<GIRmissesData[]>([])
+    const [GirMissDirections2550, SetGirMissDirections2550] = useState<
+        GirMissesArrData[]
+    >([])
+    const [GirMissLength2550, SetGirMissLength2550] = useState<GirMissesArrData[]>(
+        []
+    )
+    const [GirMissDirections5075, SetGirMissDirections5075] = useState<
+        GIRmissesData[]
+    >([])
     const [GirMissLength5075, SetGirMissLength5075] = useState<GIRmissesData[]>([])
-    const [GirMissDirections75100, SetGirMissDirections75100] = useState<GIRmissesData[]>([])
+    const [GirMissDirections75100, SetGirMissDirections75100] = useState<
+        GIRmissesData[]
+    >([])
     const [GirMissLength75100, SetGirMissLength75100] = useState<GIRmissesData[]>([])
-    const [GirMissDirections100125, SetGirMissDirections100125] = useState<GIRmissesData[]>([])
-    const [GirMissLength100125, SetGirMissLength100125] = useState<GIRmissesData[]>([])
-    const [GirMissDirections125150, SetGirMissDirections125150] = useState<GIRmissesData[]>([])
-    const [GirMissLength125150, SetGirMissLength125150] = useState<GIRmissesData[]>([])
-    const [GirMissDirections150175, SetGirMissDirections150175] = useState<GIRmissesData[]>([])
-    const [GirMissLength150175, SetGirMissLength150175] = useState<GIRmissesData[]>([])
-
-
+    const [GirMissDirections100125, SetGirMissDirections100125] = useState<
+        GIRmissesData[]
+    >([])
+    const [GirMissLength100125, SetGirMissLength100125] = useState<GIRmissesData[]>(
+        []
+    )
+    const [GirMissDirections125150, SetGirMissDirections125150] = useState<
+        GIRmissesData[]
+    >([])
+    const [GirMissLength125150, SetGirMissLength125150] = useState<GIRmissesData[]>(
+        []
+    )
+    const [GirMissDirections150175, SetGirMissDirections150175] = useState<
+        GIRmissesData[]
+    >([])
+    const [GirMissLength150175, SetGirMissLength150175] = useState<GIRmissesData[]>(
+        []
+    )
 
     const [ToggleValue, SetToggleValue] = useState<string>('1000')
 
@@ -72,12 +88,42 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
             approachdistancestot = approachdistancestot.concat(approachdistances[i])
         }
 
-        let girmisses2550 = countGirMissDirectionsForChart(gIRtot, approachdistancestot,25,49)
-        let girmisses5075 = countGirMissDirectionsForChart(gIRtot, approachdistancestot,50,74)
-        let girmisses75100 = countGirMissDirectionsForChart(gIRtot, approachdistancestot,75,99)
-        let girmisses100125 = countGirMissDirectionsForChart(gIRtot, approachdistancestot,100,124)
-        let girmisses125150 = countGirMissDirectionsForChart(gIRtot, approachdistancestot,125,149)
-        let girmisses150175 = countGirMissDirectionsForChart(gIRtot, approachdistancestot,150,174)
+        let girmisses2550 = countGirMissDirectionsForChart(
+            gIRtot,
+            approachdistancestot,
+            25,
+            49
+        )
+        let girmisses5075 = countGirMissDirectionsForChart(
+            gIRtot,
+            approachdistancestot,
+            50,
+            74
+        )
+        let girmisses75100 = countGirMissDirectionsForChart(
+            gIRtot,
+            approachdistancestot,
+            75,
+            99
+        )
+        let girmisses100125 = countGirMissDirectionsForChart(
+            gIRtot,
+            approachdistancestot,
+            100,
+            124
+        )
+        let girmisses125150 = countGirMissDirectionsForChart(
+            gIRtot,
+            approachdistancestot,
+            125,
+            149
+        )
+        let girmisses150175 = countGirMissDirectionsForChart(
+            gIRtot,
+            approachdistancestot,
+            150,
+            174
+        )
 
         SetGirMissDirections2550(girmisses2550[0])
         SetGirMissLength2550(girmisses2550[1])
@@ -91,10 +137,6 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
         SetGirMissLength125150(girmisses125150[1])
         SetGirMissDirections150175(girmisses150175[0])
         SetGirMissLength150175(girmisses150175[1])
-
-
-
-
     }, [ToggleValue, gir, approachdistances])
 
     const countGirMissDirectionsForChart = (
@@ -118,75 +160,111 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
         //Selections choosing the latest x rounds
         if (ToggleValue === '10' && girData.length > 10 * 18) {
             selectedGirData = girData.slice(girData.length - 10 * 18, girData.length)
-            selectedApproachData = approachData.slice(approachData.length - 10 * 18, approachData.length)
+            selectedApproachData = approachData.slice(
+                approachData.length - 10 * 18,
+                approachData.length
+            )
         } else if (ToggleValue === '5' && girData.length > 5 * 18) {
             selectedGirData = girData.slice(girData.length - 5 * 18, girData.length)
-            selectedApproachData = approachData.slice(approachData.length - 5 * 18, approachData.length)
+            selectedApproachData = approachData.slice(
+                approachData.length - 5 * 18,
+                approachData.length
+            )
         } else {
             selectedGirData = girData
             selectedApproachData = approachData
         }
 
         selectedGirData.forEach((value: string, index: number) => {
-
             switch (value) {
                 //If gir try was not valid, shorten the data length to compensate
                 case 'NONE':
                     break
                 case 'left':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance){
-                    validDistanceCounter++     
-                    correctLengthCount++       
-                    leftCount++ }
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
+                        validDistanceCounter++
+                        correctLengthCount++
+                        leftCount++
+                    }
                     break
                 case 'right':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance){
-                    validDistanceCounter++      
-                    correctLengthCount++      
-                    rightCount++ }
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
+                        validDistanceCounter++
+                        correctLengthCount++
+                        rightCount++
+                    }
                     break
                 case 'hit':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance){
-                    validDistanceCounter++    
-                    correctLengthCount++        
-                    correctDirectionCount++ }
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
+                        validDistanceCounter++
+                        correctLengthCount++
+                        correctDirectionCount++
+                    }
                     break
                 case 'left short':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance){
-                    validDistanceCounter++
-                    leftCount++
-                    shortCount++   }               
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
+                        validDistanceCounter++
+                        leftCount++
+                        shortCount++
+                    }
                     break
                 case 'short':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance) {
-                    validDistanceCounter++
-                    shortCount++
-                    correctDirectionCount++
-                }
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
+                        validDistanceCounter++
+                        shortCount++
+                        correctDirectionCount++
+                    }
                     break
                 case 'right short':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance) {
-                    validDistanceCounter++
-                    rightCount++
-                    shortCount++
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
+                        validDistanceCounter++
+                        rightCount++
+                        shortCount++
                     }
                     break
                 case 'left long':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance) {
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
                         validDistanceCounter++
                         leftCount++
                         longCount++
                     }
                     break
                 case 'long':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance) {
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
                         validDistanceCounter++
                         longCount++
                         correctDirectionCount++
                     }
                     break
                 case 'right long':
-                    if (parseInt(selectedApproachData[index]) <= maxdistance && parseInt(selectedApproachData[index]) >= mindistance) {
+                    if (
+                        parseInt(selectedApproachData[index]) <= maxdistance &&
+                        parseInt(selectedApproachData[index]) >= mindistance
+                    ) {
                         validDistanceCounter++
                         rightCount++
                         longCount++
@@ -212,7 +290,7 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
             { direction: 'Short', value: (shortCount / validDistanceCounter) * 100 },
         ]
 
-        return [missDirectionData,missLengthData]
+        return [missDirectionData, missLengthData]
     }
 
     const styling = useStyles()
@@ -281,9 +359,8 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
                         title="Long or Short?   (75 - 100 m)"
                         width={400}
                     />
-                                    </Box>
-                    <Box className={styling.row}>
-
+                </Box>
+                <Box className={styling.row}>
                     <BarChart
                         data={GirMissDirections100125}
                         title="Left or Right?  (100 - 125 m)"

@@ -8,6 +8,9 @@ import ShortGameStats from './Pages/ShortGame'
 import DrivingStats from './Pages/Driving'
 import ApproachesStats from './Pages/Approaches'
 import ApproachesbyDistanceStats from './Pages/ApproachesDistance'
+import Scoring from './Pages/Scoring'
+import ScoringByDistance from './Pages/ScoringByDistance'
+
 
 import GIRStats from './Pages/GIR'
 
@@ -79,7 +82,7 @@ const StatsPage = () => {
     const [FairwayBunkers, SetFairwayBunkers] = useState<string[][]>([])
     const [GreenBunkers, SetGreenBunkers] = useState<string[][]>([])
     const [ActivePage, SetActivePage] = useState<string>('Overview')
-    const [SelectedTeeBox, SetSelectedTeeBox] = useState<string>('White')
+    const [SelectedTeeBox, SetSelectedTeeBox] = useState<string>('All')
 
     const { data, loading } = useQuery<Query>(GET_LATEST_ROUNDS)
 
@@ -189,6 +192,15 @@ const StatsPage = () => {
                 <>
                     <ApproachesbyDistanceStats
                         gir={GIR}
+                        approachdistances={ApproachDistance}
+                    />
+                </>
+            )}
+             {(Scores && ActivePage==="Scoring By Distance") && (
+                <>
+                    <ScoringByDistance
+                        pars={Pars}
+                        scores={Scores}
                         approachdistances={ApproachDistance}
                     />
                 </>

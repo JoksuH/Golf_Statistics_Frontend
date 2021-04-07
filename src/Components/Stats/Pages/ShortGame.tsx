@@ -71,6 +71,11 @@ const ShortGameStats: React.FC<propsData> = ({
             }
         })
 
+        console.log(puttsdata)
+        console.log(girPutts)
+        console.log(nogirPutts)
+
+
         SetPuttsPerGIR(girPutts)
         SetPuttsNoGIR(nogirPutts)
     }
@@ -109,21 +114,19 @@ const ShortGameStats: React.FC<propsData> = ({
             <Box className={styling.row}>
                 <LineChart
                     dataArray={PuttsPerGIR}
-                    title="Putts Avg GIR (7 round moving average)"
+                    title="Putts Avg GIR"
                     average={true}
-                    last={7}
-                    perRound={true}
+                    last={15}
                 />
                 <LineChart
                     dataArray={PuttsNoGIR}
-                    title="Putts Avg NO GIR (7 round moving average)"
+                    title="Putts Avg NO GIR"
                     average={true}
-                    last={7}
-                    perRound={true}
+                    last={15}
                 />
                 <LineChart
                     dataArray={PuttsPerRound}
-                    title="Putts (7 round moving average)"
+                    title="Putts Per Round"
                     average={true}
                 />
             </Box>
@@ -131,13 +134,13 @@ const ShortGameStats: React.FC<propsData> = ({
             <Box className={styling.row}>
                 <LineChart
                     dataArray={SandSaves}
-                    title="Greenside Sand Save % (moving average)"
+                    title="Greenside Sand Save %"
                     average={true}
                     last={15}
                 />
                    <LineChart
                     dataArray={UpAndDowns}
-                    title="Up and Down % (moving average)"
+                    title="Up and Down %"
                     average={true}
                     last={15}
                 />
