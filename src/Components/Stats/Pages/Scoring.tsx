@@ -116,7 +116,7 @@ const Scoring: React.FC<propsData> = ({ pars, scores }) => {
             <Box className={styling.root}>
                 <Box className={styling.row}>
                     <Typography align="center" variant="h4">
-                        Scoring
+                        Scoring Relative To Par
                     </Typography>
                 </Box>
                 <Box className={styling.row}>

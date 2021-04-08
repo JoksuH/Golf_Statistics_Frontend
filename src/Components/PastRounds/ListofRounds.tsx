@@ -61,8 +61,6 @@ const ListofRounds: React.FC<props> = ({ onClick }) => {
 
     const styling = useStyles()
 
-    console.log(data)
-
     const passCourseData = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ): void => {
@@ -80,6 +78,7 @@ const ListofRounds: React.FC<props> = ({ onClick }) => {
                 data?.roundMany?.map((element: any, index: number) => {
                     return (
                         <RoundListItem
+                            key={element.course.name + index}
                             name={element.course.name}
                             score={element.holescores}
                             date={element.date}

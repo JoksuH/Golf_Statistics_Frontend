@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import CourseBox from './CourseBox'
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client'
+import TextField from '@material-ui/core/TextField'
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+    search: {
+        marginTop: theme.spacing(8),
+        marginLeft: '35vw',
+        backgroundColor: theme.palette.success.light,
+        width: '30vw'
+    }
+    
+}))
+
 
 interface props {
     onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
@@ -27,10 +40,37 @@ const GET_COURSE_NAMES = gql`
 const NewRoundCourseSelection: React.FC<props> = ({onClick}) => {
 
     const { loading, data } = useQuery<data>(GET_COURSE_NAMES)
+    const [CourseList, SetCourseList] = useState<CourseData[]| undefined>(undefined)
+    const [SearchTerm, SetSearchTerm] = useState<string>("")
+
+    const styling = useStyles()
+
+    useEffect(() => {
+        if (data) SetCourseList(data.courseMany)
+    }, [data])
+
+    useEffect(() => {
+        let filteredCourseList: CourseData[] = []
+        if (data && SearchTerm !== "") {
+            filteredCourseList = data.courseMany.filter(course => (course.name.toLowerCase().includes(SearchTerm.toLowerCase())))
+        }
+        else if (data && SearchTerm === "") filteredCourseList = data.courseMany
+
+        SetCourseList(filteredCourseList)
+
+    }, [SearchTerm])
+
+    const handleSearchTermEnter = (event: React.ChangeEvent<HTMLInputElement>
+        ): void => {
+            SetSearchTerm(event.target.value)
+        }
+
 
     return (
         <div>
-            {data && data.courseMany.map(course => {
+            <TextField className={styling.search} label="Search course by name" onChange={handleSearchTermEnter}/>
+            {data && CourseList && CourseList.map((course: CourseData, index: number) => {
+                if (index < 10) 
                 return (<CourseBox name={course.name} key={course._id} onClick={onClick}/>)
             })
         }

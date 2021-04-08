@@ -122,7 +122,7 @@ const EnterHoleScore: React.FC<props> = ({
     const inputApproachDistance = useRef<HTMLDivElement | null>(null)
     const inputPenalties = useRef<HTMLDivElement | null>(null)
     const inputfwBunkers = useRef<HTMLDivElement | null>(null)
-    const inputgreenBunkers = useRef<HTMLDivElement | null>(null)
+    const inputgreenBunkers = useRef<HTMLInputElement | null>(null)
     const inputNextHoleButton = useRef<HTMLButtonElement | null>(null)
 
 
@@ -263,7 +263,9 @@ const EnterHoleScore: React.FC<props> = ({
         else letDataArray.push('NONE')
         letDataArray.push(Penalties)
         letDataArray.push(FairwayBunkers)
-        letDataArray.push(GreenBunkers)
+        console.log(GreenBunkers)
+        if (inputgreenBunkers.current?.value)  letDataArray.push(inputgreenBunkers.current.value)
+
 
         onSave(letDataArray)
     }
@@ -388,6 +390,7 @@ const EnterHoleScore: React.FC<props> = ({
                                 <Checkbox
                                     onChange={handleGIRSelection}
                                     name="hit"
+                                    size="small"
                                     checked={GIR['hit']}
                                     disabled={Object.keys(GIR).some(
                                         (value) =>
@@ -407,6 +410,7 @@ const EnterHoleScore: React.FC<props> = ({
                                 <Checkbox
                                     onChange={handleGIRSelection}
                                     name="left"
+                                    size="small"
                                     checked={GIR['left']}
                                     disabled={
                                         GIR['hit'] ||
@@ -427,6 +431,7 @@ const EnterHoleScore: React.FC<props> = ({
                                 <Checkbox
                                     onChange={handleGIRSelection}
                                     name="right"
+                                    size="small"
                                     checked={GIR['right']}
                                     disabled={
                                         GIR['hit'] || GIR['left'] || GIR['NONE']
@@ -443,6 +448,7 @@ const EnterHoleScore: React.FC<props> = ({
                             control={
                                 <Checkbox
                                     onChange={handleGIRSelection}
+                                    size="small"
                                     name="short"
                                     checked={GIR['short']}
                                     disabled={
@@ -461,6 +467,7 @@ const EnterHoleScore: React.FC<props> = ({
                                 <Checkbox
                                     onChange={handleGIRSelection}
                                     name="long"
+                                    size="small"
                                     checked={GIR['long']}
                                     disabled={
                                         GIR['hit'] ||
@@ -480,6 +487,7 @@ const EnterHoleScore: React.FC<props> = ({
                                 <Checkbox
                                     onChange={handleGIRSelection}
                                     name="NONE"
+                                    size="small"
                                     checked={GIR['NONE']}
                                     disabled={Object.keys(GIR).some(
                                         (value) =>

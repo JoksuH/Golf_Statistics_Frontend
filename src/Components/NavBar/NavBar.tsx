@@ -20,7 +20,7 @@ const NavBar: React.FC = () => {
 
     const History = useHistory()
 
-    const [SelectedTab, SetSelectedTab] = useState<number>(0)
+    const [SelectedTab, SetSelectedTab] = useState<number|boolean>(0)
 
     const handleTabChange = (event: object, value: number): void => {
         SetSelectedTab(value)
@@ -36,7 +36,7 @@ const NavBar: React.FC = () => {
     }
 
     const handleNewRoundStart = (): void => {
-        SetSelectedTab(4)
+        SetSelectedTab(false)
         History.push('/newround')
     }
 

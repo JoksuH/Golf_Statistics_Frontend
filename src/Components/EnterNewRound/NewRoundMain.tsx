@@ -60,17 +60,32 @@ const CREATE_ROUND = gql`
 const useStyles = makeStyles((theme) => ({
     teeboxselection: {
         marginTop: theme.spacing(8),
-        marginLeft: '45vw',
+        marginLeft: '35vw',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-end',
-        width: '50vw',
+        justifyContent: 'center',
+        width: '25vw',
     },
     rowbox: {
         margin: 'auto',
         display: 'flex',
         flexDirection: 'row',
     },
+    columnbox: {
+        margin: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '15vh',
+        justifyContent: 'space-evenly',
+    },
+    teebuttonwhite: {
+        backgroundColor: "white",
+        fontSize: '18px',
+    },
+    teebuttonyellow: {
+        backgroundColor: "yellow",
+        fontSize: '18px',
+    }
 }))
 
 const NewRoundMain: React.FC = () => {
@@ -95,6 +110,8 @@ const NewRoundMain: React.FC = () => {
     const handleNextHoleButtonClicked = (data: string[]): void => {
         if (HoleNumber < 18) {
             SetHoleNumber(HoleNumber + 1)
+
+        console.log(data)
 
             /*data package is sent in the following order: 
         (Score)
@@ -225,14 +242,11 @@ const NewRoundMain: React.FC = () => {
             )}
             {SelectedTeeBox === '' && SelectedCourse !== '' && (
                 <Box className={styling.teeboxselection}>
-                    <Typography>Please Select The Tee Box:</Typography>
-                    <ButtonGroup
-                        variant="contained"
-                        aria-label="contained primary button group"
-                    >
-                        <Button onClick={handleTeeSelection}>White</Button>
-                        <Button onClick={handleTeeSelection}>Yellow</Button>
-                    </ButtonGroup>
+                    <Typography style={{color: "white", fontSize: '18px'}}>Please Select The Tee Box:</Typography>
+                    <Box className={styling.columnbox}>
+                        <Button  className={styling.teebuttonwhite} onClick={handleTeeSelection}>White</Button>
+                        <Button className={styling.teebuttonyellow} onClick={handleTeeSelection}>Yellow</Button>
+                        </Box>
                 </Box>
             )}
             {data !== undefined &&

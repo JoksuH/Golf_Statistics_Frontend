@@ -48,7 +48,6 @@ const StatTabs: React.FC<pageData> = ({
         'Scoring By Distance',
         'Scoring',
         'Short Game',
-        'Strategy',
     ]
 
     const valueofActivePage: number = pageList.findIndex(
