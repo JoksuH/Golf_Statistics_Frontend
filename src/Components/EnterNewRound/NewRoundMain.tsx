@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import NewRoundCourseSelection from './NewRoundCourseSelection'
 import EnterHoleScore from './EnterHoleScore'
+import EnterHoleScoreMobile from './EnterHoleScoreMobile'
 import ViewRound from './../ViewRound/ViewRound'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import ButtonGroup from '@material-ui/core/ButtonGroup'
 
 interface data {
     courseOne: { [key: string]: number[] }
@@ -253,13 +253,22 @@ const NewRoundMain: React.FC = () => {
                 SelectedCourse !== '' &&
                 SelectedTeeBox !== '' && (
                     <>
-                       
+                       {window.innerWidth > 1200 ? 
                         <EnterHoleScore
                             HoleNumber={HoleNumber}
                             Par={data?.courseOne?.pars[HoleNumber - 1]}
                             onSave={handleNextHoleButtonClicked}
                             onClickPrev={handlePreviousHoleButtonClicked}
                         />
+                        : 
+                        <EnterHoleScoreMobile
+                            HoleNumber={HoleNumber}
+                            Par={data?.courseOne?.pars[HoleNumber - 1]}
+                            onSave={handleNextHoleButtonClicked}
+                            onClickPrev={handlePreviousHoleButtonClicked}
+                        />
+
+                    }
                         <ViewRound
                             Coursename={SelectedCourse}
                             Pars={data?.courseOne?.pars}

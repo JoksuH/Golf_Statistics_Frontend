@@ -11,6 +11,15 @@ const theme = createMuiTheme({
     },
 })
 
+
+theme.typography.h6 = {
+    fontFamily: ['"Montserrat"', 'Open Sans'].join(','),
+    fontWeight: 500,
+    '@media (max-width:1100px)': {
+      fontSize: '14px',
+    },
+  };
+
 const client = new ApolloClient({
     uri: 'http://localhost:4000/api',
     cache: new InMemoryCache(),

@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button'
 import { makeStyles } from '@material-ui/core/styles'
 import ListofRounds from './ListofRounds'
 import ViewRound from './../ViewRound/ViewRound'
+import ViewRoundMobile from './../ViewRound/ViewRoundMobile'
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,7 +40,19 @@ const PastRounds: React.FC = () => {
             {SelectedRound === undefined ? (
                 <ListofRounds onClick={handleRoundSelect} />
             ) : (
-                <>
+                <> {window.innerWidth < 1200 ?                     
+                <ViewRoundMobile
+                    Coursename={SelectedRound.course.name}
+                    Pars={SelectedRound.course.pars}
+                    Strokes={SelectedRound.holescores}
+                    Putts={SelectedRound.putts}
+                    Fairways={SelectedRound.fir}
+                    GIRs={SelectedRound.gir}
+                    Penalties={SelectedRound.penalties}
+                    FWBunkers={SelectedRound.fwbunkers}
+                    GreenBunkers={SelectedRound.greenbunkers}
+                />
+                    : 
                     <ViewRound
                         Coursename={SelectedRound.course.name}
                         Pars={SelectedRound.course.pars}
@@ -50,6 +64,7 @@ const PastRounds: React.FC = () => {
                         FWBunkers={SelectedRound.fwbunkers}
                         GreenBunkers={SelectedRound.greenbunkers}
                     />
+                }
                     <Button
                         variant="outlined"
                         style={{ width: '20vw', margin: 'auto' }}

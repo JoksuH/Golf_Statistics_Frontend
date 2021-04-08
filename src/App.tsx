@@ -1,5 +1,6 @@
 import React from 'react'
 import Login from './Components/LoginPage/Login'
+import './App.css'
 import NavBar from './Components/NavBar/NavBar'
 import AddNewCourse from './Components/AddNewCourse/AddNewCourse'
 import NewRoundMain from './Components/EnterNewRound/NewRoundMain'

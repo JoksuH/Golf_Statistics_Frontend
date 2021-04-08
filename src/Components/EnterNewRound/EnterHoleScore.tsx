@@ -32,9 +32,10 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(2),
         display: 'flex',
         flexDirection: 'column',
+        padding: '5vh 5vh 5vh 5vh',
         justifyContent: 'space-evenly',
         alignItems: 'center',
-        width: '80vw',
+        width: '40vw',
         margin: 'auto',
         height: '100%',
         backgroundColor: theme.palette.success.light,
@@ -54,14 +55,14 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         display: 'flex',
         flexDirection: 'row',
-        width: '80vw',
+        width: '40vw',
         justifyContent: 'space-evenly'
     },
     column: {
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2),
         display: 'flex',
-        width: '80vw',
+        width: '40vw',
         flexDirection: 'column',
         justifyContent: 'center',
 
@@ -139,16 +140,18 @@ const EnterHoleScore: React.FC<props> = ({
         switch (event.target.value) {
             case '4':
                 SetFIR('left')
+                inputHiddenGir.current?.focus()
                 break
             case '5':
                 SetFIR('hit')
+                inputHiddenGir.current?.focus()
                 break
             case '6':
                 SetFIR('right')
+                inputHiddenGir.current?.focus()
                 break
         }
         event.target.value = ""
-        inputHiddenGir.current?.focus()
     }
     const handleGirEnter = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -289,7 +292,7 @@ const EnterHoleScore: React.FC<props> = ({
             </Typography>
             <TextField
                 size="small"
-                variant="standard"
+                variant="outlined"
                 label="Score"
                 inputRef={inputScore}
                 value={Score}
@@ -501,26 +504,6 @@ const EnterHoleScore: React.FC<props> = ({
                         />                        </Grid>
 
                     </FormGroup>
-                    </Grid>
-                    <TextField
-                        inputRef={inputHiddenGir}
-                        onChange={handleGirEnter}
-                        type="number"
-                        inputProps={{
-                            maxLength: 1,
-                            pattern: '[0-9]',
-                            style: {
-                                fontSize: '0px',
-                                width: '0px',
-                                height: '0px'
-                            },
-                        }}
-                        InputProps={{
-                            disableUnderline: true,
-                        }}
-
-
-                    />
                     <TextField
                         size="small"
                         variant="standard"
@@ -549,6 +532,27 @@ const EnterHoleScore: React.FC<props> = ({
                         }}
                         InputLabelProps={{ shrink: true }}
                     />
+                    </Grid>
+                    <TextField
+                        inputRef={inputHiddenGir}
+                        onChange={handleGirEnter}
+                        type="number"
+                        inputProps={{
+                            maxLength: 1,
+                            pattern: '[0-9]',
+                            style: {
+                                fontSize: '0px',
+                                width: '0px',
+                                height: '0px'
+                            },
+                        }}
+                        InputProps={{
+                            disableUnderline: true,
+                        }}
+
+
+                    />
+                    
                 </Box>
             <Box className={styling.row}>
                 <TextField
