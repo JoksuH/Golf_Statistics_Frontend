@@ -15,11 +15,18 @@ const useStyles = makeStyles((theme) => ({
 
     coursename: {
         fontSize: '22px',
+        textAlign: 'center'
     },
     scoredate: {
         display: 'flex',
         flexDirection: 'row',
         width: '30%',
+        justifyContent: 'space-between',
+    },
+    scoredatemobile: {
+        display: 'flex',
+        flexDirection: 'row',
+        width: '90%',
         justifyContent: 'space-between',
     },
     listitem: {
@@ -39,6 +46,23 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: 'hsla(194, 3%, 88%, 1)',
         },
     },
+    listitemmobile: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        border: '1px solid black',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        margin: 'auto',
+        cursor: 'pointer',
+        backgroundColor: theme.palette.success.light,
+        borderRadius: '7px',
+        width: '90%',
+        '&:hover': {
+            backgroundColor: 'hsla(194, 3%, 88%, 1)',
+        },
+    },
 }))
 
 const RoundListItem: React.FC<props> = ({ name, score, date, onClick, index }) => {
@@ -50,12 +74,12 @@ const RoundListItem: React.FC<props> = ({ name, score, date, onClick, index }) =
 
     return (
         <Box
-            className={styling.listitem}
+            className={window.innerWidth > 1200 ? styling.listitem : styling.listitemmobile}
             onClick={onClick}
             id={index.toString()}
         >
             <Typography className={styling.coursename} onClick={onClick}>{name}</Typography>
-            <Box className={styling.scoredate}>
+           <Box className={window.innerWidth > 1200 ? styling.scoredate : styling.scoredatemobile}>
             <Typography className={styling.coursename} onClick={onClick}>{totalScore}</Typography>
             <Typography className={styling.coursename} onClick={onClick}>{date.split('T')[0]}</Typography>
 
