@@ -9,11 +9,17 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
+        width: '100%',
         backgroundColor: 'hsl(107, 100%, 87%)',
     },
     row: {
         display: 'flex',
         flexDirection: 'row',
+        margin: 'auto',
+    },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
         margin: 'auto',
     },
     toggle: {
@@ -133,7 +139,7 @@ const ScoringByDistance: React.FC<propsData> = ({ pars, scores, approachdistance
                         Scoring By Distance
                     </Typography>
                 </Box>
-                <Box className={styling.row}>
+                <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <LineChart
                         dataArray={ShotsFrom2550}
                         title="Shots to Hole (25-50 m)"
@@ -147,7 +153,7 @@ const ScoringByDistance: React.FC<propsData> = ({ pars, scores, approachdistance
                         title="Shots to Hole (75 - 100 m)"
                     />
                 </Box>
-                <Box className={styling.row}>
+                <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <LineChart
                         dataArray={ShotsFrom100125}
                         title="Shots to Hole  (100 - 125 m)"

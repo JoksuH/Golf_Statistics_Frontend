@@ -17,6 +17,12 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         margin: 'auto',        
     },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',
+    },
+
 }))
 
 interface propsData {
@@ -168,7 +174,7 @@ const GIRStats: React.FC<propsData> = ({ pars,
 
             <Typography align="center" variant="h4">Green in Regulation % (moving average)</Typography>            
 
-            <Box className={styling.row}>
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
             <LineChart dataArray = {GIRHitPercentage} title="GIR Total %" average={true} fitData={true} digits={2} last={15}/>
             <LineChart dataArray = {GIRHitPercentageFW} title="GIR from fairway %" average={true} fitData={true} digits={2} last={15} />
             <LineChart dataArray = {GIRHitPercentageOutFW} title="GIR not fairway %"  average={true} fitData={true} digits={2}last={15} />
@@ -179,7 +185,7 @@ const GIRStats: React.FC<propsData> = ({ pars,
 
             <Typography align="center" variant="h4">Green in Regulation % per Par (moving average)</Typography>            
 
-            <Box className={styling.row}>
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
             <LineChart dataArray = {GIRHitPercentagePar3} title="Par 3" average={true} fitData={true} digits={2} last={15}/>
             <LineChart dataArray = {GIRHitPercentagePar4} title="Par 4" average={true} fitData={true} digits={2} last={15} />
             <LineChart dataArray = {GIRHitPercentagePar5} title="Par 5" average={true} fitData={true} digits={2} last={15} />

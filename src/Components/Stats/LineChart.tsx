@@ -94,7 +94,10 @@ const Chart: React.FC<propsData> = ({
             datavalue: parseFloat(element),
         }))
 
-    let width = window.innerWidth * 0.2
+    let width: number = 0
+    if (window.innerWidth < 1200) width = window.innerWidth * 0.9
+    else width = window.innerWidth * 0.2
+
     let height = window.innerHeight * 0.2
 
     return (

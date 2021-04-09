@@ -3,12 +3,14 @@ import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 import LineChart from './../LineChart'
 import { sumScores } from './../../../Utils/Helpers'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
+        width: '100%',
         backgroundColor: 'hsl(107, 100%, 87%)',
     },
     row: {
@@ -16,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         margin: 'auto',
     },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',
+      },    
 }))
 
 interface propsData {
@@ -112,7 +119,13 @@ const ShortGameStats: React.FC<propsData> = ({
 
     return (
         <Box className={styling.root}>
-            <Box className={styling.row}>
+                            <Box className={styling.row}>
+                    <Typography align="center" variant="h4">
+                        Short Game
+                    </Typography>
+                </Box>
+
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <LineChart
                     dataArray={PuttsPerGIR}
                     title="Putts Avg GIR"
@@ -132,7 +145,7 @@ const ShortGameStats: React.FC<propsData> = ({
                 />
             </Box>
 
-            <Box className={styling.row}>
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <LineChart
                     dataArray={SandSaves}
                     title="Greenside Sand Save %"

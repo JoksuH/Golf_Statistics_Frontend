@@ -16,7 +16,7 @@ interface pageData {
 }
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    row: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -24,11 +24,19 @@ const useStyles = makeStyles((theme) => ({
         margin: 'auto',
         marginTop: '25px',
     },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: theme.palette.success.light,
+        margin: 'auto',
+        marginTop: '25px',
+    },
     toggle: {
         margin: '0 25px 0 25px',
+        justifyContent: 'center'
     },
     toggletext: {
-        fontSize: '17px',
+        fontSize: '14px',
         color: 'black',
     },
 }))
@@ -58,11 +66,12 @@ const StatTabs: React.FC<pageData> = ({
 
     return (
         <Box>
-            <Paper className={styling.root}>
+            <Paper className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <Tabs
                     value={valueofActivePage}
                     indicatorColor="primary"
                     textColor="inherit"
+                    variant="scrollable"
                     onChange={onChangeTab}
                 >
                     {pageList &&

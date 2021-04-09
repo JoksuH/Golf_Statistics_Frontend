@@ -16,6 +16,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         margin: 'auto',
     },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',
+    },
 }))
 
 interface propsData {
@@ -133,7 +138,7 @@ const DrivingStats: React.FC<propsData> = ({
                     Driving Accuracy % (moving average)
                 </Typography>
 
-                <Box className={styling.row}>
+                <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <LineChart
                         dataArray={FIRMissLeft}
                         title="Miss left %"
@@ -159,13 +164,14 @@ const DrivingStats: React.FC<propsData> = ({
                         last={15}
                     />
                 </Box>
+                
             </Box>
             <Box className={styling.root}>
                 <Typography align="center" variant="h4">
                     Driving Misses % (moving average)
                 </Typography>
 
-                <Box className={styling.row}>
+                <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <LineChart
                         dataArray={PenaltiesPercentage}
                         title="Penalties %"
@@ -190,7 +196,8 @@ const DrivingStats: React.FC<propsData> = ({
                         digits={2}
                         last={15}
                     />
-                </Box>
+                </Box> 
+
             </Box>
         </Box>
     )

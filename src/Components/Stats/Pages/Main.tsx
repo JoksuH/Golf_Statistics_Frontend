@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         margin: 'auto',
     },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
+        margin: 'auto',
+    },
 }))
 
 interface propsData {
@@ -73,7 +78,7 @@ const MainStats: React.FC<propsData> = ({
 
     return (
         <Box className={styling.root}>
-            <Box className={styling.row}>
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <LineChart
                     dataArray={Scores}
                     title="Shots (7 round moving average)"
@@ -91,7 +96,7 @@ const MainStats: React.FC<propsData> = ({
                 />
             </Box>
 
-            <Box className={styling.row}>
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <LineChart
                     dataArray={FIR}
                     title="GIR (7 round moving average)"

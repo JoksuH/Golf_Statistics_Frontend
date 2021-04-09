@@ -3,6 +3,7 @@ import NewRoundCourseSelection from './NewRoundCourseSelection'
 import EnterHoleScore from './EnterHoleScore'
 import EnterHoleScoreMobile from './EnterHoleScoreMobile'
 import ViewRound from './../ViewRound/ViewRound'
+import ViewRoundMobile from './../ViewRound/ViewRoundMobile'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -269,18 +270,35 @@ const NewRoundMain: React.FC = () => {
                         />
 
                     }
-                        <ViewRound
-                            Coursename={SelectedCourse}
-                            Pars={data?.courseOne?.pars}
-                            Strokes={ScoreCard}
-                            Putts={Putts}
-                            Fairways={FIR}
-                            GIRs={GIR}
-                            Penalties={Penalties}
-                            FWBunkers={FairwayBunkers}
-                            GreenBunkers={GreenBunkers}
-                        />
+                    {window.innerWidth > 1200 ? 
+                         <ViewRound
+                         Coursename={SelectedCourse}
+                         Pars={data?.courseOne?.pars}
+                         Strokes={ScoreCard}
+                         Putts={Putts}
+                         Fairways={FIR}
+                         GIRs={GIR}
+                         Penalties={Penalties}
+                         FWBunkers={FairwayBunkers}
+                         GreenBunkers={GreenBunkers}
+                     />
+                 
+                        : 
+                        <ViewRoundMobile
+                        Coursename={SelectedCourse}
+                        Pars={data?.courseOne?.pars}
+                        Strokes={ScoreCard}
+                        Putts={Putts}
+                        Fairways={FIR}
+                        GIRs={GIR}
+                        Penalties={Penalties}
+                        FWBunkers={FairwayBunkers}
+                        GreenBunkers={GreenBunkers}
+                    />
+
+                    }
                     </>
+                       
                 )}
         </div>
     )

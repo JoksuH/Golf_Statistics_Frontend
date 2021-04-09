@@ -11,11 +11,17 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
+        width: '100%',
         backgroundColor: 'hsl(107, 100%, 87%)',
     },
     row: {
         display: 'flex',
         flexDirection: 'row',
+        margin: 'auto',
+    },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
         margin: 'auto',
     },
     toggle: {
@@ -205,7 +211,7 @@ const ApproachesStats: React.FC<propsData> = ({
     return (
         <Box className={styling.root}>
             <Box className={styling.root}>
-                <Box className={styling.row}>
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <Typography align="center" variant="h4">
                         Gir Approach Misses
                     </Typography>
@@ -235,16 +241,14 @@ const ApproachesStats: React.FC<propsData> = ({
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </Box>
-                <Box className={styling.row}>
+                <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <BarChart
                         data={GirMissDirections}
                         title="Left or Right?"
-                        width={400}
                     />
                     <BarChart
                         data={GirMissLength}
                         title="Long or Short?"
-                        width={400}
                     />
                 </Box>
             </Box>

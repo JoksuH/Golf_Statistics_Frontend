@@ -46,10 +46,6 @@ const NewRoundCourseSelection: React.FC<props> = ({onClick}) => {
     const styling = useStyles()
 
     useEffect(() => {
-        if (data) SetCourseList(data.courseMany)
-    }, [data])
-
-    useEffect(() => {
         let filteredCourseList: CourseData[] = []
         if (data && SearchTerm !== "") {
             filteredCourseList = data.courseMany.filter(course => (course.name.toLowerCase().includes(SearchTerm.toLowerCase())))
@@ -58,7 +54,7 @@ const NewRoundCourseSelection: React.FC<props> = ({onClick}) => {
 
         SetCourseList(filteredCourseList)
 
-    }, [SearchTerm])
+    }, [data,SearchTerm])
 
     const handleSearchTermEnter = (event: React.ChangeEvent<HTMLInputElement>
         ): void => {
@@ -72,6 +68,7 @@ const NewRoundCourseSelection: React.FC<props> = ({onClick}) => {
             {data && CourseList && CourseList.map((course: CourseData, index: number) => {
                 if (index < 10) 
                 return (<CourseBox name={course.name} key={course._id} onClick={onClick}/>)
+                else return <p></p>
             })
         }
             {loading && <p>Loading Courselist</p>}

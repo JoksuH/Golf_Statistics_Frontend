@@ -21,8 +21,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const Chart: React.FC<propsData> = ({ data, title, width = 900 }) => {
+const Chart: React.FC<propsData> = ({ data, title, width = 0 }) => {
     const styling = useStyles()
+
+    window.innerWidth < 1200 ? width = 400 : width = 900
 
     return (
         <Box className={styling.root}>

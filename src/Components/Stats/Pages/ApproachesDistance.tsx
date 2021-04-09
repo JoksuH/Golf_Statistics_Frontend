@@ -11,11 +11,17 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
+        width: '100%',
         backgroundColor: 'hsl(107, 100%, 87%)',
     },
     row: {
         display: 'flex',
         flexDirection: 'row',
+        margin: 'auto',
+    },
+    column: {
+        display: 'flex',
+        flexDirection: 'column',
         margin: 'auto',
     },
     toggle: {
@@ -298,7 +304,7 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
     return (
         <Box className={styling.root}>
             <Box className={styling.root}>
-                <Box className={styling.row}>
+            <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <Typography align="center" variant="h4">
                         Gir Approach Misses
                     </Typography>
@@ -328,7 +334,7 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
                         </ToggleButton>
                     </ToggleButtonGroup>
                 </Box>
-                <Box className={styling.row}>
+                <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <BarChart
                         data={GirMissDirections2550}
                         title="Left or Right? (25-50 m)"
@@ -360,7 +366,7 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({
                         width={400}
                     />
                 </Box>
-                <Box className={styling.row}>
+                <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                     <BarChart
                         data={GirMissDirections100125}
                         title="Left or Right?  (100 - 125 m)"

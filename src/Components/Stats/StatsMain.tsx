@@ -228,12 +228,3 @@ const StatsPage = () => {
 }
 
 export default StatsPage
-
-// Putts per Gir
-// Avg gir hit percentage per meter of approach distance
-// split approach distance into groups (25 meters?) and see progression of greens hit
-// Gir misses
-// fir misses
-// scoring from different aprroac distances
-
-//effect of hitting a fairway bunker on gir or scoring
