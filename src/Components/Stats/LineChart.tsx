@@ -2,6 +2,7 @@ import React from 'react'
 import { LineChart, Line, Tooltip, XAxis, YAxis } from 'recharts'
 import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
+import { Typography } from '@material-ui/core'
 
 interface propsData {
     dataArray: string[]
@@ -96,13 +97,13 @@ const Chart: React.FC<propsData> = ({
 
     let width: number = 0
     if (window.innerWidth < 1200) width = window.innerWidth * 0.9
-    else width = window.innerWidth * 0.2
+    else width = window.innerWidth * 0.25
 
-    let height = window.innerHeight * 0.2
+    let height = window.innerHeight * 0.25
 
     return (
         <Box className={styling.root}>
-            <h2>{title}</h2>
+            <Typography variant="h5" align="center" style={{marginBottom: "4vh"}}>{title}</Typography>
             <LineChart data={setArray} width={width} height={height}>
                 <Line
                     type="monotone"

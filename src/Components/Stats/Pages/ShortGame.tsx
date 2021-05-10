@@ -10,8 +10,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
-        width: '100%',
+        marginTop: '20px',
+        padding: '20px 20px 20px 20px',
+        borderRadius: '7px',
         backgroundColor: 'hsl(107, 100%, 87%)',
+
     },
     row: {
         display: 'flex',

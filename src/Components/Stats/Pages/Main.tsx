@@ -3,12 +3,16 @@ import Box from '@material-ui/core/Box'
 import { makeStyles } from '@material-ui/core/styles'
 import LineChart from './../LineChart'
 import { sumScores, hitCounter } from './../../../Utils/Helpers'
+import { Typography } from '@material-ui/core'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
         flexDirection: 'column',
         margin: 'auto',
+        marginTop: '20px',
+        padding: '20px 20px 20px 20px',
+        borderRadius: '7px',
         backgroundColor: 'hsl(107, 100%, 87%)',
 
     },
@@ -78,20 +82,21 @@ const MainStats: React.FC<propsData> = ({
 
     return (
         <Box className={styling.root}>
+           <Typography align="center" variant="h4"> Overview (per Round) </Typography>
             <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <LineChart
                     dataArray={Scores}
-                    title="Shots (7 round moving average)"
+                    title="Shots"
                     average={true}
                     />
                 <LineChart
                     dataArray={Putts}
-                    title="Putts (7 round moving average)"
+                    title="Putts"
                     average={true}
                 />
                 <LineChart
                     dataArray={GIR}
-                    title="FIR (7 round moving average)"
+                    title="FIR"
                     average={true}
                 />
             </Box>
@@ -99,17 +104,17 @@ const MainStats: React.FC<propsData> = ({
             <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <LineChart
                     dataArray={FIR}
-                    title="GIR (7 round moving average)"
+                    title="GIR"
                     average={true}
                 />
                 <LineChart
                     dataArray={Penalties}
-                    title="Penalties (7 round moving average)"
+                    title="Penalties"
                     average={true}
                 />
                 <LineChart
                     dataArray={GreenBunkers}
-                    title="Green Bunkers (7 round moving average)"
+                    title="Green Bunkers"
                     average={true}
                 />
             </Box>

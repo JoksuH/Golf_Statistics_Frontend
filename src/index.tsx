@@ -21,7 +21,7 @@ theme.typography.h6 = {
   };
 
 const client = new ApolloClient({
-    uri: 'http://localhost:4000/api',
+    uri: 'https://golf-statistics-2021.herokuapp.com/api',
     cache: new InMemoryCache(),
 })
 

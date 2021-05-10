@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: '414px',
+    width: '100%',
     margin: 'auto',
     height: '100%',
     backgroundColor: theme.palette.success.light,
@@ -137,13 +137,15 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
   const handleGirEnter = (event: React.ChangeEvent<HTMLInputElement>): void => {
     console.log(event.target.value)
     switch (event.target.value) {
-      case '1':
+
+      // Different cases because iphone number buttons in different order than keypad on PC
+      case '7':
         SetGIR({ ...GIR, left: true, short: true })
         break
-      case '2':
+      case '8':
         SetGIR({ ...GIR, short: true })
         break
-      case '3':
+      case '9':
         SetGIR({ ...GIR, right: true, short: true })
         break
       case '4':
@@ -155,13 +157,13 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
       case '6':
         SetGIR({ ...GIR, right: true })
         break
-      case '7':
+      case '1':
         SetGIR({ ...GIR, left: true, long: true })
         break
-      case '8':
+      case '2':
         SetGIR({ ...GIR, long: true })
         break
-      case '9':
+      case '3':
         SetGIR({ ...GIR, right: true, long: true })
         break
       case '0':
@@ -195,7 +197,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
   }
 
   const handleApproachDistanceEnter = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    if (event.target.value[event.target.value.length - 1] === undefined) inputPenalties.current?.focus()
+    if (event.target.value.length > 3 ) inputPenalties.current?.focus()
     else SetApproachDistance(event.target.value)
   }
 
@@ -250,6 +252,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
         size="small"
         variant="outlined"
         label="Score"
+        type="tel"           
         inputRef={inputScore}
         value={Score}
         autoFocus={true}
@@ -268,6 +271,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
         size="small"
         variant="standard"
         label="Putts"
+        type="tel"           
         value={Putts}
         inputRef={inputPutts}
         onChange={handlePuttsEnter}
@@ -293,7 +297,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
             <TextField
               inputRef={inputHiddenFir}
               onChange={handleFirEnter}
-              type="number"
+              type="tel"           
               inputProps={{
                 maxLength: 1,
                 pattern: '[0-7]',
@@ -348,7 +352,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
           variant="standard"
           helperText="Approach Distance"
           inputRef={inputApproachDistance}
-          type="number"
+          type="tel"           
           style={{ width: window.innerWidth < 1500 ? '35vw' : '10vw', margin: 'auto', marginTop: '1vh' }}
           value={ApproachDistance}
           disabled={GIR['NONE']}
@@ -369,7 +373,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
         <TextField
           inputRef={inputHiddenGir}
           onChange={handleGirEnter}
-          type="number"
+          type="tel"           
           inputProps={{
             maxLength: 1,
             pattern: '[0-9]',
@@ -388,6 +392,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
         <TextField
           size="small"
           variant="outlined"
+          type="tel"           
           value={Penalties}
           inputRef={inputPenalties}
           onChange={handlePenaltiesEnter}
@@ -406,6 +411,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
         <TextField
           size="small"
           variant="outlined"
+          type="tel"           
           value={FairwayBunkers}
           inputRef={inputfwBunkers}
           helperText="Fairway Bunker Shots"
@@ -423,6 +429,7 @@ const EnterHoleScoreMobile: React.FC<props> = ({ HoleNumber, Par, onSave, onClic
         <TextField
           size="small"
           variant="outlined"
+          type="tel"           
           value={GreenBunkers}
           inputRef={inputgreenBunkers}
           helperText="Greenside Bunker Shots"

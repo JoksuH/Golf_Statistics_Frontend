@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
     },
+    root: {
+        margin: 'auto',
+        width: '100%',
+    },
     columnbox: {
         margin: 'auto',
         display: 'flex',
@@ -237,7 +241,7 @@ const NewRoundMain: React.FC = () => {
     }
 
     return (
-        <div>
+        <Box className={styling.root}>
             {SelectedCourse === '' && (
                 <NewRoundCourseSelection onClick={handleCourseSelection} />
             )}
@@ -300,7 +304,7 @@ const NewRoundMain: React.FC = () => {
                     </>
                        
                 )}
-        </div>
+        </Box>
     )
 }
 

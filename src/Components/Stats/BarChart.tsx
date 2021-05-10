@@ -11,7 +11,7 @@ interface propsData {
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        marginTop: theme.spacing(6),
+        marginTop: theme.spacing(4),
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -24,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
 const Chart: React.FC<propsData> = ({ data, title, width = 0 }) => {
     const styling = useStyles()
 
+    // If desired width hasn't already been specified
+    if (width === 0)
     window.innerWidth < 1200 ? width = 400 : width = 900
 
     return (

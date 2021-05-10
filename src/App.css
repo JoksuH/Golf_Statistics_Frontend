@@ -12,3 +12,7 @@ input[type='number'] {
   justify-content: center;
   display: flex;
 }
+
+body {
+  margin: 0;
+}

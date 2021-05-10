@@ -9,7 +9,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     margin: 'auto',
-    width: '100%',
+    marginTop: '20px',
+    padding: '20px 20px 20px 20px',
+    borderRadius: '7px',
     backgroundColor: 'hsl(107, 100%, 87%)',
   },
   row: {
@@ -117,7 +119,6 @@ const Scoring: React.FC<propsData> = ({ pars, scores }) => {
 
   return (
     <Box className={styling.root}>
-      <Box className={styling.root}>
         <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
           <Typography align="center" variant="h4">
             Scoring Relative To Par
@@ -139,7 +140,6 @@ const Scoring: React.FC<propsData> = ({ pars, scores }) => {
           <LineChart dataArray={TrBogeyPercentage} title="Triple Bogeys (%)" perRound={true} last={10} />
         </Box>
       </Box>
-    </Box>
   )
 }
 
