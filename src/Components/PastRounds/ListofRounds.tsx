@@ -5,90 +5,79 @@ import { gql, useQuery } from '@apollo/client'
 import RoundListItem from './RoundListItem'
 
 interface props {
-    onClick: (data: any) => void
+  onClick: (data: any) => void
 }
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        margin: 'auto',        
-    },
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+  },
 }))
 
 interface Query {
-    __typename: string
-    roundMany: dataFields[]
-  }
+  __typename: string
+  roundMany: dataFields[]
+}
 
-  interface dataFields {
-    __typename: string
-    _id: string
-    holescores: string[]
-    putts: string[]
-    fir: string[]
-    gir: string[]
-    approachdistance: string[]
-    penalties: string[]
-    greenbunkers: string[]
-    fwbunkers: string[]
-  }
-
+interface dataFields {
+  __typename: string
+  _id: string
+  holescores: string[]
+  putts: string[]
+  fir: string[]
+  gir: string[]
+  approachdistance: string[]
+  penalties: string[]
+  greenbunkers: string[]
+  fwbunkers: string[]
+}
 
 const GET_LATEST_ROUNDS = gql`
-    query {
-        roundMany(limit: 20) {
-            _id
-            holescores
-            putts
-            fir
-            gir
-            approachdistance
-            penalties
-            greenbunkers
-            fwbunkers
-            date
-            course {
-                name
-                pars
-            }
-        }
+  query {
+    roundMany(limit: 20) {
+      _id
+      holescores
+      putts
+      fir
+      gir
+      approachdistance
+      penalties
+      greenbunkers
+      fwbunkers
+      date
+      course {
+        name
+        pars
+      }
     }
+  }
 `
 
 const ListofRounds: React.FC<props> = ({ onClick }) => {
-    const { data } = useQuery<Query>(GET_LATEST_ROUNDS)
+  const { data } = useQuery<Query>(GET_LATEST_ROUNDS)
 
-    const styling = useStyles()
+  const styling = useStyles()
 
-    const passCourseData = (
-        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ): void => {
-        const input = event.target as HTMLElement
-        if (
-            input?.parentElement?.id !== '' &&
-            input?.parentElement?.id !== undefined
-        )
-            onClick(data?.roundMany[parseInt(input.parentElement.id)])
-    }
+  const passCourseData = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    const input = event.target as HTMLElement
+    console.log(input)
+    if (input?.parentElement?.id !== '' && input?.parentElement?.id !== undefined) 
+    onClick(data?.roundMany[parseInt(input.parentElement.id)])
+    
+    else if (input?.id !== '') 
+    onClick(data?.roundMany[parseInt(input.id)])
+  }
 
-    return (
-        <Box className={styling.root}>
-            {data !== undefined &&
-                data?.roundMany?.map((element: any, index: number) => {
-                    return (
-                        <RoundListItem
-                            key={element.course.name + index}
-                            name={element.course.name}
-                            score={element.holescores}
-                            date={element.date}
-                            onClick={passCourseData}
-                            index={index}
-                        />
-                    )
-                })}
-        </Box>
-    )
+  return (
+    <Box className={styling.root}>
+      {data !== undefined &&
+        data?.roundMany?.map((element: any, index: number) => {
+          return <RoundListItem key={element.course.name + index} name={element.course.name} score={element.holescores} date={element.date} onClick={passCourseData} index={index} />
+        })}
+    </Box>
+  )
 }
 
 export default ListofRounds

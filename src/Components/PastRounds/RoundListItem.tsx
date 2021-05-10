@@ -68,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 const RoundListItem: React.FC<props> = ({ name, score, date, onClick, index }) => {
     const styling = useStyles()
 
+    //Calculate the total score to show from hole scores
     const totalScore = score.reduce((accumulator: string, curVal: string) =>
         (Number(accumulator) + Number(curVal)).toString()
     )
@@ -78,10 +79,10 @@ const RoundListItem: React.FC<props> = ({ name, score, date, onClick, index }) =
             onClick={onClick}
             id={index.toString()}
         >
-            <Typography className={styling.coursename} onClick={onClick}>{name}</Typography>
+            <Typography className={styling.coursename} id={index.toString()} >{name}</Typography>
            <Box className={window.innerWidth > 1200 ? styling.scoredate : styling.scoredatemobile}>
-            <Typography className={styling.coursename} onClick={onClick}>{totalScore}</Typography>
-            <Typography className={styling.coursename} onClick={onClick}>{date.split('T')[0]}</Typography>
+            <Typography className={styling.coursename} id={index.toString()}>{totalScore}</Typography>
+            <Typography className={styling.coursename} id={index.toString()}>{date.split('T')[0]}</Typography>
 
             </Box>
         </Box>
