@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
         marginTop: '20px',
         padding: '20px 20px 20px 20px',
         borderRadius: '7px',
-        backgroundColor: 'hsl(107, 100%, 87%)',
+        backgroundColor: 'hsl(107, 100%, 85%)',
 
     },
     row: {

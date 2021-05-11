@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        width: '100%',
         margin: 'auto',
         paddingBottom: '2vh',
         backgroundColor: theme.palette.success.light,
@@ -34,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        backgroundColor: 'hsl(107, 100%, 87%)',
+        borderRadius: '7px'
     },
     scorecard: {
         marginTop: theme.spacing(8),

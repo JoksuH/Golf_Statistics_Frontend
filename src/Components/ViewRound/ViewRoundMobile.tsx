@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
+        backgroundColor: 'hsl(107, 100%, 87%)',
     },
     scorecard: {
         marginTop: theme.spacing(4),
@@ -166,7 +167,7 @@ const ViewRound: React.FC<props> = ({
 
     return (
         <Box className={styling.root}>
-            <Typography variant="h4" className={styling.enterpar}>
+            <Typography variant="h3" className={styling.enterpar}>
                 {Coursename}
             </Typography>
             <Box className={styling.holenumbers}>
