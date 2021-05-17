@@ -266,7 +266,6 @@ const EnterHoleScore: React.FC<props> = ({
         else letDataArray.push('NONE')
         letDataArray.push(Penalties)
         letDataArray.push(FairwayBunkers)
-        console.log(GreenBunkers)
         if (inputgreenBunkers.current?.value)  letDataArray.push(inputgreenBunkers.current.value)
 
 

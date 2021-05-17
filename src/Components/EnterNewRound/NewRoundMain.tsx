@@ -91,10 +91,8 @@ const NewRoundMain: React.FC = () => {
   const styling = useStyles()
 
   const handleNextHoleButtonClicked = (data: string[]): void => {
-    if (HoleNumber < 18) {
-      SetHoleNumber(HoleNumber + 1)
-
-      console.log(data)
+    if (HoleNumber <= 18) {
+      if (HoleNumber < 18) SetHoleNumber(HoleNumber + 1)
 
       /*data package is sent in the following order: 
         (Score)
@@ -107,9 +105,11 @@ const NewRoundMain: React.FC = () => {
         (GreenBunkers)
         */
 
+      // If adding a score for a new hole
       if (HoleNumber === ScoreCard.length + 1 || HoleNumber === 18) {
         let holderArr = ScoreCard
         holderArr.push(data[0])
+        console.log(holderArr)
         SetScoreCard(holderArr)
 
         holderArr = Putts
@@ -139,7 +139,10 @@ const NewRoundMain: React.FC = () => {
         holderArr = GreenBunkers
         holderArr.push(data[7])
         SetGreenBunkers(holderArr)
-      } else {
+      } 
+      
+      // if editing an already entered score from the previous hole
+      else {
         let holderArr = ScoreCard
         holderArr.splice(HoleNumber - 1, 1, data[0])
         SetScoreCard(holderArr)
@@ -175,7 +178,7 @@ const NewRoundMain: React.FC = () => {
         SetHoleNumber(ScoreCard.length + 1)
       }
     }
-    if (HoleNumber > 17) SaveRound()
+    if (HoleNumber === 18) SaveRound()
   }
 
   const handlePreviousHoleButtonClicked = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
@@ -189,6 +192,8 @@ const NewRoundMain: React.FC = () => {
   }
 
   const SaveRound = (): void => {
+
+    console.log(HoleNumber)
     addRound({
       variables: {
         coursename: data?.courseOne?._id,
