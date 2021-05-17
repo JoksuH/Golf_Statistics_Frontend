@@ -105,8 +105,8 @@ const StatsPage = () => {
             gIR.push(value.gir)
             approachDistance.push(value.approachdistance)
             penalties.push(value.penalties)
-            fairwayBunkers.push(value.greenbunkers)
-            greenBunkers.push(value.fwbunkers)
+            fairwayBunkers.push(value.fwbunkers)
+            greenBunkers.push(value.greenbunkers)
             pars = pars.concat(value.course.pars)
         }
         })

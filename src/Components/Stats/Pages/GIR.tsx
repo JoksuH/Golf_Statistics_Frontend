@@ -145,9 +145,9 @@ const GIRStats: React.FC<propsData> = ({ pars, fir, gir }) => {
         </Typography>
 
         <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={GIRHitPercentage} title="GIR Total %" average={true} fitData={true} digits={2} last={15} />
-          <LineChart dataArray={GIRHitPercentageFW} title="GIR from fairway %" average={true} fitData={true} digits={2} last={15} />
-          <LineChart dataArray={GIRHitPercentageOutFW} title="GIR not fairway %" average={true} fitData={true} digits={2} last={15} />
+          <LineChart dataArray={GIRHitPercentage} title="GIR Total %" average={true} fitData={true} digits={2} last={7} />
+          <LineChart dataArray={GIRHitPercentageFW} title="GIR from fairway %" average={true} fitData={true} digits={2} last={7} />
+          <LineChart dataArray={GIRHitPercentageOutFW} title="GIR not fairway %" average={true} fitData={true} digits={2} last={7} />
         </Box>
       <Box className={styling.root}>
         <Typography align="center" variant="h4">

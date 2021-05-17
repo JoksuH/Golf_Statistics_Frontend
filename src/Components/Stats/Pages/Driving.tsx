@@ -75,16 +75,16 @@ const DrivingStats: React.FC<propsData> = ({ fir, gir, penalties, fairwaybunkers
     firData.forEach((value: string, index: number) => {
       if (value === 'left') {
         leftCount++
-        leftmiss.push(((leftCount * 100) / (index + 1)).toString())
       }
       if (value === 'hit') {
         hitCount++
-        hit.push(((hitCount * 100) / (index + 1)).toString())
       }
       if (value === 'right') {
         rightCount++
-        rightmiss.push(((rightCount * 100) / (index + 1)).toString())
       }
+      leftmiss.push(((leftCount * 100) / (index + 1)).toString())
+      hit.push(((hitCount * 100) / (index + 1)).toString())
+      rightmiss.push(((rightCount * 100) / (index + 1)).toString())
     })
 
     SetFIRMissLeft(leftmiss)
@@ -100,8 +100,8 @@ const DrivingStats: React.FC<propsData> = ({ fir, gir, penalties, fairwaybunkers
     Data.forEach((value: string, index: number) => {
       if (value > '0') {
         hitCount++
-        dataArr.push(((hitCount * 100) / (index + 1)).toString())
       }
+      dataArr.push(((hitCount * 100) / (index + 1)).toString())
     })
 
     return dataArr
@@ -117,8 +117,8 @@ const DrivingStats: React.FC<propsData> = ({ fir, gir, penalties, fairwaybunkers
     girData.forEach((value: string, index: number) => {
       if (value === 'NONE') {
         girNoneCount++
-        girNoTry.push(((girNoneCount * 100) / (index + 1)).toString())
       }
+      girNoTry.push(((girNoneCount * 100) / (index + 1)).toString())
     })
 
     SetGIRNoTryPercentage(girNoTry)
@@ -128,15 +128,15 @@ const DrivingStats: React.FC<propsData> = ({ fir, gir, penalties, fairwaybunkers
 
   return (
     <Box className={styling.root}>
-        <Typography align="center" variant="h4">
-          Driving Accuracy %
-        </Typography>
+      <Typography align="center" variant="h4">
+        Driving Accuracy %
+      </Typography>
 
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={FIRMissLeft} title="Miss left %" average={true} fitData={true} digits={2} last={15} />
-          <LineChart dataArray={FIRHit} title="Hit %" average={true} fitData={true} digits={2} last={15} />
-          <LineChart dataArray={FIRMissRight} title="Miss right %" average={true} fitData={true} digits={2} last={15} />
-        </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <LineChart dataArray={FIRMissLeft} title="Miss left %" average={true} fitData={true} digits={2} last={15} />
+        <LineChart dataArray={FIRHit} title="Hit %" average={true} fitData={true} digits={2} last={15} />
+        <LineChart dataArray={FIRMissRight} title="Miss right %" average={true} fitData={true} digits={2} last={15} />
+      </Box>
       <Box className={styling.root}>
         <Typography align="center" variant="h4">
           Driving Misses %

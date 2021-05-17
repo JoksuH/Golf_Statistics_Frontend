@@ -65,6 +65,8 @@ const ShortGameStats: React.FC<propsData> = ({
             gIRtot = gIRtot.concat(gir[i])
             greenBunkerstot = greenBunkerstot.concat(greenbunkers[i])
         }
+
+        console.log(puttsperRound)
         calcputtsPerGIR(gIRtot, puttstot)
         calcSandSavesandUpDowns(greenBunkerstot, puttstot, gIRtot)
         SetPuttsPerRound(puttsperRound)
@@ -81,10 +83,6 @@ const ShortGameStats: React.FC<propsData> = ({
                 nogirPutts.push(puttsdata[index])
             }
         })
-
-        console.log(puttsdata)
-        console.log(girPutts)
-        console.log(nogirPutts)
 
 
         SetPuttsPerGIR(girPutts)
@@ -133,13 +131,13 @@ const ShortGameStats: React.FC<propsData> = ({
                     dataArray={PuttsPerGIR}
                     title="Putts Avg GIR"
                     average={true}
-                    last={15}
+                    last={7}
                 />
                 <LineChart
                     dataArray={PuttsNoGIR}
                     title="Putts Avg NO GIR"
                     average={true}
-                    last={15}
+                    last={7}
                 />
                 <LineChart
                     dataArray={PuttsPerRound}
@@ -153,13 +151,13 @@ const ShortGameStats: React.FC<propsData> = ({
                     dataArray={SandSaves}
                     title="Greenside Sand Save %"
                     average={true}
-                    last={15}
+                    last={7}
                 />
                    <LineChart
                     dataArray={UpAndDowns}
                     title="Up and Down %"
                     average={true}
-                    last={15}
+                    last={7}
                 />
             </Box>
         </Box>

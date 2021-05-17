@@ -55,7 +55,6 @@ const Chart: React.FC<propsData> = ({
         let roundarr: number[] = []
 
         //Calculates the average value based on last X rounds
-
         if (dataArray.length > last) {
             for (let i = last; i < dataArray.length; i++) {
                 let average: number = 0
@@ -84,16 +83,27 @@ const Chart: React.FC<propsData> = ({
                 }
             }
         }
+        //if data length is not long enough to calculate a moving average
+        else {
+            let totalCount: number = 0
+            for (let i = 0; i < dataArray.length; i++) {
+                totalCount += Number(dataArray[i])
+                Average.push(parseFloat((totalCount/(i+1)).toFixed(digits)))
+        }
+    }
 
         setArray = Average.map((element, index) => ({
             roundnumber: index,
             datavalue: element,
-        }))
-    } else
+        })) 
+    }
+
+    else {
         setArray = dataArray.map((element, index) => ({
             roundnumber: index,
             datavalue: parseFloat(element),
         }))
+    }
 
     let width: number = 0
     if (window.innerWidth < 1200) width = window.innerWidth * 0.9

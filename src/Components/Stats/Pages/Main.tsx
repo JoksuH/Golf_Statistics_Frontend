@@ -96,7 +96,7 @@ const MainStats: React.FC<propsData> = ({
                 />
                 <LineChart
                     dataArray={GIR}
-                    title="FIR"
+                    title="GIR"
                     average={true}
                 />
             </Box>
@@ -104,7 +104,7 @@ const MainStats: React.FC<propsData> = ({
             <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
                 <LineChart
                     dataArray={FIR}
-                    title="GIR"
+                    title="FIR"
                     average={true}
                 />
                 <LineChart
