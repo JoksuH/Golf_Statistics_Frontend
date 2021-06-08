@@ -84,7 +84,7 @@ const StatsPage = () => {
     const [ActivePage, SetActivePage] = useState<string>('Overview')
     const [SelectedTeeBox, SetSelectedTeeBox] = useState<string>('All')
 
-    const { data, loading } = useQuery<Query>(GET_LATEST_ROUNDS)
+    const { data, loading, refetch } = useQuery<Query>(GET_LATEST_ROUNDS)
 
     useEffect(() => {
         let holescores: string[][] = []
@@ -121,6 +121,7 @@ const StatsPage = () => {
         SetFairwayBunkers(fairwayBunkers)
         SetGreenBunkers(greenBunkers)
     }, [data, SelectedTeeBox])
+
 
     const handleTabsChange = (event: React.ChangeEvent<{}>): void => {
         const input = event.target as HTMLElement

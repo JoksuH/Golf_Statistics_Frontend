@@ -29,8 +29,8 @@ const GET_COURSE_INFO = gql`
   }
 `
 const CREATE_ROUND = gql`
-  mutation roundCreateOnenew($coursename: MongoID!, $holescores: [String]!, $putts: [String]!, $fir: [String]!, $gir: [String]!, $approachdistance: [String]!, $penalties: [String]!, $greenbunkers: [String]!, $fwbunkers: [String]!) {
-    roundCreateOne(record: { coursename: $coursename, holescores: $holescores, putts: $putts, fir: $fir, gir: $gir, approachdistance: $approachdistance, penalties: $penalties, greenbunkers: $greenbunkers, fwbunkers: $fwbunkers }) {
+  mutation roundCreateOnenew($coursename: MongoID!, $holescores: [String]!, $putts: [String]!, $fir: [String]!, $gir: [String]!, $approachdistance: [String]!, $penalties: [String]!, $greenbunkers: [String]!, $fwbunkers: [String]!, $tee: String!) {
+    roundCreateOne(record: { coursename: $coursename, holescores: $holescores, putts: $putts, fir: $fir, gir: $gir, approachdistance: $approachdistance, penalties: $penalties, greenbunkers: $greenbunkers, fwbunkers: $fwbunkers, tee: $tee }) {
       recordId
     }
   }
@@ -139,8 +139,8 @@ const NewRoundMain: React.FC = () => {
         holderArr = GreenBunkers
         holderArr.push(data[7])
         SetGreenBunkers(holderArr)
-      } 
-      
+      }
+
       // if editing an already entered score from the previous hole
       else {
         let holderArr = ScoreCard
@@ -192,8 +192,6 @@ const NewRoundMain: React.FC = () => {
   }
 
   const SaveRound = (): void => {
-
-    console.log(HoleNumber)
     addRound({
       variables: {
         coursename: data?.courseOne?._id,
