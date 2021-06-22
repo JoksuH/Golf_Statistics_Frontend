@@ -11,221 +11,180 @@ import ApproachesbyDistanceStats from './Pages/ApproachesDistance'
 import Scoring from './Pages/Scoring'
 import ScoringByDistance from './Pages/ScoringByDistance'
 
-
 import GIRStats from './Pages/GIR'
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        margin: 'auto',
-    },
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        margin: 'auto',
-    },
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 'auto',
+  },
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: 'auto',
+  },
 }))
 
 interface Query {
-    __typename: string
-    roundMany: dataFields[]
+  __typename: string
+  roundMany: dataFields[]
 }
 
 interface dataFields {
-    __typename: string
-    holescores: string[]
-    putts: string[]
-    fir: string[]
-    gir: string[]
-    approachdistance: string[]
-    penalties: string[]
-    greenbunkers: string[]
-    fwbunkers: string[]
-    tee: string
-    course: courseData
+  __typename: string
+  holescores: string[]
+  putts: string[]
+  fir: string[]
+  gir: string[]
+  approachdistance: string[]
+  penalties: string[]
+  greenbunkers: string[]
+  fwbunkers: string[]
+  tee: string
+  course: courseData
 }
 
 interface courseData {
-    pars: number[]
+  pars: number[]
 }
 
 const GET_LATEST_ROUNDS = gql`
-    query {
-        roundMany(limit: 50) {
-            holescores
-            putts
-            fir
-            gir
-            approachdistance
-            penalties
-            greenbunkers
-            fwbunkers
-            tee
-            course {
-                pars
-            }
-        }
+  query {
+    roundMany(limit: 50) {
+      holescores
+      putts
+      fir
+      gir
+      approachdistance
+      penalties
+      greenbunkers
+      fwbunkers
+      tee
+      course {
+        pars
+      }
     }
+  }
 `
 
 const StatsPage = () => {
-    const styling = useStyles()
+  const styling = useStyles()
 
-    const [Scores, SetScores] = useState<string[][]>([])
-    const [Pars, SetPars] = useState<number[]>([])
-    const [Putts, SetPutts] = useState<string[][]>([])
-    const [FIR, SetFIR] = useState<string[][]>([])
-    const [GIR, SetGIR] = useState<string[][]>([])
-    const [ApproachDistance, SetApproachDistance] = useState<string[][]>([])
-    const [Penalties, SetPenalties] = useState<string[][]>([])
-    const [FairwayBunkers, SetFairwayBunkers] = useState<string[][]>([])
-    const [GreenBunkers, SetGreenBunkers] = useState<string[][]>([])
-    const [ActivePage, SetActivePage] = useState<string>('Overview')
-    const [SelectedTeeBox, SetSelectedTeeBox] = useState<string>('All')
+  const [Scores, SetScores] = useState<string[][]>([])
+  const [Pars, SetPars] = useState<number[]>([])
+  const [Putts, SetPutts] = useState<string[][]>([])
+  const [FIR, SetFIR] = useState<string[][]>([])
+  const [GIR, SetGIR] = useState<string[][]>([])
+  const [ApproachDistance, SetApproachDistance] = useState<string[][]>([])
+  const [Penalties, SetPenalties] = useState<string[][]>([])
+  const [FairwayBunkers, SetFairwayBunkers] = useState<string[][]>([])
+  const [GreenBunkers, SetGreenBunkers] = useState<string[][]>([])
+  const [ActivePage, SetActivePage] = useState<string>('Overview')
+  const [SelectedTeeBox, SetSelectedTeeBox] = useState<string>('All')
 
-    const { data, loading, refetch } = useQuery<Query>(GET_LATEST_ROUNDS)
+  const { data, loading, refetch } = useQuery<Query>(GET_LATEST_ROUNDS)
 
-    useEffect(() => {
-        let holescores: string[][] = []
-        let pars: number[] = []
-        let putts: string[][] = []
-        let fIR: string[][] = []
-        let gIR: string[][] = []
-        let approachDistance: string[][] = []
-        let penalties: string[][] = []
-        let fairwayBunkers: string[][] = []
-        let greenBunkers: string[][] = []
+  useEffect(() => {
+    let holescores: string[][] = []
+    let pars: number[] = []
+    let putts: string[][] = []
+    let fIR: string[][] = []
+    let gIR: string[][] = []
+    let approachDistance: string[][] = []
+    let penalties: string[][] = []
+    let fairwayBunkers: string[][] = []
+    let greenBunkers: string[][] = []
 
-        data?.roundMany?.forEach((value) => {
-            if (value.tee === SelectedTeeBox || SelectedTeeBox === "All") {
-            holescores.push(value.holescores)
-            putts.push(value.putts)
-            fIR.push(value.fir)
-            gIR.push(value.gir)
-            approachDistance.push(value.approachdistance)
-            penalties.push(value.penalties)
-            fairwayBunkers.push(value.fwbunkers)
-            greenBunkers.push(value.greenbunkers)
-            pars = pars.concat(value.course.pars)
-        }
-        })
+    data?.roundMany?.forEach((value) => {
+      if (value.tee === SelectedTeeBox || SelectedTeeBox === 'All') {
+        holescores.push(value.holescores)
+        putts.push(value.putts)
+        fIR.push(value.fir)
+        gIR.push(value.gir)
+        approachDistance.push(value.approachdistance)
+        penalties.push(value.penalties)
+        fairwayBunkers.push(value.fwbunkers)
+        greenBunkers.push(value.greenbunkers)
+        pars = pars.concat(value.course.pars)
+      }
+    })
 
-        SetScores(holescores)
-        SetPars(pars)
-        SetPutts(putts)
-        SetFIR(fIR)
-        SetGIR(gIR)
-        SetApproachDistance(approachDistance)
-        SetPenalties(penalties)
-        SetFairwayBunkers(fairwayBunkers)
-        SetGreenBunkers(greenBunkers)
-    }, [data, SelectedTeeBox])
+    SetScores(holescores)
+    SetPars(pars)
+    SetPutts(putts)
+    SetFIR(fIR)
+    SetGIR(gIR)
+    SetApproachDistance(approachDistance)
+    SetPenalties(penalties)
+    SetFairwayBunkers(fairwayBunkers)
+    SetGreenBunkers(greenBunkers)
+  }, [data, SelectedTeeBox])
 
+  useEffect(() => {
+    refetch()
+  }, [])
 
-    const handleTabsChange = (event: React.ChangeEvent<{}>): void => {
-        const input = event.target as HTMLElement
-        //Using input.textContent to get the value no matter where in the tab the click is placed
-        if (input.textContent !== null)
-        SetActivePage(input.textContent)
-    }
+  const handleTabsChange = (event: React.ChangeEvent<{}>): void => {
+    const input = event.target as HTMLElement
+    //Using input.textContent to get the value no matter where in the tab the click is placed
+    if (input.textContent !== null) SetActivePage(input.textContent)
+  }
 
-    const handleTeeBoxChange = (event: React.ChangeEvent<{}>): void => {
-        const input = event.target as HTMLElement
+  const handleTeeBoxChange = (event: React.ChangeEvent<{}>): void => {
+    const input = event.target as HTMLElement
 
-        //Get value from innertext to make the buttons work no matter where in them you click
-        let formattedinputText = input.innerText.charAt(0).toUpperCase() +  input.innerText.slice(1).toLowerCase()
-        SetSelectedTeeBox(formattedinputText)
-    }
+    //Get value from innertext to make the buttons work no matter where in them you click
+    let formattedinputText = input.innerText.charAt(0).toUpperCase() + input.innerText.slice(1).toLowerCase()
+    SetSelectedTeeBox(formattedinputText)
+  }
 
-    return (
-        <Box className={styling.root}>
-            <StatTabs
-                activePage={ActivePage}
-                activeTee={SelectedTeeBox}
-                onChangeTab={handleTabsChange}
-                onChangeTee={handleTeeBoxChange}
-            />
-            {loading && <p>Loading data, please wait a bit...</p>}
-            {(Scores && ActivePage==="Overview") && (
-                <>
-                    <MainStats
-                        holescores={Scores}
-                        putts={Putts}
-                        fir={FIR}
-                        gir={GIR}
-                        greenbunkers={GreenBunkers}
-                        penalties={Penalties}
-                    />
-                </>
-            )}
-            {(Scores && ActivePage==="Driving") && (
-                <>
-                    <DrivingStats
-                        fir={FIR}
-                        gir={GIR}
-                        fairwaybunkers={FairwayBunkers}
-                        penalties={Penalties}
-                    />
-                </>
-            )}
-            {(Scores && ActivePage==="Greens In Regulation") && (
-                <>
-                    <GIRStats
-                        pars={Pars}
-                        fir={FIR}
-                        gir={GIR}
-                    />
-                </>
-            )}
-            {(Scores && ActivePage==="Approach Accuracy") && (
-                <>
-                    <ApproachesStats
-                        pars={Pars}
-                        holescores={Scores}
-                        fir={FIR}
-                        gir={GIR}
-                        approachdistances={ApproachDistance}
-                    />
-                </>
-            )}
-            {(Scores && ActivePage==="Approach by Distance") && (
-                <>
-                    <ApproachesbyDistanceStats
-                        gir={GIR}
-                        approachdistances={ApproachDistance}
-                    />
-                </>
-            )}
-             {(Scores && ActivePage==="Scoring By Distance") && (
-                <>
-                    <ScoringByDistance
-                        pars={Pars}
-                        scores={Scores}
-                        approachdistances={ApproachDistance}
-                    />
-                </>
-            )}
-            {(Scores && ActivePage==="Scoring") && (
-                <>
-                    <Scoring
-                        pars={Pars}
-                        scores={Scores}
-                    />
-                </>
-            )}
-            {(Scores && ActivePage==="Short Game") && (
-                <>
-                    <ShortGameStats
-                        holescores={Scores}
-                        putts={Putts}
-                        gir={GIR}
-                        greenbunkers={GreenBunkers}
-                    />
-                </>
-            )}
-        </Box>
-    )
+  return (
+    <Box className={styling.root}>
+      <StatTabs activePage={ActivePage} activeTee={SelectedTeeBox} onChangeTab={handleTabsChange} onChangeTee={handleTeeBoxChange} />
+      {loading && <p>Loading data, please wait a bit...</p>}
+      {Scores && ActivePage === 'Overview' && (
+        <>
+          <MainStats holescores={Scores} putts={Putts} fir={FIR} gir={GIR} greenbunkers={GreenBunkers} penalties={Penalties} />
+        </>
+      )}
+      {Scores && ActivePage === 'Driving' && (
+        <>
+          <DrivingStats fir={FIR} gir={GIR} fairwaybunkers={FairwayBunkers} penalties={Penalties} />
+        </>
+      )}
+      {Scores && ActivePage === 'Greens In Regulation' && (
+        <>
+          <GIRStats pars={Pars} fir={FIR} gir={GIR} />
+        </>
+      )}
+      {Scores && ActivePage === 'Approach Accuracy' && (
+        <>
+          <ApproachesStats pars={Pars} holescores={Scores} fir={FIR} gir={GIR} approachdistances={ApproachDistance} />
+        </>
+      )}
+      {Scores && ActivePage === 'Approach by Distance' && (
+        <>
+          <ApproachesbyDistanceStats gir={GIR} approachdistances={ApproachDistance} />
+        </>
+      )}
+      {Scores && ActivePage === 'Scoring By Distance' && (
+        <>
+          <ScoringByDistance pars={Pars} scores={Scores} approachdistances={ApproachDistance} />
+        </>
+      )}
+      {Scores && ActivePage === 'Scoring' && (
+        <>
+          <Scoring pars={Pars} scores={Scores} />
+        </>
+      )}
+      {Scores && ActivePage === 'Short Game' && (
+        <>
+          <ShortGameStats holescores={Scores} putts={Putts} gir={GIR} greenbunkers={GreenBunkers} />
+        </>
+      )}
+    </Box>
+  )
 }
 
 export default StatsPage

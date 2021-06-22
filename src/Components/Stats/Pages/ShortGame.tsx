@@ -66,7 +66,6 @@ const ShortGameStats: React.FC<propsData> = ({
             greenBunkerstot = greenBunkerstot.concat(greenbunkers[i])
         }
 
-        console.log(puttsperRound)
         calcputtsPerGIR(gIRtot, puttstot)
         calcSandSavesandUpDowns(greenBunkerstot, puttstot, gIRtot)
         SetPuttsPerRound(puttsperRound)
@@ -113,6 +112,8 @@ const ShortGameStats: React.FC<propsData> = ({
                     upandDowns.push('0')
                 }
         })
+
+        console.log(upandDowns)
 
         SetSandSaves(sandSaves)
         SetUpAndDowns(upandDowns)
