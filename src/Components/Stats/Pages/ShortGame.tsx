@@ -92,28 +92,42 @@ const ShortGameStats: React.FC<propsData> = ({
 
         let upandDowns: string[] = []
         let sandSaves: string[] = []
+        let upandDownCounter: number = 0
+        let upandDownTryCounter: number = 0
+        let sandSavesCounter: number = 0
+        let sandSavesTryCounter: number = 0
+
+
 
 
         greenbunkers.forEach((value: string, index: number) => {
             if (value === '1' && puttsdata[index] === '1') {
                 //Push 100 to get full percentage values
-                sandSaves.push('100')
+                sandSavesCounter++
+                sandSavesTryCounter++
+                sandSaves.push(String(sandSavesCounter*100/sandSavesTryCounter))
             } 
+            // in case of multiple sandshots or putts
             else if (value > '0' && puttsdata[index] !== '1') 
                 {
-                    sandSaves.push('0')
+                    sandSavesTryCounter++
+                    sandSaves.push(String(sandSavesCounter*100/sandSavesTryCounter))
+
                 }
             else if (value === '0' && puttsdata[index] === '1' && girdata[index] !== 'hit') 
                 {
-                    upandDowns.push('100')
+                    upandDownCounter++
+                    upandDownTryCounter++
+                    upandDowns.push(String(upandDownCounter*100/upandDownTryCounter))
                 }
             else if (value === '0' && puttsdata[index] > '1' && girdata[index] !== 'hit') 
                 {
-                    upandDowns.push('0')
+                    upandDownTryCounter++
+                    upandDowns.push(String(upandDownCounter*100/upandDownTryCounter))
                 }
+
         })
 
-        console.log(upandDowns)
 
         SetSandSaves(sandSaves)
         SetUpAndDowns(upandDowns)
