@@ -46,6 +46,6 @@ After you clone this repo to your desktop, go to its root directory and run `npm
 
 Once the dependencies are installed, you can run  `npm start` to start the application. You will then be able to access it at localhost:3000
 
-If you want to run the project from your computer, you need to run the backend at the same time as the front end using a port of your choice. The default port address is localhost:5000
+If you want to run the project from your computer, you need to run the backend at the same time as the front end using a port of your choice. The default port address is localhost:4000
 
 ---
