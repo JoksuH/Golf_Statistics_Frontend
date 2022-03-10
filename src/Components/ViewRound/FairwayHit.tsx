@@ -7,30 +7,26 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CheckIcon from '@material-ui/icons/Check'
 
 interface props {
-    fairwayvalue: string,
+  fairwayvalue: string
 }
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        margin: 'auto',
-    },
+  root: {
+    display: 'flex',
+    margin: 'auto',
+  },
 }))
 
+const FairwayHit: React.FC<props> = ({ fairwayvalue }) => {
+  const styling = useStyles()
 
-const FairwayHit: React.FC<props> = ({fairwayvalue}) => {
-
-    const styling = useStyles()
-
-    return (
-        <Box className={styling.root}>
-            {fairwayvalue === "hit" && <CheckIcon />}
-            {fairwayvalue === "left" && <ArrowBackIcon />}
-            {fairwayvalue === "right" && <ArrowForwardIcon />}
-
-           
-        </Box>
-    )
+  return (
+    <Box className={styling.root}>
+      {fairwayvalue === 'hit' && <CheckIcon />}
+      {fairwayvalue === 'left' && <ArrowBackIcon />}
+      {fairwayvalue === 'right' && <ArrowForwardIcon />}
+    </Box>
+  )
 }
 
 export default FairwayHit

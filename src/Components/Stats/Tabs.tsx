@@ -9,102 +9,68 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Typography from '@material-ui/core/Typography'
 
 interface pageData {
-    activePage: string
-    activeTee: string
-    onChangeTab: (event: React.ChangeEvent<{}>, value: any) => void
-    onChangeTee: (event: React.ChangeEvent<{}>, value: any) => void
+  activePage: string
+  activeTee: string
+  onChangeTab: (event: React.ChangeEvent<{}>, value: any) => void
+  onChangeTee: (event: React.ChangeEvent<{}>, value: any) => void
 }
 
 const useStyles = makeStyles((theme) => ({
-    row: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: theme.palette.success.light,
-        margin: 'auto',
-        marginTop: '25px',
-    },
-    column: {
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: theme.palette.success.light,
-        margin: 'auto',
-        marginTop: '25px',
-    },
-    toggle: {
-        margin: '0 25px 0 25px',
-        justifyContent: 'center'
-    },
-    toggletext: {
-        fontSize: '14px',
-        color: 'black',
-    },
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: theme.palette.success.light,
+    margin: 'auto',
+    marginTop: '25px',
+  },
+  column: {
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: theme.palette.success.light,
+    margin: 'auto',
+    marginTop: '25px',
+  },
+  toggle: {
+    margin: '0 25px 0 25px',
+    justifyContent: 'center',
+  },
+  toggletext: {
+    fontSize: '14px',
+    color: 'black',
+  },
 }))
 
-const StatTabs: React.FC<pageData> = ({
-    activePage,
-    activeTee,
-    onChangeTab,
-    onChangeTee,
-}) => {
-    const pageList: string[] = [
-        'Overview',
-        'Driving',
-        'Greens In Regulation',
-        'Approach Accuracy',
-        'Approach by Distance',
-        'Scoring By Distance',
-        'Scoring',
-        'Short Game',
-    ]
+const StatTabs: React.FC<pageData> = ({ activePage, activeTee, onChangeTab, onChangeTee }) => {
+  const pageList: string[] = ['Overview', 'Driving', 'Greens In Regulation', 'Approach Accuracy', 'Approach by Distance', 'Scoring By Distance', 'Scoring', 'Short Game']
 
-    const valueofActivePage: number = pageList.findIndex(
-        (element: string) => element === activePage
-    )
+  const valueofActivePage: number = pageList.findIndex((element: string) => element === activePage)
 
-    const styling = useStyles()
+  const styling = useStyles()
 
-    return (
-        <Box>
-            <Paper className={window.innerWidth > 1200 ? styling.row : styling.column}>
-                <Tabs
-                    value={valueofActivePage}
-                    indicatorColor="primary"
-                    textColor="inherit"
-                    variant="scrollable"
-                    onChange={onChangeTab}
-                >
-                    {pageList &&
-                        pageList.map((city) => {
-                            return <Tab label={city} key={city} />
-                        })}
-                </Tabs>
-                <ToggleButtonGroup
-                    className={styling.toggle}
-                    value={activeTee}
-                    exclusive
-                    onChange={onChangeTee}
-                    aria-label="teebox selection"
-                >
-                    <ToggleButton value="All" aria-label="all teeboxes">
-                        <Typography className={styling.toggletext}>
-                            All
-                        </Typography>
-                    </ToggleButton>
-                    <ToggleButton value="Yellow" aria-label="yellow teebox">
-                        <Typography className={styling.toggletext}>
-                            Yellow
-                        </Typography>
-                    </ToggleButton>
-                    <ToggleButton value="White" aria-label="white teebox">
-                        <Typography className={styling.toggletext}>
-                            White
-                        </Typography>
-                    </ToggleButton>
-                </ToggleButtonGroup>
-            </Paper>
-        </Box>
-    )
+  return (
+    <Box>
+      <Paper className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <Tabs value={valueofActivePage} indicatorColor="primary" textColor="inherit" variant="scrollable" onChange={onChangeTab}>
+          {pageList &&
+            pageList.map((city) => {
+              return <Tab label={city} key={city} />
+            })}
+        </Tabs>
+        <ToggleButtonGroup className={styling.toggle} value={activeTee} exclusive onChange={onChangeTee} aria-label="teebox selection">
+          <ToggleButton value="All" aria-label="all teeboxes">
+            <Typography className={styling.toggletext}>All</Typography>
+          </ToggleButton>
+          <ToggleButton value="Yellow" aria-label="yellow teebox">
+            <Typography className={styling.toggletext}>Yellow</Typography>
+          </ToggleButton>
+          <ToggleButton value="White" aria-label="white teebox">
+            <Typography className={styling.toggletext}>White</Typography>
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </Paper>
+    </Box>
+  )
 }
 
 export default StatTabs

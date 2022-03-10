@@ -140,15 +140,15 @@ const GIRStats: React.FC<propsData> = ({ pars, fir, gir }) => {
 
   return (
     <Box className={styling.root}>
-        <Typography align="center" variant="h4">
-          Green in Regulation % (moving average)
-        </Typography>
+      <Typography align="center" variant="h4">
+        Green in Regulation % (moving average)
+      </Typography>
 
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={GIRHitPercentage} title="GIR Total %" average={true} fitData={true} digits={2} last={7} />
-          <LineChart dataArray={GIRHitPercentageFW} title="GIR from fairway %" average={true} fitData={true} digits={2} last={7} />
-          <LineChart dataArray={GIRHitPercentageOutFW} title="GIR not fairway %" average={true} fitData={true} digits={2} last={7} />
-        </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <LineChart dataArray={GIRHitPercentage} title="GIR Total %" average={true} fitData={true} digits={2} last={7} />
+        <LineChart dataArray={GIRHitPercentageFW} title="GIR from fairway %" average={true} fitData={true} digits={2} last={7} />
+        <LineChart dataArray={GIRHitPercentageOutFW} title="GIR not fairway %" average={true} fitData={true} digits={2} last={7} />
+      </Box>
       <Box className={styling.root}>
         <Typography align="center" variant="h4">
           Green in Regulation % per Par (moving average)

@@ -249,7 +249,6 @@ const ApproachesbyDistanceStats: React.FC<propsData> = ({ gir, approachdistances
           <BarChart data={GirMissDirections75100} title="Left or Right? (75 - 100 m)" width={400} />
           <BarChart data={GirMissLength75100} title="Long or Short?   (75 - 100 m)" width={400} />
         </Box>
-
       </Box>
 
       <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>

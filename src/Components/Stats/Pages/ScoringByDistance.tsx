@@ -90,23 +90,23 @@ const ScoringByDistance: React.FC<propsData> = ({ pars, scores, approachdistance
   const styling = useStyles()
 
   return (
-      <Box className={styling.root}>
-        <Box className={styling.row}>
-          <Typography align="center" variant="h4">
-            Scoring By Distance
-          </Typography>
-        </Box>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={ShotsFrom2550} title="Shots to Hole (25-50 m)" />
-          <LineChart dataArray={ShotsFrom5075} title="Shots to Hole (50-75 m)" />
-          <LineChart dataArray={ShotsFrom75100} title="Shots to Hole (75 - 100 m)" />
-        </Box>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={ShotsFrom100125} title="Shots to Hole  (100 - 125 m)" />
-          <LineChart dataArray={ShotsFrom125150} title="Shots to Hole  (125 - 150 m)" />
-          <LineChart dataArray={ShotsFrom150175} title="Shots to Hole  (150 - 175 m)" />
-        </Box>
+    <Box className={styling.root}>
+      <Box className={styling.row}>
+        <Typography align="center" variant="h4">
+          Scoring By Distance
+        </Typography>
       </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <LineChart dataArray={ShotsFrom2550} title="Shots to Hole (25-50 m)" />
+        <LineChart dataArray={ShotsFrom5075} title="Shots to Hole (50-75 m)" />
+        <LineChart dataArray={ShotsFrom75100} title="Shots to Hole (75 - 100 m)" />
+      </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <LineChart dataArray={ShotsFrom100125} title="Shots to Hole  (100 - 125 m)" />
+        <LineChart dataArray={ShotsFrom125150} title="Shots to Hole  (125 - 150 m)" />
+        <LineChart dataArray={ShotsFrom150175} title="Shots to Hole  (150 - 175 m)" />
+      </Box>
+    </Box>
   )
 }
 

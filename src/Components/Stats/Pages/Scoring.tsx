@@ -119,27 +119,27 @@ const Scoring: React.FC<propsData> = ({ pars, scores }) => {
 
   return (
     <Box className={styling.root}>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <Typography align="center" variant="h4">
-            Scoring Relative To Par
-          </Typography>
-        </Box>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={ScorePar3s} title="Scoring on Par 3s" last={15} />
-          <LineChart dataArray={ScorePar4s} title="Scoring on Par 4s" last={15} />
-          <LineChart dataArray={ScorePar5s} title="Scoring on Par 5s" last={15} />
-        </Box>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={EaglePercentage} title="Eagles (%)" perRound={false} last={10} />
-          <LineChart dataArray={BirdiePercentage} title="Birdie (%)" perRound={false} last={10} />
-          <LineChart dataArray={ParPercentage} title="Pars (%)" perRound={false} last={10} />
-        </Box>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <LineChart dataArray={BogeyPercentage} title="Bogeys (%)" perRound={false} last={10} />
-          <LineChart dataArray={DBBogeyPercentage} title="Double Bogeys (%)" perRound={false} last={10} />
-          <LineChart dataArray={TrBogeyPercentage} title="Triple Bogeys (%)" perRound={false} last={10} />
-        </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <Typography align="center" variant="h4">
+          Scoring Relative To Par
+        </Typography>
       </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <LineChart dataArray={ScorePar3s} title="Scoring on Par 3s" last={15} />
+        <LineChart dataArray={ScorePar4s} title="Scoring on Par 4s" last={15} />
+        <LineChart dataArray={ScorePar5s} title="Scoring on Par 5s" last={15} />
+      </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <LineChart dataArray={EaglePercentage} title="Eagles (%)" perRound={false} last={10} />
+        <LineChart dataArray={BirdiePercentage} title="Birdie (%)" perRound={false} last={10} />
+        <LineChart dataArray={ParPercentage} title="Pars (%)" perRound={false} last={10} />
+      </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <LineChart dataArray={BogeyPercentage} title="Bogeys (%)" perRound={false} last={10} />
+        <LineChart dataArray={DBBogeyPercentage} title="Double Bogeys (%)" perRound={false} last={10} />
+        <LineChart dataArray={TrBogeyPercentage} title="Triple Bogeys (%)" perRound={false} last={10} />
+      </Box>
+    </Box>
   )
 }
 

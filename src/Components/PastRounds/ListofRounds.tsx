@@ -63,11 +63,8 @@ const ListofRounds: React.FC<props> = ({ onClick }) => {
   const passCourseData = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const input = event.target as HTMLElement
     console.log(input)
-    if (input?.parentElement?.id !== '' && input?.parentElement?.id !== undefined) 
-    onClick(data?.roundMany[parseInt(input.parentElement.id)])
-    
-    else if (input?.id !== '') 
-    onClick(data?.roundMany[parseInt(input.id)])
+    if (input?.parentElement?.id !== '' && input?.parentElement?.id !== undefined) onClick(data?.roundMany[parseInt(input.parentElement.id)])
+    else if (input?.id !== '') onClick(data?.roundMany[parseInt(input.id)])
   }
 
   return (

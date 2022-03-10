@@ -204,28 +204,28 @@ const ApproachesStats: React.FC<propsData> = ({ pars, holescores, fir, gir, appr
 
   return (
     <Box className={styling.root}>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <Typography align="center" variant="h4">
-            Gir Approach Misses
-          </Typography>
-          <ToggleButtonGroup className={styling.toggle} value={ToggleValue} exclusive onChange={(event: React.MouseEvent<HTMLElement, MouseEvent>, value: string) => SetToggleValue(value)} aria-label="teebox selection">
-            <ToggleButton value="1000" aria-label="all teeboxes">
-              <Typography className={styling.toggletext}>All Rounds</Typography>
-            </ToggleButton>
-            <ToggleButton value="10" aria-label="yellow teebox">
-              <Typography className={styling.toggletext}>Last 10</Typography>
-            </ToggleButton>
-            <ToggleButton value="5" aria-label="white teebox">
-              <Typography className={styling.toggletext}>Last 5</Typography>
-            </ToggleButton>
-          </ToggleButtonGroup>
-        </Box>
-        <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
-          <BarChart data={GirMissDirections} title="Left or Right?" width={500} />
-          <BarChart data={GirMissLength} title="Long or Short?" width={500} />
-        </Box>
-            <BarChart data={GIRMissesAllDirections} title="Approach Direction %" />
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <Typography align="center" variant="h4">
+          Gir Approach Misses
+        </Typography>
+        <ToggleButtonGroup className={styling.toggle} value={ToggleValue} exclusive onChange={(event: React.MouseEvent<HTMLElement, MouseEvent>, value: string) => SetToggleValue(value)} aria-label="teebox selection">
+          <ToggleButton value="1000" aria-label="all teeboxes">
+            <Typography className={styling.toggletext}>All Rounds</Typography>
+          </ToggleButton>
+          <ToggleButton value="10" aria-label="yellow teebox">
+            <Typography className={styling.toggletext}>Last 10</Typography>
+          </ToggleButton>
+          <ToggleButton value="5" aria-label="white teebox">
+            <Typography className={styling.toggletext}>Last 5</Typography>
+          </ToggleButton>
+        </ToggleButtonGroup>
       </Box>
+      <Box className={window.innerWidth > 1200 ? styling.row : styling.column}>
+        <BarChart data={GirMissDirections} title="Left or Right?" width={500} />
+        <BarChart data={GirMissLength} title="Long or Short?" width={500} />
+      </Box>
+      <BarChart data={GIRMissesAllDirections} title="Approach Direction %" />
+    </Box>
   )
 }
 
